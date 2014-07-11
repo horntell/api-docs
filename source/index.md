@@ -1,64 +1,82 @@
 ---
-title: API Reference
+title: Horntell API Reference
 
 language_tabs:
   - shell
-  - ruby
-  - python
-
-toc_footers:
-  - <a href='#'>Sign Up for a Developer Key</a>
-  - <a href='http://github.com/tripit/slate'>Documentation Powered by Slate</a>
 
 includes:
   - errors
 
-search: true
+search: false
 ---
 
 # Introduction
 
-Welcome to the Kittn API! You can use our API to access Kittn API endpoints, which can get information on various cats, kittens, and breeds in our database.
+```shell
+# Libraries in various languages, coming soon!
+```
 
-We have language bindings in Shell, Ruby, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+Welcome to the Horntell API. The API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and uses HTTP response codes to indicate API errors.
 
-This example API documentation page was created with [Slate](http://github.com/tripit/slate). Feel free to edit it and use it as a base for your own API's documentation.
+We use built-in HTTP features, like HTTP authentication and HTTP verbs, which can be understood by off-the-shelf HTTP clients, and we support cross-origin resource sharing to allow you to interact securely with our API from a client-side web application (though you should remember that you should never expose your secret API key in any public website's client-side code).
+
+JSON will be returned in all responses from the API, including errors (though if you're using API bindings, we will convert the response to the appropriate language-specific object).
+
+We do not have libraries for various programming languages yet (PHP library coming soon), but making the calls to API shouldn't be different than making cURL requests in the language of your choice. The examples are given on the right hand side.
+
+The base URL for all the API requests is: **https://api.horntell.com**
 
 # Authentication
 
-> To authorize, use this code:
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-```
-
 ```shell
-# With shell, you can just pass the correct header with each request
-curl "api_endpoint_here"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.horntell.com"
+  -u hornokpleasekey:hornokpleasesecret
 ```
 
-> Make sure to replace `meowmeowmeow` with your API key.
+You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!
 
-Kittn uses API keys to allow access to the API. You can register a new Kittn API key at our [developer portal](http://example.com/developers).
+Authentication to the API occurs via HTTP Basic Auth. Provide your API key as the basic auth username and your API secret as the basic auth password.
 
-Kittn expects for the API key to be included in all API requests to the server in a header that looks like the following:
-
-`Authorization: meowmeowmeow`
+All API requests must be made over HTTPS. Calls made over plain HTTP will fail. You must authenticate for all requests.
 
 <aside class="notice">
-You must replace `meowmeowmeow` with your personal API key.
+You must replace `hornokpleasekey` with your personal API key and `hornokpleasesecret` with your API secret.
 </aside>
 
-# Kittens
+# Errors
+
+Horntell uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, forbidden usage, etc.), and codes in the 5xx range indicate an error with Horntell's servers.
+
+**Attributes**
+
+Attribute | Description
+--------- | -----------
+type | The type of error returned. Can be `bad_request`, `unauthorized`, `forbidden`, `not_found`, `invalid_input` or `internal_error`.
+code | This code is same as the HTTP status code for the response. It can be `400`, `401`, `403`, `404` or `500`.
+message | The human readble message to give you more clarity about the error.
+
+# Versioning
+
+```shell
+curl "https://api.horntell.com"
+  -u hornokpleasekey:hornokpleasesecret
+  -H "Accept: application/vnd.horntell.v1+json"
+```
+
+Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is `v1`.
+
+You have to specify the version of the API with each API request in the `Accept:` header. The example on the right is using the version `v1`. If version is not specified with a request, we will route that request to the latest verion of the API.
+
+# Profiles
+
+Profiles are the most important object in your app. These objects reflect your users directly (think of them as profiles for your users). Most of the things Horntell allows you to do are dependent on the profiles (after all, they are whom you want to see more engaged in your app).
+
+### The profile object
+
+**Attributes**
+
+Attribute | Description
+--------- | -----------
 
 ## Get All Kittens
 
