@@ -2,10 +2,10 @@
 title: Horntell API Reference
 
 language_tabs:
-  - shell
+- shell
 
 includes:
-  - errors
+- errors
 
 search: false
 ---
@@ -30,7 +30,7 @@ The base URL for all the API requests is: **https://api.horntell.com**
 
 ```shell
 curl "https://api.horntell.com"
-  -u hornokpleasekey:hornokpleasesecret
+-u hornokpleasekey:hornokpleasesecret
 ```
 
 You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!
@@ -40,7 +40,7 @@ Authentication to the API occurs via HTTP Basic Auth. Provide your API key as th
 All API requests must be made over HTTPS. Calls made over plain HTTP will fail. You must authenticate for all requests.
 
 <aside class="notice">
-You must replace `hornokpleasekey` with your personal API key and `hornokpleasesecret` with your API secret.
+    You must replace `hornokpleasekey` with your personal API key and `hornokpleasesecret` with your API secret.
 </aside>
 
 # Errors
@@ -51,16 +51,16 @@ Horntell uses conventional HTTP response codes to indicate success or failure of
 
 Attribute | Description
 --------- | -----------
-type | The type of error returned. Can be `bad_request`, `unauthorized`, `forbidden`, `not_found`, `invalid_input` or `internal_error`.
-code | This code is same as the HTTP status code for the response. It can be `400`, `401`, `403`, `404` or `500`.
-message | The human readble message to give you more clarity about the error.
+type | *`string`* <br /> The type of error returned. Can be `bad_request`, `unauthorized`, `forbidden`, `not_found`, `invalid_input` or `internal_error`.
+code | *`number`* <br /> This code is same as the HTTP status code for the response. It can be `400`, `401`, `403`, `404` or `500`.
+message | *`string`* <br /> The human readble message to give you more clarity about the error.
 
 # Versioning
 
 ```shell
 curl "https://api.horntell.com"
-  -u hornokpleasekey:hornokpleasesecret
-  -H "Accept: application/vnd.horntell.v1+json"
+-u hornokpleasekey:hornokpleasesecret
+-H "Accept: application/vnd.horntell.v1+json"
 ```
 
 Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is `v1`.
@@ -73,50 +73,112 @@ Profiles are the most important object in your app. These objects reflect your u
 
 ### The profile object
 
+```json
+{
+    "id": "53a1626b28d56e6708f9dd35",
+    "uid": "720974375",
+    "name": "John Doe",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@example.com",
+    "signedup_at": "2013-12-25 13:13:13",
+    "avatar_url": "http://example.com/johndoe.jpg",
+    "gender": "Male",
+    "position": "Founder & CEO",
+    "company": "Acme, Inc.",
+    "industry": "Computer Softwares",
+    "location": "San Fransisco, USA",
+    "headline": "Everyone's example!",
+    "birthday": "1977-02-26",
+    "app_id": "539855de9016382d3b8b07d7",
+    "last_seen_at": "2014-07-10 11:27:54",
+    "activities_summary": {
+        "paid_subscription_fees": {
+            "count": 3,
+            "first_at": "2014-05-03 10:08:21",
+            "last_at": "2014-07-03 10:08:21"
+        },
+        "invited_a_team_member": {
+            "count": 2,
+            "first_at": "2014-06-18 10:08:37",
+            "last_at": "2014-06-18 10:11:20"
+        },
+        "asked_a_question_on_forum": {
+            "count": 56,
+            "first_at": "2014-05-10 10:39:40",
+            "last_at": "2014-07-01 23:58:15"
+        }
+    },
+    "campaigns_summary": {
+        "53bf732028d56edc0b8b4567": {
+            "count": 1,
+            "first_at": "2014-05-03 10:10:10",
+            "last_at": "2014-05-03 10:10:10"
+        }
+    },
+    "created_at": "2014-05-01 09:56:59",
+    "stats": {
+        "total_activities": 61,
+        "total_revenue": 334.54,
+        "total_campaigns": 1
+    },
+    "segments": ["all", "new", "loyal"]
+}
+```
+
 **Attributes**
+
 
 Attribute | Description
 --------- | -----------
+id | *`string`* <br /> This is the primary identifier that Horntell gives to every profile that is created in the system. This identifier is unique all wide the Horntell.
+app_id | *`string`* <br /> This is the primary identifier for your app to which the profile belongs.
+uid | *`string`* <br /> This is the identifer which is the primary identifier for the user in your app.
+name | *`string`* <br /> User's full name.
+first_name | *`string`*
+last_name | *`string`*
+email | *`string`*
+signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> The timestamp at which the user signed up for your app.
+avatar_url | *`string`* *`url`*
+gender | *`string`* <br /> Either `Male` or `Female`.
+position | *`string`* <br /> The position of the user at his company.
+company | *`string`* <br /> The company where the user works.
+industry | *`string`*
+location | *`string`*
+headline | *`string`* <br /> The small description/bio about the user.
+birthday | *`string`* *`yyyy-mm-dd`*
+last_seen_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> This is the last time the user was seen in your app.
+activities_summary | *`object`* <br /> The summary about the activities the user performed in your app. Each activity is summarized in three fields: `count`, `first_at` and `last_at`.
+campaigns_summary | *`object`* <br /> The summary about the automatic campaigns that were fired for the user. Each campaign is summarized in three fields: `count`, `first_at` and `last_at`.
+created_at | *`string`* *`yyyy-mm-dd hh:mm:ss`*
+stats | *`object`* <br /> This object keeps track of the important data points for the user. The three stats that you'll find here are the `total_activities`, `total_revenue` and `total_campaigns`.
+segments | *`array`* <br />  The list of segments to which the user belongs.
 
-## Get All Kittens
-
-```ruby
-require 'kittn'
-
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get
-```
-
-```python
-import 'kittn'
-
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get()
-```
+## Create a New Profile
 
 ```shell
-curl "http://example.com/api/kittens"
-  -H "Authorization: meowmeowmeow"
+curl "https://api.horntell.com/profiles"
+    -H "Accept: application/vnd.horntell.v1+json"
 ```
 
 > The above command returns JSON structured like this:
 
 ```json
 [
-  {
+{
     "id": 1,
     "name": "Fluffums",
     "breed": "calico",
     "fluffiness": 6,
     "cuteness": 7
-  },
-  {
+},
+{
     "id": 2,
     "name": "Isis",
     "breed": "unknown",
     "fluffiness": 5,
     "cuteness": 10
-  }
+}
 ]
 ```
 
@@ -134,7 +196,7 @@ include_cats | false | If set to true, the result will also include cats.
 available | true | If set to false, the result will include kittens that have already been adopted.
 
 <aside class="success">
-Remember — a happy kitten is an authenticated kitten!
+    Remember — a happy kitten is an authenticated kitten!
 </aside>
 
 ## Get a Specific Kitten
@@ -155,7 +217,7 @@ api.kittens.get(2)
 
 ```shell
 curl "http://example.com/api/kittens/3"
-  -H "Authorization: meowmeowmeow"
+-H "Authorization: meowmeowmeow"
 ```
 
 > The above command returns JSON structured like this:
