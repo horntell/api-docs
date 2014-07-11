@@ -155,34 +155,17 @@ stats | *`object`* <br /> This object keeps track of the important data points f
 segments | *`array`* <br />  The list of segments to which the user belongs.
 
 ## Create a New Profile
+> POST https://api.horntell.com/profiles
 
 ```shell
 curl "https://api.horntell.com/profiles"
+    -u hornokpleasekey:hornokpleasesecret
     -H "Accept: application/vnd.horntell.v1+json"
+    -H "Content-Type: application/json"
+    -d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": "2013-12-25 13:13:13", "gender": "male"}'
 ```
 
-> The above command returns JSON structured like this:
-
-```json
-[
-{
-    "id": 1,
-    "name": "Fluffums",
-    "breed": "calico",
-    "fluffiness": 6,
-    "cuteness": 7
-},
-{
-    "id": 2,
-    "name": "Isis",
-    "breed": "unknown",
-    "fluffiness": 5,
-    "cuteness": 10
-}
-]
-```
-
-This endpoint retrieves all kittens.
+Creates a new profile.
 
 ### HTTP Request
 
