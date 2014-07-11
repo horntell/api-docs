@@ -47,7 +47,7 @@ All API requests must be made over HTTPS. Calls made over plain HTTP will fail. 
 
 Horntell uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, forbidden usage, etc.), and codes in the 5xx range indicate an error with Horntell's servers.
 
-**Attributes**
+### Attributes
 
 Attribute | Description
 --------- | -----------
@@ -71,7 +71,7 @@ You have to specify the version of the API with each API request in the `Accept:
 
 Profiles are the most important object in your app. These objects reflect your users directly (think of them as profiles for your users). Most of the things Horntell allows you to do are dependent on the profiles (after all, they are whom you want to see more engaged in your app).
 
-### The profile object
+## The profile object
 
 ```json
 {
@@ -126,8 +126,7 @@ Profiles are the most important object in your app. These objects reflect your u
 }
 ```
 
-**Attributes**
-
+### Attributes
 
 Attribute | Description
 --------- | -----------
@@ -155,6 +154,12 @@ stats | *`object`* <br /> This object keeps track of the important data points f
 segments | *`array`* <br />  The list of segments to which the user belongs.
 
 ## Create a New Profile
+
+Creates a new profile.
+
+### Endpoint
+`POST https://api.horntell.com/profiles`
+
 > POST https://api.horntell.com/profiles
 
 ```shell
@@ -165,21 +170,27 @@ curl "https://api.horntell.com/profiles"
     -d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": "2013-12-25 13:13:13", "gender": "male"}'
 ```
 
-Creates a new profile.
 
-### HTTP Request
+### Arguments
 
-`GET http://example.com/kittens`
+Argument | Description
+-------- | -----------
+uid | *`string`* *`required`* <br /> The primary identifier for the user in your app.
+first_name | *`string`* *`required`* <br /> First name of the user in your app.
+last_name | *`string`* *`required`* <br /> Last name of the user in your app.
+email | *`string`* *`required`* <br /> The valid email address for the user. This email address is used to send the campaign emails to the profile.
+signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* *`required`* <br /> The time at which the user signed up for your app.
+avatar_url | *`string`* *`url`* <br /> The URL at which the Horntell can find the profile picture for the profile. This makes your dashboard look good.
+gender | *`string`* <br /> Gender can either be `male` or `female` (all lowercase).
+position | *`string`* <br /> The position at which the user works at his company.
+company | *`string`* <br /> The company at which the user works.
+industry | *`string`* <br /> The industry in which the user works.
+location | *`string`* <br /> The geographical place where the user lives.
+headline | *`string`* <br /> The small description/bio about the user.
+birthday | *`string`* *`yyyy-mm-dd`* Happy birthday to you!
 
-### Query Parameters
-
-Parameter | Default | Description
---------- | ------- | -----------
-include_cats | false | If set to true, the result will also include cats.
-available | true | If set to false, the result will include kittens that have already been adopted.
-
-<aside class="success">
-    Remember — a happy kitten is an authenticated kitten!
+<aside class="notice">
+    The more information you put in the profile, the better your account looks.
 </aside>
 
 ## Get a Specific Kitten
