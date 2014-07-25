@@ -4,9 +4,6 @@ title: Horntell API Reference
 language_tabs:
 - shell
 
-includes:
-- errors
-
 search: false
 ---
 
@@ -431,7 +428,7 @@ Attribute | Description
 name | *`string`* *`required`* <br /> Activity's complete name.
 direction | *`string`* *`required`* <br /> It's value can either be `inbound` or `outbound`. Inbound activity means the activity has happened from user towards the app (eg. most of the activities). Outbound activity means the activity thas happened from app towards the user (eg. refunds).
 revenue | *`float`* <br /> This is the amount of revenue that this activity has brought to your business. This is particularly helpful when properly segmenting your profiles.
-context | *`hash`* The hash of the custom data you want to save for the activity. You can have upto 5 such custom attributes for each activity.
+context | *`hash`* <br /> The hash of the custom data you want to save for the activity. You can have upto 5 such custom attributes for each activity.
 
 ### Calibration
 
@@ -456,3 +453,81 @@ We calibrate the several data points in the activity, which should be properly u
 
     We will save `product_id` as `ping-pong` and ignore every key that yields that same the calibrated value.
 
+# Horns
+
+Horns are the notifications in the Horntell's terminology. A horn is the primary way of keeping your users engaged in the app. Horns can be sent to a particular profile. An horn can be of one of four formats:
+
+- **Simple**: Horns of this format do not have anything special about them. They are useful for notifying users about some activity in their account. They cannot interact with these horns. Of course, you can add the links through custom HTML, but we do not take responsibility of their interaction.
+
+- **Ask**: Horns of this format provides you ability to add upto 3 buttons for your users to interact with. These can be used to have a single question surveys.
+
+- **Link**: Horns of this format provides you the ability to provide a clickable notification, which will take the user to a diffferent page. This format works best for notifications.
+
+- **Talk**: Horns of this type comes with an input box under them. Users can type in anything and talk to you directly through the horn. These are very useful to build trust among users or to collect some small pieces of information like their email addresses.
+
+<aside class="notice">
+    The easiest way to remember these formats is through the acronym **SALT**, which stands for Simple, Ask, Link, Talk.
+</aside>
+
+<aside class="notice">
+    Horns of each of these formats can also be a **Bubble Horn**. Bubble horns are the horns that opens automatically upon being pushed to your users. Bubbles give you power to get better responses against your horns. But as with every other power, it comes with responsibility. If you send too many bubbles, your users might get frustrated, thus, it is advised to keep these for important things.
+</aside>
+
+## Create a New Horn
+
+> POST https://api.horntell.com/profiles/{uid}/horns
+
+```shell
+curl "https://api.horntell.com/profiles/720974375/horns"
+    -X POST
+    -u hornokpleasekey:hornokpleasesecret
+    -H "Accept: application/vnd.horntell.v1+json"
+    -H "Content-Type: application/json"
+    -d '
+    {
+        "format": "link",
+        "type": "info",
+        "bubble": true,
+        "text": "Welcome campaign was fired.",
+        "html": "<strong>Welcome</strong> campaign was fired.",
+        "link": "http://example.com/campaigns/welcome"
+    }'
+```
+
+> You will get the HTTP 204 (No Content) in response for the successful request.
+
+### Attributes
+
+The following are the attributes which are same for all formats of horns. There are some extra attributes, for each format of horns, which are discussed below.
+
+Attribute | Description
+--------- | -----------
+format | *`string`* *`required`* <br /> It should be one of these: `simple`, `ask`, `link` or `talk`.
+type | *`string`* *`required`* <br /> You can give a color to your horn depending upon the situation. For instance, account expiry warning can be red colored, while simple heads up can be blue colored. The available types are: `info` (blue), `success` (green), `warning` (orange), `danger` (red).
+text | *`string`* *`required`* <br /> This is the plain text version of the horn. We require this to show something in situations where HTML cannot be rendered.
+bubble | *`boolean`* When set to `true`, the horn will be opened automatically when pushed to the user.
+html | *`string`* <br /> When available, this string will be rendered as HTML rather than the `text` string. We parse the HTMl and clean it for all XSS attempts. We have a very strict whitelist of the tags that you can use in your html. You have the following tags available to use: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`, `<strong>`, `<em>`, `<sub>`, `<sup>`, `<small>`, `<code>`, `<pre>`, `<strike>`, `<table>`, `<thead>`, `<tbody>`, `<tfoot>`, `<tr>`, `<th>`, `<td>`, `<ul>`, `<ol>`, `<li>`, `<a>`, `<img>`, `<iframe>`.
+
+### Special Attributes
+
+Each format comes with some extra attributes that allows you to control the interaction of horn with the user. Here we detail the extra attributes that horn of each format can have.
+
+- **Simple**
+
+    There are no extra attributes for this format.
+
+- **Ask**
+
+    Attribute | Description
+    --------- | -----------
+    options | *`array`* *`required`* <br /> It is an array which contains details about the buttons to render for the horn. It can have maximum of 3 elements, where each element can either be a string (text on the button) or be an object with two keys: `type` and `text`. The `text` is the text to the shown on button and `type` can be one of these values to denote the color of button: `default` (white), `success` (green), `warning` (orange), `danger` (red).
+
+- **Link**
+
+    Attribute | Description
+    --------- | -----------
+    link | *`string`* *`url`* *`required`* <br /> It is the URL of the page where the user should be sent to upon clicking.
+
+- **Talk**
+
+    There are no extra attributes for this format.
