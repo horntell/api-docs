@@ -360,64 +360,23 @@ The following endpoint deletes the profile against the `uid` passed. On successf
 
 # Activities
 
-Activities is the way you track the behaviour of a user in your app.
+Activities is the way you track the behaviour of a user in your app. By tracking behaviour, we are not encouraging you to track each little thing he does in your app, but the important actions that determine the behaviour of the user. Some examples of actions that can be considered as activity can be: inviting a friend, activating his account, upgraded the subscription plan, etc.
 
-## The profile object
+## The activity object
 
 ```json
 {
-    "id": "53a1626b28d56e6708f9dd35",
-    "uid": "720974375",
-    "name": "John Doe",
-    "first_name": "John",
-    "last_name": "Doe",
-    "email": "john@example.com",
-    "signedup_at": "2013-12-25 13:13:13",
-    "avatar_url": "http://example.com/johndoe.jpg",
-    "gender": "Male",
-    "position": "Founder & CEO",
-    "company": "Acme, Inc.",
-    "industry": "Computer Softwares",
-    "location": "San Fransisco, USA",
-    "headline": "Everyone's example!",
-    "birthday": "1977-02-26",
-    "custom_attributes": {
-        "first_referral_at": "2014-01-10 00:00:00",
-        "type": "earlybird"
-    }
+    "id": "53d2406f28d56eff078b4567",
     "app_id": "539855de9016382d3b8b07d7",
-    "last_seen_at": "2014-07-10 11:27:54",
-    "activities_summary": {
-        "paid_subscription_fees": {
-            "count": 3,
-            "first_at": "2014-05-03 10:08:21",
-            "last_at": "2014-07-03 10:08:21"
-        },
-        "invited_a_team_member": {
-            "count": 2,
-            "first_at": "2014-06-18 10:08:37",
-            "last_at": "2014-06-18 10:11:20"
-        },
-        "asked_a_question_on_forum": {
-            "count": 56,
-            "first_at": "2014-05-10 10:39:40",
-            "last_at": "2014-07-01 23:58:15"
-        }
+    "profile_uid": "720974375",
+    "name": "Purchased A Cat",
+    "direction": "inbound",
+    "revenue": 34.54,
+    "context": {
+        "breed": "Street Cat",
+        "weight": "2kg"
     },
-    "campaigns_summary": {
-        "53bf732028d56edc0b8b4567": {
-            "count": 1,
-            "first_at": "2014-05-03 10:10:10",
-            "last_at": "2014-05-03 10:10:10"
-        }
-    },
-    "created_at": "2014-05-01 09:56:59",
-    "stats": {
-        "total_activities": 61,
-        "total_revenue": 334.54,
-        "total_campaigns": 1
-    },
-    "segments": ["all", "new", "loyal"]
+    "created_at": "2014-07-25 11:33:03"
 }
 ```
 
@@ -425,26 +384,75 @@ Activities is the way you track the behaviour of a user in your app.
 
 Attribute | Description
 --------- | -----------
-id | *`string`* <br /> This is the primary identifier that Horntell gives to every profile that is created in the system. This identifier is unique all wide the Horntell.
-app_id | *`string`* <br /> This is the primary identifier for your app to which the profile belongs.
-uid | *`string`* <br /> This is the identifer which is the primary identifier for the user in your app.
-name | *`string`* <br /> User's full name.
-first_name | *`string`*
-last_name | *`string`*
-email | *`string`*
-signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> The timestamp at which the user signed up for your app.
-avatar_url | *`string`* *`url`*
-gender | *`string`* <br /> Either `Male` or `Female`.
-position | *`string`* <br /> The position of the user at his company.
-company | *`string`* <br /> The company where the user works.
-industry | *`string`*
-location | *`string`*
-headline | *`string`* <br /> The small description/bio about the user.
-birthday | *`string`* *`yyyy-mm-dd`*
-custom_attributes | *`hash`* <br /> The hash of custom key-value pairs.
-last_seen_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> This is the last time the user was seen in your app.
-activities_summary | *`object`* <br /> The summary about the activities the user performed in your app. Each activity is summarized in three fields: `count`, `first_at` and `last_at`.
-campaigns_summary | *`object`* <br /> The summary about the automatic campaigns that were fired for the user. Each campaign is summarized in three fields: `count`, `first_at` and `last_at`.
-created_at | *`string`* *`yyyy-mm-dd hh:mm:ss`*
-stats | *`object`* <br /> This object keeps track of the important data points for the user. The three stats that you'll find here are the `total_activities`, `total_revenue` and `total_campaigns`.
-segments | *`array`* <br />  The list of segments to which the user belongs.
+id | *`string`* <br /> This is the primary identifier that Horntell gives to every activity that is created in the system. This identifier is unique all wide the Horntell.
+app_id | *`string`* <br /> This is the primary identifier for your app to which the activity belongs.
+profile_uid | *`string`* <br /> This is the identifer which is the primary identifier for the user in your app.
+name | *`string`* <br /> Activity's complete name.
+direction | *`string`* <br /> It's value can either be `inbound` or `outbound`. Inbound activity means the activity has happened from user towards the app (eg. most of the activities). Outbound activity means the activity thas happened from app towards the user (eg. refunds).
+revenue | *`float`* <br /> This is the amount of revenue that this activity has brought to your business. This is particularly helpful when properly segmenting your profiles.
+created_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> This timestamp in your timezone when the activity was created.
+context | *`hash`* The hash of the custom data you want to save for the activity. You can have upto 5 such custom attributes for each activity.
+
+## Create a New Activity
+
+> POST https://api.horntell.com/profiles/{uid}/activities
+
+```shell
+curl "https://api.horntell.com/profiles/720974375/activities"
+    -X POST
+    -u hornokpleasekey:hornokpleasesecret
+    -H "Accept: application/vnd.horntell.v1+json"
+    -H "Content-Type: application/json"
+    -d '{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Streeet Cat", "weight": "2kg"}}'
+```
+
+> You will get the following in response
+
+```json
+{
+    "id": "53d2406f28d56eff078b4567",
+    "app_id": "539855de9016382d3b8b07d7",
+    "profile_uid": "720974375",
+    "name": "Purchased A Cat",
+    "direction": "inbound",
+    "revenue": 34.54,
+    "context": {
+        "breed": "Street Cat",
+        "weight": "2kg"
+    },
+    "created_at": "2014-07-25 11:33:03"
+}
+```
+
+### Attributes
+
+Attribute | Description
+--------- | -----------
+name | *`string`* *`required`* <br /> Activity's complete name.
+direction | *`string`* *`required`* <br /> It's value can either be `inbound` or `outbound`. Inbound activity means the activity has happened from user towards the app (eg. most of the activities). Outbound activity means the activity thas happened from app towards the user (eg. refunds).
+revenue | *`float`* <br /> This is the amount of revenue that this activity has brought to your business. This is particularly helpful when properly segmenting your profiles.
+context | *`hash`* The hash of the custom data you want to save for the activity. You can have upto 5 such custom attributes for each activity.
+
+### Calibration
+
+We calibrate the several data points in the activity, which should be properly understood. These calibrations help you to use Horntell in a more robust way. Here are some important things to take care of.
+
+1. The name of activity can be passed as a normal human-readable string, but we will calibrate it into an underscored entity by removed all the special characters. This means that all of these activities mean the same thing to us:
+    - Purchased A Cat
+    - purchased a cat
+    - Purchased A CAT
+    - purchased_a_cat
+    - purchased-a-cat
+
+    All of these will be calibrated into `purchased_a_cat`, which will the key used at most of the places (eg. in the `activities_summary` of profiles).
+
+    When showing these activities in the dashboard, we convert them to human readable version (`Purchased A Cat`) for better readability.
+
+    What this means to you is that you can stop worrying about keeping the activity names strict around the system as we do the work to calibrate them.
+
+2. Calibration also happens in the `context` hash. All the keys in the hash are calibrated. So, if you pass two keys in the context which yield the same calibrated version, only the first one will be considered and others will be ignored. Suppose you pass in the following keys in the `context` hash:
+    - `"product id": "ping-pong"`
+    - `"Product Id": "bingo"`
+
+    We will save `product_id` as `ping-pong` and ignore every key that yields that same the calibrated value.
+
