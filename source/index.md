@@ -158,6 +158,7 @@ segments | *`array`* <br />  The list of segments to which the user belongs.
 Creates a new profile.
 
 ### Endpoint
+
 `POST https://api.horntell.com/profiles`
 
 > POST https://api.horntell.com/profiles
@@ -170,6 +171,28 @@ curl "https://api.horntell.com/profiles"
     -d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": "2013-12-25 13:13:13", "gender": "male"}'
 ```
 
+> You will get the following in response
+
+```json
+{
+    "data": {
+        "uid": "720974375",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john@example.com",
+        "signedup_at": "2013-12-25 13:13:13",
+        "avatar_url": null,
+        "gender": "Male",
+        "position": null,
+        "company": null,
+        "industry": null,
+        "location": null,
+        "birthday": null,
+        "headline": null,
+        "last_seen_at": "2013-12-25 13:13:13"
+    }
+}
+```
 
 ### Arguments
 
@@ -193,50 +216,65 @@ birthday | *`string`* *`yyyy-mm-dd`* Happy birthday to you!
     The more information you put in the profile, the better your account looks.
 </aside>
 
-## Get a Specific Kitten
+## Update a Profile
 
-```ruby
-require 'kittn'
+The following endpoint updates the profile with the new information. The fields that you send with the update request overwrites the older values for the fields.
 
-api = Kittn::APIClient.authorize!('meowmeowmeow')
-api.kittens.get(2)
-```
+<aside class="warning">
+    You cannot modify the `uid` of a profile. If you want to update the `uid` itself, consider creating a new profile with the new `uid`.
+</aside>
 
-```python
-import 'kittn'
+### Endpoint
 
-api = Kittn.authorize('meowmeowmeow')
-api.kittens.get(2)
-```
+`PUT https://api.horntell.com/profiles/{uid}`
+
+> PUT https://api.horntell.com/profiles/{uid}
 
 ```shell
-curl "http://example.com/api/kittens/3"
--H "Authorization: meowmeowmeow"
-```
+# This will update the first name of the profile with the `uid` = 720974375
 
-> The above command returns JSON structured like this:
+curl "https://api.horntell.com/profiles/720974375"
+    -u hornokpleasekey:hornokpleasesecret
+    -H "Accept: application/vnd.horntell.v1+json"
+    -H "Content-Type: application/json"
+    -d '{"first_name": "Johnny"}'
+```
+> You will get the following in response
 
 ```json
 {
-  "id": 2,
-  "name": "Isis",
-  "breed": "unknown",
-  "fluffiness": 5,
-  "cuteness": 10
+    "data": {
+        "uid": "720974375",
+        "first_name": "John",
+        "last_name": "Doe",
+        "email": "john@example.com",
+        "signedup_at": "2013-12-25 13:13:13",
+        "avatar_url": null,
+        "gender": "Male",
+        "position": null,
+        "company": null,
+        "industry": null,
+        "location": null,
+        "birthday": null,
+        "headline": null,
+        "last_seen_at": "2013-12-25 13:13:13"
+    }
 }
 ```
 
-This endpoint retrieves a specific kitten.
+### Arguments
 
-<aside class="warning">If you're not using an administrator API key, note that some kittens will return 403 Forbidden if they are hidden for admins only.</aside>
-
-### HTTP Request
-
-`GET http://example.com/kittens/<ID>`
-
-### URL Parameters
-
-Parameter | Description
---------- | -----------
-ID | The ID of the cat to retrieve
-
+Argument | Description
+-------- | -----------
+first_name | *`string`* <br /> First name of the user in your app.
+last_name | *`string`* <br /> Last name of the user in your app.
+email | *`string`* <br /> The valid email address for the user. This email address is used to send the campaign emails to the profile.
+signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> The time at which the user signed up for your app.
+avatar_url | *`string`* *`url`* <br /> The URL at which the Horntell can find the profile picture for the profile. This makes your dashboard look good.
+gender | *`string`* <br /> Gender can either be `male` or `female` (all lowercase).
+position | *`string`* <br /> The position at which the user works at his company.
+company | *`string`* <br /> The company at which the user works.
+industry | *`string`* <br /> The industry in which the user works.
+location | *`string`* <br /> The geographical place where the user lives.
+headline | *`string`* <br /> The small description/bio about the user.
+birthday | *`string`* *`yyyy-mm-dd`* Happy birthday to you!
