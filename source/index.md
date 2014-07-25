@@ -90,6 +90,10 @@ Profiles are the most important object in your app. These objects reflect your u
     "location": "San Fransisco, USA",
     "headline": "Everyone's example!",
     "birthday": "1977-02-26",
+    "custom_attributes": {
+        "first_referral_at": "2014-01-10 00:00:00",
+        "type": "earlybird"
+    }
     "app_id": "539855de9016382d3b8b07d7",
     "last_seen_at": "2014-07-10 11:27:54",
     "activities_summary": {
@@ -146,6 +150,7 @@ industry | *`string`*
 location | *`string`*
 headline | *`string`* <br /> The small description/bio about the user.
 birthday | *`string`* *`yyyy-mm-dd`*
+custom_attributes | *`hash`* <br /> The hash of custom key-value pairs.
 last_seen_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> This is the last time the user was seen in your app.
 activities_summary | *`object`* <br /> The summary about the activities the user performed in your app. Each activity is summarized in three fields: `count`, `first_at` and `last_at`.
 campaigns_summary | *`object`* <br /> The summary about the automatic campaigns that were fired for the user. Each campaign is summarized in three fields: `count`, `first_at` and `last_at`.
@@ -155,20 +160,15 @@ segments | *`array`* <br />  The list of segments to which the user belongs.
 
 ## Create a New Profile
 
-Creates a new profile.
-
-### Endpoint
-
-`POST https://api.horntell.com/profiles`
-
 > POST https://api.horntell.com/profiles
 
 ```shell
 curl "https://api.horntell.com/profiles"
+    -X POST
     -u hornokpleasekey:hornokpleasesecret
     -H "Accept: application/vnd.horntell.v1+json"
     -H "Content-Type: application/json"
-    -d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": "2013-12-25 13:13:13", "gender": "male"}'
+    -d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": 1387977193, "gender": "male", "custom_attributes": {"type": "earlybird"}}'
 ```
 
 > You will get the following in response
@@ -189,19 +189,28 @@ curl "https://api.horntell.com/profiles"
         "location": null,
         "birthday": null,
         "headline": null,
-        "last_seen_at": "2013-12-25 13:13:13"
+        "last_seen_at": "2013-12-25 13:13:13",
+        "custom_attributes": {
+            "type": "earlybird"
+        }
     }
 }
 ```
+
+Creates a new profile.
+
+### Endpoint
+
+`POST https://api.horntell.com/profiles`
 
 ### Arguments
 
 Argument | Description
 -------- | -----------
 uid | *`string`* *`required`* <br /> The primary identifier for the user in your app.
-first_name | *`string`* *`required`* <br /> First name of the user in your app.
-last_name | *`string`* *`required`* <br /> Last name of the user in your app.
-email | *`string`* *`required`* <br /> The valid email address for the user. This email address is used to send the campaign emails to the profile.
+first_name | *`string`* <br /> First name of the user in your app.
+last_name | *`string`* <br /> Last name of the user in your app.
+email | *`string`* <br /> The valid email address for the user. This email address is used to send the campaign emails to the profile.
 signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* *`required`* <br /> The time at which the user signed up for your app.
 avatar_url | *`string`* *`url`* <br /> The URL at which the Horntell can find the profile picture for the profile. This makes your dashboard look good.
 gender | *`string`* <br /> Gender can either be `male` or `female` (all lowercase).
@@ -210,7 +219,8 @@ company | *`string`* <br /> The company at which the user works.
 industry | *`string`* <br /> The industry in which the user works.
 location | *`string`* <br /> The geographical place where the user lives.
 headline | *`string`* <br /> The small description/bio about the user.
-birthday | *`string`* *`yyyy-mm-dd`* Happy birthday to you!
+birthday | *`string`* *`yyyy-mm-dd`* <br /> Happy birthday to you!
+custom_attributes | *`hash`* <br /> The hash of custom key-value pairs. Any arrays and objects will return in an error.
 
 <aside class="notice">
     The more information you put in the profile, the better your account looks.
@@ -218,22 +228,13 @@ birthday | *`string`* *`yyyy-mm-dd`* Happy birthday to you!
 
 ## Update a Profile
 
-The following endpoint updates the profile with the new information. The fields that you send with the update request overwrites the older values for the fields.
-
-<aside class="warning">
-    You cannot modify the `uid` of a profile. If you want to update the `uid` itself, consider creating a new profile with the new `uid`.
-</aside>
-
-### Endpoint
-
-`PUT https://api.horntell.com/profiles/{uid}`
-
 > PUT https://api.horntell.com/profiles/{uid}
 
 ```shell
 # This will update the first name of the profile with the `uid` = 720974375
 
 curl "https://api.horntell.com/profiles/720974375"
+    -X PUT
     -u hornokpleasekey:hornokpleasesecret
     -H "Accept: application/vnd.horntell.v1+json"
     -H "Content-Type: application/json"
@@ -245,7 +246,7 @@ curl "https://api.horntell.com/profiles/720974375"
 {
     "data": {
         "uid": "720974375",
-        "first_name": "John",
+        "first_name": "Johnny",
         "last_name": "Doe",
         "email": "john@example.com",
         "signedup_at": "2013-12-25 13:13:13",
@@ -257,10 +258,23 @@ curl "https://api.horntell.com/profiles/720974375"
         "location": null,
         "birthday": null,
         "headline": null,
-        "last_seen_at": "2013-12-25 13:13:13"
+        "last_seen_at": "2013-12-25 13:13:13",
+        "custom_attributes": {
+            "type": "earlybird"
+        }
     }
 }
 ```
+
+The following endpoint updates the profile with the new information. The fields that you send with the update request overwrites the older values for the fields.
+
+<aside class="warning">
+    You cannot modify the `uid` of a profile. If you want to update the `uid` itself, consider creating a new profile with the new `uid`.
+</aside>
+
+### Endpoint
+
+`PUT https://api.horntell.com/profiles/{uid}`
 
 ### Arguments
 
@@ -277,4 +291,160 @@ company | *`string`* <br /> The company at which the user works.
 industry | *`string`* <br /> The industry in which the user works.
 location | *`string`* <br /> The geographical place where the user lives.
 headline | *`string`* <br /> The small description/bio about the user.
-birthday | *`string`* *`yyyy-mm-dd`* Happy birthday to you!
+birthday | *`string`* *`yyyy-mm-dd`* <br /> Happy birthday to you!
+custom_attributes | *`hash`* The hash of custom key-value pairs.
+
+## Get a Profile
+
+> GET https://api.horntell.com/profiles/{uid}
+
+```shell
+# This will fetch the profile with the `uid` = 720974375
+
+curl "https://api.horntell.com/profiles/720974375"
+    -X GET
+    -u hornokpleasekey:hornokpleasesecret
+    -H "Accept: application/vnd.horntell.v1+json"
+```
+> You will get the following in response
+
+```json
+{
+    "data": {
+        "uid": "720974375",
+        "first_name": "Johnny",
+        "last_name": "Doe",
+        "email": "john@example.com",
+        "signedup_at": "2013-12-25 13:13:13",
+        "avatar_url": null,
+        "gender": "Male",
+        "position": null,
+        "company": null,
+        "industry": null,
+        "location": null,
+        "birthday": null,
+        "headline": null,
+        "last_seen_at": "2013-12-25 13:13:13",
+        "custom_attributes": {
+            "type": "earlybird"
+        }
+    }
+}
+```
+
+The following endpoint fetches the profile against the `uid` passed.
+
+### Endpoint
+
+`GET https://api.horntell.com/profiles/{uid}`
+
+
+## Delete a Profile
+
+> DELETE https://api.horntell.com/profiles/{uid}
+
+```shell
+# This will delete the profile with the `uid` = 720974375
+
+curl "https://api.horntell.com/profiles/720974375"
+    -X DELETE
+    -u hornokpleasekey:hornokpleasesecret
+    -H "Accept: application/vnd.horntell.v1+json"
+```
+
+The following endpoint deletes the profile against the `uid` passed. On successful request, it will return a HTTP 204 (No Content) response.
+
+### Endpoint
+
+`DELETE https://api.horntell.com/profiles/{uid}`
+
+# Activities
+
+Activities is the way you track the behaviour of a user in your app.
+
+## The profile object
+
+```json
+{
+    "id": "53a1626b28d56e6708f9dd35",
+    "uid": "720974375",
+    "name": "John Doe",
+    "first_name": "John",
+    "last_name": "Doe",
+    "email": "john@example.com",
+    "signedup_at": "2013-12-25 13:13:13",
+    "avatar_url": "http://example.com/johndoe.jpg",
+    "gender": "Male",
+    "position": "Founder & CEO",
+    "company": "Acme, Inc.",
+    "industry": "Computer Softwares",
+    "location": "San Fransisco, USA",
+    "headline": "Everyone's example!",
+    "birthday": "1977-02-26",
+    "custom_attributes": {
+        "first_referral_at": "2014-01-10 00:00:00",
+        "type": "earlybird"
+    }
+    "app_id": "539855de9016382d3b8b07d7",
+    "last_seen_at": "2014-07-10 11:27:54",
+    "activities_summary": {
+        "paid_subscription_fees": {
+            "count": 3,
+            "first_at": "2014-05-03 10:08:21",
+            "last_at": "2014-07-03 10:08:21"
+        },
+        "invited_a_team_member": {
+            "count": 2,
+            "first_at": "2014-06-18 10:08:37",
+            "last_at": "2014-06-18 10:11:20"
+        },
+        "asked_a_question_on_forum": {
+            "count": 56,
+            "first_at": "2014-05-10 10:39:40",
+            "last_at": "2014-07-01 23:58:15"
+        }
+    },
+    "campaigns_summary": {
+        "53bf732028d56edc0b8b4567": {
+            "count": 1,
+            "first_at": "2014-05-03 10:10:10",
+            "last_at": "2014-05-03 10:10:10"
+        }
+    },
+    "created_at": "2014-05-01 09:56:59",
+    "stats": {
+        "total_activities": 61,
+        "total_revenue": 334.54,
+        "total_campaigns": 1
+    },
+    "segments": ["all", "new", "loyal"]
+}
+```
+
+### Attributes
+
+Attribute | Description
+--------- | -----------
+id | *`string`* <br /> This is the primary identifier that Horntell gives to every profile that is created in the system. This identifier is unique all wide the Horntell.
+app_id | *`string`* <br /> This is the primary identifier for your app to which the profile belongs.
+uid | *`string`* <br /> This is the identifer which is the primary identifier for the user in your app.
+name | *`string`* <br /> User's full name.
+first_name | *`string`*
+last_name | *`string`*
+email | *`string`*
+signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> The timestamp at which the user signed up for your app.
+avatar_url | *`string`* *`url`*
+gender | *`string`* <br /> Either `Male` or `Female`.
+position | *`string`* <br /> The position of the user at his company.
+company | *`string`* <br /> The company where the user works.
+industry | *`string`*
+location | *`string`*
+headline | *`string`* <br /> The small description/bio about the user.
+birthday | *`string`* *`yyyy-mm-dd`*
+custom_attributes | *`hash`* <br /> The hash of custom key-value pairs.
+last_seen_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> This is the last time the user was seen in your app.
+activities_summary | *`object`* <br /> The summary about the activities the user performed in your app. Each activity is summarized in three fields: `count`, `first_at` and `last_at`.
+campaigns_summary | *`object`* <br /> The summary about the automatic campaigns that were fired for the user. Each campaign is summarized in three fields: `count`, `first_at` and `last_at`.
+created_at | *`string`* *`yyyy-mm-dd hh:mm:ss`*
+stats | *`object`* <br /> This object keeps track of the important data points for the user. The three stats that you'll find here are the `total_activities`, `total_revenue` and `total_campaigns`.
+segments | *`array`* <br />  The list of segments to which the user belongs.
