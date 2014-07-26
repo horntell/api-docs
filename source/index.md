@@ -90,7 +90,7 @@ Profiles are the most important object in your app. These objects reflect your u
     "custom_attributes": {
         "first_referral_at": "2014-01-10 00:00:00",
         "type": "earlybird"
-    }
+    },
     "app_id": "539855de9016382d3b8b07d7",
     "last_seen_at": "2014-07-10 11:27:54",
     "activities_summary": {
