@@ -1,3 +1,3 @@
-# Contributing to Slate
+# Contributing to Docs
 
-Thanks for contributing to Slate! Please point your pull requests at the `dev` branch, and keep your commit messages clear and informative. Also, please make sure your contributions work in the most recent version of Chrome, Firefox, and IE. Thanks!
+We do not accept any contribution from public as the docs are something which are best if updated by the core team.
