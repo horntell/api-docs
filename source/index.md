@@ -74,7 +74,6 @@ Profiles are the most important object in your app. These objects reflect your u
 {
     "id": "53a1626b28d56e6708f9dd35",
     "uid": "720974375",
-    "name": "John Doe",
     "first_name": "John",
     "last_name": "Doe",
     "email": "john@example.com",
@@ -121,7 +120,8 @@ Profiles are the most important object in your app. These objects reflect your u
     "stats": {
         "total_activities": 61,
         "total_revenue": 334.54,
-        "total_campaigns": 1
+        "total_campaigns": 1,
+        "total_horns": 23
     },
     "segments": ["all", "new", "loyal"]
 }
@@ -134,7 +134,6 @@ Attribute | Description
 id | *`string`* <br /> This is the primary identifier that Horntell gives to every profile that is created in the system. This identifier is unique all wide the Horntell.
 app_id | *`string`* <br /> This is the primary identifier for your app to which the profile belongs.
 uid | *`string`* <br /> This is the identifer which is the primary identifier for the user in your app.
-name | *`string`* <br /> User's full name.
 first_name | *`string`*
 last_name | *`string`*
 email | *`string`*
@@ -152,7 +151,7 @@ last_seen_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> This is the last time t
 activities_summary | *`object`* <br /> The summary about the activities the user performed in your app. Each activity is summarized in three fields: `count`, `first_at` and `last_at`.
 campaigns_summary | *`object`* <br /> The summary about the automatic campaigns that were fired for the user. Each campaign is summarized in three fields: `count`, `first_at` and `last_at`.
 created_at | *`string`* *`yyyy-mm-dd hh:mm:ss`*
-stats | *`object`* <br /> This object keeps track of the important data points for the user. The three stats that you'll find here are the `total_activities`, `total_revenue` and `total_campaigns`.
+stats | *`object`* <br /> This object keeps track of the important data points for the user. The three stats that you'll find here are the `total_activities`, `total_revenue`, `total_campaigns`, `total_horns`.
 segments | *`array`* <br />  The list of segments to which the user belongs.
 
 ## Create a New Profile
