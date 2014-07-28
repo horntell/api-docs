@@ -96,7 +96,6 @@
 <h2 id='the-profile-object'>The profile object</h1><pre class="highlight json"><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53a1626b28d56e6708f9dd35"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"720974375"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John Doe"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
@@ -143,7 +142,8 @@
     </span><span class="s2">"stats"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"total_activities"</span><span class="p">:</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span><span class="w">
         </span><span class="s2">"total_revenue"</span><span class="p">:</span><span class="w"> </span><span class="mf">334.54</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"total_campaigns"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="w">
+        </span><span class="s2">"total_campaigns"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"total_horns"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"segments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"all"</span><span class="p">,</span><span class="w"> </span><span class="s2">"new"</span><span class="p">,</span><span class="w"> </span><span class="s2">"loyal"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -166,10 +166,6 @@
 <tr>
 <td>uid</td>
 <td><em><code class="prettyprint">string</code></em> <br /> This is the identifer which is the primary identifier for the user in your app.</td>
-</tr>
-<tr>
-<td>name</td>
-<td><em><code class="prettyprint">string</code></em> <br /> User&rsquo;s full name.</td>
 </tr>
 <tr>
 <td>first_name</td>
@@ -241,7 +237,7 @@
 </tr>
 <tr>
 <td>stats</td>
-<td><em><code class="prettyprint">object</code></em> <br /> This object keeps track of the important data points for the user. The three stats that you&rsquo;ll find here are the <code class="prettyprint">total_activities</code>, <code class="prettyprint">total_revenue</code> and <code class="prettyprint">total_campaigns</code>.</td>
+<td><em><code class="prettyprint">object</code></em> <br /> This object keeps track of the important data points for the user. The three stats that you&rsquo;ll find here are the <code class="prettyprint">total_activities</code>, <code class="prettyprint">total_revenue</code>, <code class="prettyprint">total_campaigns</code>, <code class="prettyprint">total_horns</code>.</td>
 </tr>
 <tr>
 <td>segments</td>
