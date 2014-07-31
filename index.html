@@ -353,6 +353,18 @@
 <p><aside class="notice">
     The more information you put in the profile, the better your account looks.
 </aside></p>
+<h3 id='custom-attributes'>Custom Attributes</h1>
+<p>Horntell allows you to add any amount of custom attributes to your profiles to later filter upon. However, the concept of adding custom attributes is simple (simply pass in hash of data), there are a few things to understand tomake most out of it.</p>
+
+<p>The true value of custom attributes is extracted when using them in filtering your profiles. You can compare (<code class="prettyprint">starts_with</code>, <code class="prettyprint">contains</code>, etc.) these custom attributes just like the default attributes (<code class="prettyprint">first_name</code>, <code class="prettyprint">gender</code>, etc.). The comparison operators that you get corresponding to each attribute depends on the type of attribute it is. For example, a attribute with data type <code class="prettyprint">number</code> will have comparison operators like <code class="prettyprint">greater than</code>, <code class="prettyprint">less than</code>, which makes no sense when working with <code class="prettyprint">string</code> attributes.</p>
+
+<p>Thus, data type of custom attributes become crucial when it comes to using them for filtering. By default, custom attribute will be considered as a <code class="prettyprint">string</code> and will receive comparison rules for <code class="prettyprint">string</code> attribute. However, using these tips, you can make Horntell comprehend corret data type for your attributes.</p>
+
+<ul>
+<li>If an attribute is seen with either of these values <code class="prettyprint">&#39;true&#39;</code> (string), <code class="prettyprint">&#39;false&#39;</code> (string), <code class="prettyprint">true</code> (boolean), <code class="prettyprint">false</code> (boolean), it is considered to be a boolean attribute.</li>
+<li>If an attribute&rsquo;s data type is <code class="prettyprint">int</code> or <code class="prettyprint">float</code>, it is considered to be a <code class="prettyprint">number</code> attribute.</li>
+<li>If an attribute&rsquo;s data type is <code class="prettyprint">int</code> type and the <code class="prettyprint">key</code> ends with <code class="prettyprint">_at</code> (eg. <code class="prettyprint">account_activated_at</code>), it is assumed to be an UNIX timestamp in UTC, and will be typecasted into <code class="prettyprint">date</code> attribute.</li>
+</ul>
 <h2 id='update-a-profile'>Update a Profile</h1>
 <blockquote>
 <p>PUT https://api.horntell.com/profiles/{uid}</p>
