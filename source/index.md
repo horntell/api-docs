@@ -222,6 +222,18 @@ custom_attributes | *`hash`* <br /> The hash of custom key-value pairs. Any arra
     The more information you put in the profile, the better your account looks.
 </aside>
 
+### Custom Attributes
+
+Horntell allows you to add any amount of custom attributes to your profiles to later filter upon. However, the concept of adding custom attributes is simple (simply pass in hash of data), there are a few things to understand tomake most out of it.
+
+The true value of custom attributes is extracted when using them in filtering your profiles. You can compare (`starts_with`, `contains`, etc.) these custom attributes just like the default attributes (`first_name`, `gender`, etc.). The comparison operators that you get corresponding to each attribute depends on the type of attribute it is. For example, a attribute with data type `number` will have comparison operators like `greater than`, `less than`, which makes no sense when working with `string` attributes.
+
+Thus, data type of custom attributes become crucial when it comes to using them for filtering. By default, custom attribute will be considered as a `string` and will receive comparison rules for `string` attribute. However, using these tips, you can make Horntell comprehend corret data type for your attributes.
+
+- If an attribute is seen with either of these values `'true'` (string), `'false'` (string), `true` (boolean), `false` (boolean), it is considered to be a boolean attribute.
+- If an attribute's data type is `int` or `float`, it is considered to be a `number` attribute.
+- If an attribute's data type is `int` type and the `key` ends with `_at` (eg. `account_activated_at`), it is assumed to be an UNIX timestamp in UTC, and will be typecasted into `date` attribute.
+
 ## Update a Profile
 
 > PUT https://api.horntell.com/profiles/{uid}
