@@ -206,7 +206,7 @@ curl "https://api.horntell.com/profiles"
 
 ```php
 <?php
-$profile = (new Horntell\Profile)->create(array(
+(new Horntell\Profile)->create(array(
     'uid' => '720974375',
     'first_name' => 'John',
     'last_name' => 'Doe',
@@ -303,7 +303,7 @@ curl "https://api.horntell.com/profiles/720974375"
 <?php
 // This will update the first name of the profile with the `uid` = 720974375
 
-$profile = (new Horntell\Profile)->update('720974375', array(
+(new Horntell\Profile)->update('720974375', array(
     'first_name' => 'Johnny'
 ));
 ```
@@ -379,7 +379,7 @@ curl "https://api.horntell.com/profiles/720974375"
 <?php
 // This will fetch the profile with the `uid` = 720974375
 
-$profile = (new Horntell\Profile)->find('720974375');
+(new Horntell\Profile)->find('720974375');
 ```
 
 > You will get the following in response
@@ -491,7 +491,7 @@ curl "https://api.horntell.com/profiles/720974375/activities"
 
 ```php
 <?php
-$activity = (new Horntell\Activity)->create('720974375', array(
+(new Horntell\Activity)->create('720974375', array(
     'name' => 'purchased a cat',
     'direction' => 'inbound',
     'revenue' => 34.54,
