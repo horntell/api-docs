@@ -489,6 +489,19 @@ curl "https://api.horntell.com/profiles/720974375/activities"
     -d '{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Street Cat", "weight": "2kg"}}'
 ```
 
+```php
+<?php
+$activity = (new Horntell\Activity)->create('720974375', array(
+    'name' => 'purchased a cat',
+    'direction' => 'inbound',
+    'revenue' => 34.54,
+    'context' => array(
+        'breed' => 'Street Cat',
+        'weight' => '2kg'
+    )
+));
+```
+
 > You will get the following in response
 
 ```json
