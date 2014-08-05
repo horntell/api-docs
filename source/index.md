@@ -58,12 +58,43 @@ type | *`string`* <br /> The type of error returned. Can be `bad_request`, `unau
 code | *`number`* <br /> This code is same as the HTTP status code for the response. It can be `400`, `401`, `403`, `404` or `500`.
 message | *`string`* <br /> The human readble message to give you more clarity about the error.
 
+```php
+<?php
+try {
+    // Use SDK for PHP
+} catch(Horntell\Errors\ForbiddenError $e) {
+    /* you were successfully authenticated but not allowed to do what you were trying to do.*/
+} catch(Horntell\Errors\NotFoundError $e) {
+    /* the resource you wanted to work with was not found. eg. creating horn for a profile that doesn't exist.*/
+} catch(Horntell\Errors\InvalidRequestError $e) {
+    /* any errors (Forbidden, NotFound, etc.) that are thrown due to invalid request extend from this error, and thus, it can be used to catch all such errors instead of catching all of them individually.*/
+} catch(Horntell\Errors\AuthenticationError $e) {
+    /* the request couldn't be authenticated properly, please verify your app's credentials in such case.*/
+} catch(Horntell\Errors\ServiceError $e) {
+    /* this error is thrown when something wrong goes on Horntell's servers. Ideally, it should never be thrown. But if it does, we are pinged and we get on fixing it immediately.*/
+} catch(Horntell\Errors\NetworkError $e) {
+    /* this error is thrown when some network issue arises and the request couldn't be sent to Horntell. Please check your network connection in such case.*/
+} catch(Horntell\Errors\Error $e) {
+    /* of course, you can be a little lazy and simply catch just this one error, which is the parent of each of the above errors.*/
+}
+```
+
+### Handling Errors
+
+Our SDK for PHP can throw exceptions for many reasons, like network issues, validation errors, authentication errors, etc. We strongly recommend always trying to gracefully handle exceptions from our API.
+
 # Versioning
 
 ```shell
 curl "https://api.horntell.com"
 -u hornokpleasekey:hornokpleasesecret
 -H "Accept: application/vnd.horntell.v1+json"
+```
+
+```php
+<?php
+// it already defaults to v1, so this can be skipped
+Horntell\App::setVersion('v1');
 ```
 
 Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is `v1`.
