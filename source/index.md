@@ -298,6 +298,16 @@ curl "https://api.horntell.com/profiles/720974375"
     -H "Content-Type: application/json"
     -d '{"first_name": "Johnny"}'
 ```
+
+```php
+<?php
+// This will update the first name of the profile with the `uid` = 720974375
+
+$profile = (new Horntell\Profile)->update('720974375', array(
+    'first_name' => 'Johnny'
+));
+```
+
 > You will get the following in response
 
 ```json
