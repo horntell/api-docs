@@ -81,7 +81,7 @@ try {
 
 ### Handling Errors
 
-Our SDK for PHP can throw exceptions for many reasons, like network issues, validation errors, authentication errors, etc. We strongly recommend always trying to gracefully handle exceptions from our API.
+Our SDKs can throw exceptions/errors for many reasons, like network issues, validation errors, authentication errors, etc. We strongly recommend always trying to gracefully handle these exceptions.
 
 # Versioning
 
