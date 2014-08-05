@@ -3,6 +3,7 @@ title: Horntell API Reference
 
 language_tabs:
 - shell
+- php
 
 search: false
 ---
@@ -10,7 +11,7 @@ search: false
 # Introduction
 
 ```shell
-# Libraries in various languages, coming soon!
+# PHP library available at https://github.com/horntell/php-sdk. Others coming soon!
 ```
 
 Welcome to the Horntell API. The API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and uses HTTP response codes to indicate API errors.
@@ -19,7 +20,7 @@ We use built-in HTTP features, like HTTP authentication and HTTP verbs, which ca
 
 JSON will be returned in all responses from the API, including errors (though if you're using API bindings, we will convert the response to the appropriate language-specific object).
 
-We do not have libraries for various programming languages yet (PHP library coming soon), but making the calls to API shouldn't be different than making cURL requests in the language of your choice. The examples are given on the right hand side.
+We have a library for [PHP](https://github.com/horntell/php-sdk) ready (others coming soon), but making the calls to API in others shouldn't be different than making cURL requests in the language of your choice. The examples are given on the right hand side.
 
 The base URL for all the API requests is: **https://api.horntell.com**
 
@@ -28,6 +29,11 @@ The base URL for all the API requests is: **https://api.horntell.com**
 ```shell
 curl "https://api.horntell.com"
 -u hornokpleasekey:hornokpleasesecret
+```
+
+```php
+<?php
+Horntell\App::init('hornokpleasekey', 'hornokpleasesecret');
 ```
 
 You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!
