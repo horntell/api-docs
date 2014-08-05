@@ -374,6 +374,14 @@ curl "https://api.horntell.com/profiles/720974375"
     -u hornokpleasekey:hornokpleasesecret
     -H "Accept: application/vnd.horntell.v1+json"
 ```
+
+```php
+<?php
+// This will fetch the profile with the `uid` = 720974375
+
+$profile = (new Horntell\Profile)->find('720974375');
+```
+
 > You will get the following in response
 
 ```json
@@ -418,6 +426,13 @@ curl "https://api.horntell.com/profiles/720974375"
     -X DELETE
     -u hornokpleasekey:hornokpleasesecret
     -H "Accept: application/vnd.horntell.v1+json"
+```
+
+```php
+<?php
+// This will delete the profile with the `uid` = 720974375
+
+(new Horntell\Profile)->delete('720974375');
 ```
 
 The following endpoint deletes the profile against the `uid` passed. On successful request, it will return a HTTP 204 (No Content) response.
@@ -471,7 +486,7 @@ curl "https://api.horntell.com/profiles/720974375/activities"
     -u hornokpleasekey:hornokpleasesecret
     -H "Accept: application/vnd.horntell.v1+json"
     -H "Content-Type: application/json"
-    -d '{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Streeet Cat", "weight": "2kg"}}'
+    -d '{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Street Cat", "weight": "2kg"}}'
 ```
 
 > You will get the following in response
