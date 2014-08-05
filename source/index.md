@@ -204,6 +204,19 @@ curl "https://api.horntell.com/profiles"
     -d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": 1387977193, "gender": "male", "custom_attributes": {"type": "earlybird"}}'
 ```
 
+```php
+<?php
+$profile = (new Horntell\Profile)->create(array(
+    'uid' => '720974375',
+    'first_name' => 'John',
+    'last_name' => 'Doe',
+    'email' => 'john@example.com',
+    'signedup_at' => 1387977193,
+    'gender' => 'male',
+    'custom_attributes' => array('type' => 'earlybird')
+));
+```
+
 > You will get the following in response
 
 ```json
