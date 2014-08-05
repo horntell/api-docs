@@ -593,6 +593,18 @@ curl "https://api.horntell.com/profiles/720974375/horns"
     }'
 ```
 
+```php
+<?php
+(new Horntell\Horn)->toProfile('720974375', array(
+    'format' => 'link',
+    'type' => 'info',
+    'bubble' => true,
+    'text' => 'Welcome campaign was fired.',
+    'html' => '<strong>Welcome</strong> campaign was fired.',
+    'link' => 'http://app.example.com/campaigns/welcome'
+));
+```
+
 > You will get the HTTP 204 (No Content) in response for the successful request.
 
 ### Attributes
