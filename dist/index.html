@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["shell"]);
+          setupLanguages(["shell","php"]);
         });
       </script>
   </head>
@@ -29,6 +29,7 @@
       <img src="images/logo.png" />
         <div class="lang-selector">
               <a href="#" data-language-name="shell">shell</a>
+              <a href="#" data-language-name="php">php</a>
         </div>
       <div id="toc">
       </div>
@@ -36,7 +37,7 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1><pre class="highlight shell"><span class="c"># Libraries in various languages, coming soon!</span>
+        <h1 id='introduction'>Introduction</h1><pre class="highlight shell"><span class="c"># PHP library available at https://github.com/horntell/php-sdk. Others coming soon!</span>
 </pre>
 
 <p>Welcome to the Horntell API. The API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and uses HTTP response codes to indicate API errors.</p>
@@ -45,11 +46,14 @@
 
 <p>JSON will be returned in all responses from the API, including errors (though if you&rsquo;re using API bindings, we will convert the response to the appropriate language-specific object).</p>
 
-<p>We do not have libraries for various programming languages yet (PHP library coming soon), but making the calls to API shouldn&rsquo;t be different than making cURL requests in the language of your choice. The examples are given on the right hand side.</p>
+<p>We have a library for <a href="https://github.com/horntell/php-sdk">PHP</a> ready (others coming soon), but making the calls to API in others shouldn&rsquo;t be different than making cURL requests in the language of your choice. The examples are given on the right hand side.</p>
 
 <p>The base URL for all the API requests is: <strong>https://api.horntell.com</strong></p>
 <h1 id='authentication'>Authentication</h1><pre class="highlight shell">curl <span class="s2">"https://api.horntell.com"</span>
 -u hornokpleasekey:hornokpleasesecret
+</pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="nx">Horntell\App</span><span class="o">::</span><span class="na">init</span><span class="p">(</span><span class="s1">'hornokpleasekey'</span><span class="p">,</span> <span class="s1">'hornokpleasesecret'</span><span class="p">);</span>
 </pre>
 
 <p>You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!</p>
@@ -83,9 +87,34 @@
 <td><em><code class="prettyprint">string</code></em> <br /> The human readble message to give you more clarity about the error.</td>
 </tr>
 </tbody></table>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="k">try</span> <span class="p">{</span>
+    <span class="c1">// Use SDK for PHP
+</span><span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\ForbiddenError</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* you were successfully authenticated but not allowed to do what you were trying to do.*/</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\NotFoundError</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* the resource you wanted to work with was not found. eg. creating horn for a profile that doesn't exist.*/</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\InvalidRequestError</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* any errors (Forbidden, NotFound, etc.) that are thrown due to invalid request extend from this error, and thus, it can be used to catch all such errors instead of catching all of them individually.*/</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\AuthenticationError</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* the request couldn't be authenticated properly, please verify your app's credentials in such case.*/</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\ServiceError</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* this error is thrown when something wrong goes on Horntell's servers. Ideally, it should never be thrown. But if it does, we are pinged and we get on fixing it immediately.*/</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\NetworkError</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* this error is thrown when some network issue arises and the request couldn't be sent to Horntell. Please check your network connection in such case.*/</span>
+<span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\Error</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
+    <span class="cm">/* of course, you can be a little lazy and simply catch just this one error, which is the parent of each of the above errors.*/</span>
+<span class="p">}</span>
+</pre>
+<h3 id='handling-errors'>Handling Errors</h1>
+<p>Our SDKs can throw exceptions/errors for many reasons, like network issues, validation errors, authentication errors, etc. We strongly recommend always trying to gracefully handle these exceptions.</p>
 <h1 id='versioning'>Versioning</h1><pre class="highlight shell">curl <span class="s2">"https://api.horntell.com"</span>
 -u hornokpleasekey:hornokpleasesecret
 -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
+</pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="c1">// it already defaults to v1, so this can be skipped
+</span><span class="nx">Horntell\App</span><span class="o">::</span><span class="na">setVersion</span><span class="p">(</span><span class="s1">'v1'</span><span class="p">);</span>
 </pre>
 
 <p>Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is <code class="prettyprint">v1</code>.</p>
@@ -255,6 +284,17 @@
     -H <span class="s2">"Content-Type: application/json"</span>
     -d <span class="s1">'{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": 1387977193, "gender": "male", "custom_attributes": {"type": "earlybird"}}'</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Profile</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
+    <span class="s1">'uid'</span> <span class="o">=&gt;</span> <span class="s1">'720974375'</span><span class="p">,</span>
+    <span class="s1">'first_name'</span> <span class="o">=&gt;</span> <span class="s1">'John'</span><span class="p">,</span>
+    <span class="s1">'last_name'</span> <span class="o">=&gt;</span> <span class="s1">'Doe'</span><span class="p">,</span>
+    <span class="s1">'email'</span> <span class="o">=&gt;</span> <span class="s1">'john@example.com'</span><span class="p">,</span>
+    <span class="s1">'signedup_at'</span> <span class="o">=&gt;</span> <span class="mi">1387977193</span><span class="p">,</span>
+    <span class="s1">'gender'</span> <span class="o">=&gt;</span> <span class="s1">'male'</span><span class="p">,</span>
+    <span class="s1">'custom_attributes'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'earlybird'</span><span class="p">)</span>
+<span class="p">));</span>
+</pre>
 
 <blockquote>
 <p>You will get the following in response</p>
@@ -378,6 +418,13 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
     -H <span class="s2">"Content-Type: application/json"</span>
     -d <span class="s1">'{"first_name": "Johnny"}'</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="c1">// This will update the first name of the profile with the `uid` = 720974375
+</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Profile</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'first_name'</span> <span class="o">=&gt;</span> <span class="s1">'Johnny'</span>
+<span class="p">));</span>
+</pre>
 
 <blockquote>
 <p>You will get the following in response</p>
@@ -483,6 +530,11 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
     -u hornokpleasekey:hornokpleasesecret
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="c1">// This will fetch the profile with the `uid` = 720974375
+</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Profile</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">);</span>
+</pre>
 
 <blockquote>
 <p>You will get the following in response</p>
@@ -523,6 +575,11 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
     -X DELETE
     -u hornokpleasekey:hornokpleasesecret
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
+</pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="c1">// This will delete the profile with the `uid` = 720974375
+</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Profile</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">);</span>
 </pre>
 
 <p>The following endpoint deletes the profile against the <code class="prettyprint">uid</code> passed. On successful request, it will return a HTTP 204 (No Content) response.</p>
@@ -593,7 +650,18 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
     -u hornokpleasekey:hornokpleasesecret
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
     -H <span class="s2">"Content-Type: application/json"</span>
-    -d <span class="s1">'{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Streeet Cat", "weight": "2kg"}}'</span>
+    -d <span class="s1">'{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Street Cat", "weight": "2kg"}}'</span>
+</pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Activity</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'purchased a cat'</span><span class="p">,</span>
+    <span class="s1">'direction'</span> <span class="o">=&gt;</span> <span class="s1">'inbound'</span><span class="p">,</span>
+    <span class="s1">'revenue'</span> <span class="o">=&gt;</span> <span class="mf">34.54</span><span class="p">,</span>
+    <span class="s1">'context'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
+        <span class="s1">'breed'</span> <span class="o">=&gt;</span> <span class="s1">'Street Cat'</span><span class="p">,</span>
+        <span class="s1">'weight'</span> <span class="o">=&gt;</span> <span class="s1">'2kg'</span>
+    <span class="p">)</span>
+<span class="p">));</span>
 </pre>
 
 <blockquote>
@@ -701,6 +769,16 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
         "link": "http://example.com/campaigns/welcome"
     }'</span>
 </pre>
+<pre class="highlight php"><span class="cp">&lt;?php</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Horn</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
+    <span class="s1">'format'</span> <span class="o">=&gt;</span> <span class="s1">'link'</span><span class="p">,</span>
+    <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'info'</span><span class="p">,</span>
+    <span class="s1">'bubble'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
+    <span class="s1">'text'</span> <span class="o">=&gt;</span> <span class="s1">'Welcome campaign was fired.'</span><span class="p">,</span>
+    <span class="s1">'html'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.'</span><span class="p">,</span>
+    <span class="s1">'link'</span> <span class="o">=&gt;</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span>
+<span class="p">));</span>
+</pre>
 
 <blockquote>
 <p>You will get the HTTP 204 (No Content) in response for the successful request.</p>
@@ -777,6 +855,7 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
       <div class="dark-box">
           <div class="lang-selector">
                 <a href="#" data-language-name="shell">shell</a>
+                <a href="#" data-language-name="php">php</a>
           </div>
       </div>
     </div>
