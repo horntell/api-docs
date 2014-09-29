@@ -27,7 +27,7 @@ The base URL for all the API requests is: **https://api.horntell.com**
 # Authentication
 
 ```shell
-curl "https://api.horntell.com"
+curl "https://api.horntell.com" \
 -u hornokpleasekey:hornokpleasesecret
 ```
 
@@ -86,8 +86,8 @@ Our SDKs can throw exceptions/errors for many reasons, like network issues, vali
 # Versioning
 
 ```shell
-curl "https://api.horntell.com"
--u hornokpleasekey:hornokpleasesecret
+curl "https://api.horntell.com" \
+-u hornokpleasekey:hornokpleasesecret \
 -H "Accept: application/vnd.horntell.v1+json"
 ```
 
@@ -196,11 +196,11 @@ segments | *`array`* <br />  The list of segments to which the user belongs.
 > POST https://api.horntell.com/profiles
 
 ```shell
-curl "https://api.horntell.com/profiles"
-    -X POST
-    -u hornokpleasekey:hornokpleasesecret
-    -H "Accept: application/vnd.horntell.v1+json"
-    -H "Content-Type: application/json"
+curl "https://api.horntell.com/profiles" \
+    -X POST \
+    -u hornokpleasekey:hornokpleasesecret \
+    -H "Accept: application/vnd.horntell.v1+json" \
+    -H "Content-Type: application/json" \
     -d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": 1387977193, "gender": "male", "custom_attributes": {"type": "earlybird"}}'
 ```
 
@@ -291,11 +291,11 @@ Thus, data type of custom attributes become crucial when it comes to using them 
 ```shell
 # This will update the first name of the profile with the `uid` = 720974375
 
-curl "https://api.horntell.com/profiles/720974375"
-    -X PUT
-    -u hornokpleasekey:hornokpleasesecret
-    -H "Accept: application/vnd.horntell.v1+json"
-    -H "Content-Type: application/json"
+curl "https://api.horntell.com/profiles/720974375" \
+    -X PUT \
+    -u hornokpleasekey:hornokpleasesecret \
+    -H "Accept: application/vnd.horntell.v1+json" \
+    -H "Content-Type: application/json" \
     -d '{"first_name": "Johnny"}'
 ```
 
@@ -369,10 +369,10 @@ custom_attributes | *`hash`* The hash of custom key-value pairs.
 ```shell
 # This will fetch the profile with the `uid` = 720974375
 
-curl "https://api.horntell.com/profiles/720974375"
-    -X GET
-    -u hornokpleasekey:hornokpleasesecret
-    -H "Accept: application/vnd.horntell.v1+json"
+curl "https://api.horntell.com/profiles/720974375" \
+    -X GET \
+    -u hornokpleasekey:hornokpleasesecret \
+    -H "Accept: application/vnd.horntell.v1+json" \
 ```
 
 ```php
@@ -422,10 +422,10 @@ The following endpoint fetches the profile against the `uid` passed.
 ```shell
 # This will delete the profile with the `uid` = 720974375
 
-curl "https://api.horntell.com/profiles/720974375"
-    -X DELETE
-    -u hornokpleasekey:hornokpleasesecret
-    -H "Accept: application/vnd.horntell.v1+json"
+curl "https://api.horntell.com/profiles/720974375" \
+    -X DELETE \
+    -u hornokpleasekey:hornokpleasesecret \
+    -H "Accept: application/vnd.horntell.v1+json" \
 ```
 
 ```php
@@ -481,11 +481,11 @@ context | *`hash`* The hash of the custom data you want to save for the activity
 > POST https://api.horntell.com/profiles/{uid}/activities
 
 ```shell
-curl "https://api.horntell.com/profiles/720974375/activities"
-    -X POST
-    -u hornokpleasekey:hornokpleasesecret
-    -H "Accept: application/vnd.horntell.v1+json"
-    -H "Content-Type: application/json"
+curl "https://api.horntell.com/profiles/720974375/activities" \
+    -X POST \
+    -u hornokpleasekey:hornokpleasesecret \
+    -H "Accept: application/vnd.horntell.v1+json" \
+    -H "Content-Type: application/json" \
     -d '{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Street Cat", "weight": "2kg"}}'
 ```
 
@@ -577,11 +577,11 @@ Horns are the notifications in the Horntell's terminology. A horn is the primary
 > POST https://api.horntell.com/profiles/{uid}/horns
 
 ```shell
-curl "https://api.horntell.com/profiles/720974375/horns"
-    -X POST
-    -u hornokpleasekey:hornokpleasesecret
-    -H "Accept: application/vnd.horntell.v1+json"
-    -H "Content-Type: application/json"
+curl "https://api.horntell.com/profiles/720974375/horns" \
+    -X POST \
+    -u hornokpleasekey:hornokpleasesecret \
+    -H "Accept: application/vnd.horntell.v1+json" \
+    -H "Content-Type: application/json" \
     -d '
     {
         "format": "link",
