@@ -49,7 +49,7 @@
 <p>We have a library for <a href="https://github.com/horntell/php-sdk">PHP</a> ready (others coming soon), but making the calls to API in others shouldn&rsquo;t be different than making cURL requests in the language of your choice. The examples are given on the right hand side.</p>
 
 <p>The base URL for all the API requests is: <strong>https://api.horntell.com</strong></p>
-<h1 id='authentication'>Authentication</h1><pre class="highlight shell">curl <span class="s2">"https://api.horntell.com"</span>
+<h1 id='authentication'>Authentication</h1><pre class="highlight shell">curl <span class="s2">"https://api.horntell.com"</span> <span class="se">\</span>
 -u hornokpleasekey:hornokpleasesecret
 </pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
@@ -108,8 +108,8 @@
 </pre>
 <h3 id='handling-errors'>Handling Errors</h1>
 <p>Our SDKs can throw exceptions/errors for many reasons, like network issues, validation errors, authentication errors, etc. We strongly recommend always trying to gracefully handle these exceptions.</p>
-<h1 id='versioning'>Versioning</h1><pre class="highlight shell">curl <span class="s2">"https://api.horntell.com"</span>
--u hornokpleasekey:hornokpleasesecret
+<h1 id='versioning'>Versioning</h1><pre class="highlight shell">curl <span class="s2">"https://api.horntell.com"</span> <span class="se">\</span>
+-u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
 -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
 </pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
@@ -277,11 +277,11 @@
 <blockquote>
 <p>POST https://api.horntell.com/profiles</p>
 </blockquote>
-<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles"</span>
-    -X POST
-    -u hornokpleasekey:hornokpleasesecret
-    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
-    -H <span class="s2">"Content-Type: application/json"</span>
+<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles"</span> <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
+    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s1">'{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": 1387977193, "gender": "male", "custom_attributes": {"type": "earlybird"}}'</span>
 </pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
@@ -411,11 +411,11 @@
 </blockquote>
 <pre class="highlight shell"><span class="c"># This will update the first name of the profile with the `uid` = 720974375</span>
 
-curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
-    -X PUT
-    -u hornokpleasekey:hornokpleasesecret
-    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
-    -H <span class="s2">"Content-Type: application/json"</span>
+curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span class="se">\</span>
+    -X PUT <span class="se">\</span>
+    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
+    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s1">'{"first_name": "Johnny"}'</span>
 </pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
@@ -525,10 +525,10 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
 </blockquote>
 <pre class="highlight shell"><span class="c"># This will fetch the profile with the `uid` = 720974375</span>
 
-curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
-    -X GET
-    -u hornokpleasekey:hornokpleasesecret
-    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
+curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span class="se">\</span>
+    -X GET <span class="se">\</span>
+    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
+    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
 </pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="c1">// This will fetch the profile with the `uid` = 720974375
@@ -571,10 +571,10 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
 </blockquote>
 <pre class="highlight shell"><span class="c"># This will delete the profile with the `uid` = 720974375</span>
 
-curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
-    -X DELETE
-    -u hornokpleasekey:hornokpleasesecret
-    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
+curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span class="se">\</span>
+    -X DELETE <span class="se">\</span>
+    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
+    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
 </pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
 <span class="c1">// This will delete the profile with the `uid` = 720974375
@@ -645,11 +645,11 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
 <blockquote>
 <p>POST https://api.horntell.com/profiles/{uid}/activities</p>
 </blockquote>
-<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles/720974375/activities"</span>
-    -X POST
-    -u hornokpleasekey:hornokpleasesecret
-    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
-    -H <span class="s2">"Content-Type: application/json"</span>
+<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles/720974375/activities"</span> <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
+    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s1">'{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Street Cat", "weight": "2kg"}}'</span>
 </pre>
 <pre class="highlight php"><span class="cp">&lt;?php</span>
@@ -754,11 +754,11 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span>
 <blockquote>
 <p>POST https://api.horntell.com/profiles/{uid}/horns</p>
 </blockquote>
-<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles/720974375/horns"</span>
-    -X POST
-    -u hornokpleasekey:hornokpleasesecret
-    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
-    -H <span class="s2">"Content-Type: application/json"</span>
+<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles/720974375/horns"</span> <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
+    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s1">'
     {
         "format": "link",
