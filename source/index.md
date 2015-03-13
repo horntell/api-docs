@@ -129,23 +129,6 @@ Profiles are the most important object in your app. These objects reflect your u
     },
     "app_id": "539855de9016382d3b8b07d7",
     "last_seen_at": "2014-07-10 11:27:54",
-    "activities_summary": {
-        "paid_subscription_fees": {
-            "count": 3,
-            "first_at": "2014-05-03 10:08:21",
-            "last_at": "2014-07-03 10:08:21"
-        },
-        "invited_a_team_member": {
-            "count": 2,
-            "first_at": "2014-06-18 10:08:37",
-            "last_at": "2014-06-18 10:11:20"
-        },
-        "asked_a_question_on_forum": {
-            "count": 56,
-            "first_at": "2014-05-10 10:39:40",
-            "last_at": "2014-07-01 23:58:15"
-        }
-    },
     "campaigns_summary": {
         "53bf732028d56edc0b8b4567": {
             "count": 1,
@@ -155,12 +138,10 @@ Profiles are the most important object in your app. These objects reflect your u
     },
     "created_at": "2014-05-01 09:56:59",
     "stats": {
-        "total_activities": 61,
-        "total_revenue": 334.54,
         "total_campaigns": 1,
         "total_horns": 23
     },
-    "segments": ["all", "new", "loyal"]
+    "segments": ["all", "new"]
 }
 ```
 
@@ -185,10 +166,9 @@ headline | *`string`* <br /> The small description/bio about the user.
 birthday | *`string`* *`yyyy-mm-dd`*
 custom_attributes | *`hash`* <br /> The hash of custom key-value pairs.
 last_seen_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> This is the last time the user was seen in your app.
-activities_summary | *`object`* <br /> The summary about the activities the user performed in your app. Each activity is summarized in three fields: `count`, `first_at` and `last_at`.
-campaigns_summary | *`object`* <br /> The summary about the automatic campaigns that were fired for the user. Each campaign is summarized in three fields: `count`, `first_at` and `last_at`.
+campaigns_summary | *`object`* <br /> The summary about the campaigns that were fired for the user. Each campaign is summarized in three fields: `count`, `first_at` and `last_at`.
 created_at | *`string`* *`yyyy-mm-dd hh:mm:ss`*
-stats | *`object`* <br /> This object keeps track of the important data points for the user. The three stats that you'll find here are the `total_activities`, `total_revenue`, `total_campaigns`, `total_horns`.
+stats | *`object`* <br /> This object keeps track of the important data points for the user. The three stats that you'll find here are the `total_campaigns`, `total_horns`.
 segments | *`array`* <br />  The list of segments to which the user belongs.
 
 ## Create a New Profile
@@ -274,7 +254,7 @@ custom_attributes | *`hash`* <br /> The hash of custom key-value pairs. Any arra
 
 ### Custom Attributes
 
-Horntell allows you to add any amount of custom attributes to your profiles to later filter upon. However, the concept of adding custom attributes is simple (simply pass in hash of data), there are a few things to understand tomake most out of it.
+Horntell allows you to add any amount of custom attributes to your profiles to later filter upon. However, the concept of adding custom attributes is simple (simply pass in hash of data), there are a few things to understand to make most out of it.
 
 The true value of custom attributes is extracted when using them in filtering your profiles. You can compare (`starts_with`, `contains`, etc.) these custom attributes just like the default attributes (`first_name`, `gender`, etc.). The comparison operators that you get corresponding to each attribute depends on the type of attribute it is. For example, a attribute with data type `number` will have comparison operators like `greater than`, `less than`, which makes no sense when working with `string` attributes.
 
