@@ -5,7 +5,7 @@ language_tabs:
 - shell
 - php
 
-search: true
+search: false
 ---
 
 # Introduction

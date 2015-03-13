@@ -37,8 +37,9 @@
     <div class="page-wrapper">
       <div class="dark-box"></div>
       <div class="content">
-        <h1 id='introduction'>Introduction</h1><pre class="highlight shell"><span class="c"># PHP library available at https://github.com/horntell/php-sdk. Others coming soon!</span>
-</pre>
+        <h1 id="introduction">Introduction</h1>
+<pre class="highlight shell"><code><span class="c"># PHP library available at https://github.com/horntell/php-sdk. Others coming soon!</span>
+</code></pre>
 
 <p>Welcome to the Horntell API. The API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and uses HTTP response codes to indicate API errors.</p>
 
@@ -49,12 +50,14 @@
 <p>We have a library for <a href="https://github.com/horntell/php-sdk">PHP</a> ready (others coming soon), but making the calls to API in others shouldn&rsquo;t be different than making cURL requests in the language of your choice. The examples are given on the right hand side.</p>
 
 <p>The base URL for all the API requests is: <strong>https://api.horntell.com</strong></p>
-<h1 id='authentication'>Authentication</h1><pre class="highlight shell">curl <span class="s2">"https://api.horntell.com"</span> <span class="se">\</span>
+
+<h1 id="authentication">Authentication</h1>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.horntell.com"</span> <span class="se">\</span>
 -u hornokpleasekey:hornokpleasesecret
-</pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="nx">Horntell\App</span><span class="o">::</span><span class="na">init</span><span class="p">(</span><span class="s1">'hornokpleasekey'</span><span class="p">,</span> <span class="s1">'hornokpleasesecret'</span><span class="p">);</span>
-</pre>
+</code></pre>
 
 <p>You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!</p>
 
@@ -65,9 +68,13 @@
 <p><aside class="notice">
     You must replace <code class="prettyprint">hornokpleasekey</code> with your personal API key and <code class="prettyprint">hornokpleasesecret</code> with your API secret.
 </aside></p>
-<h1 id='errors'>Errors</h1>
+
+<h1 id="errors">Errors</h1>
+
 <p>Horntell uses conventional HTTP response codes to indicate success or failure of an API request. In general, codes in the 2xx range indicate success, codes in the 4xx range indicate an error that resulted from the provided information (e.g. a required parameter was missing, forbidden usage, etc.), and codes in the 5xx range indicate an error with Horntell&rsquo;s servers.</p>
-<h3 id='attributes'>Attributes</h1>
+
+<h3 id="attributes">Attributes</h3>
+
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -87,7 +94,7 @@
 <td><em><code class="prettyprint">string</code></em> <br /> The human readble message to give you more clarity about the error.</td>
 </tr>
 </tbody></table>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="k">try</span> <span class="p">{</span>
     <span class="c1">// Use SDK for PHP
 </span><span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\ForbiddenError</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
@@ -105,24 +112,32 @@
 <span class="p">}</span> <span class="k">catch</span><span class="p">(</span><span class="nx">Horntell\Errors\Error</span> <span class="nv">$e</span><span class="p">)</span> <span class="p">{</span>
     <span class="cm">/* of course, you can be a little lazy and simply catch just this one error, which is the parent of each of the above errors.*/</span>
 <span class="p">}</span>
-</pre>
-<h3 id='handling-errors'>Handling Errors</h1>
+</code></pre>
+
+<h3 id="handling-errors">Handling Errors</h3>
+
 <p>Our SDKs can throw exceptions/errors for many reasons, like network issues, validation errors, authentication errors, etc. We strongly recommend always trying to gracefully handle these exceptions.</p>
-<h1 id='versioning'>Versioning</h1><pre class="highlight shell">curl <span class="s2">"https://api.horntell.com"</span> <span class="se">\</span>
+
+<h1 id="versioning">Versioning</h1>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.horntell.com"</span> <span class="se">\</span>
 -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
 -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span>
-</pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// it already defaults to v1, so this can be skipped
 </span><span class="nx">Horntell\App</span><span class="o">::</span><span class="na">setVersion</span><span class="p">(</span><span class="s1">'v1'</span><span class="p">);</span>
-</pre>
+</code></pre>
 
 <p>Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is <code class="prettyprint">v1</code>.</p>
 
 <p>You have to specify the version of the API with each API request in the <code class="prettyprint">Accept:</code> header. The example on the right is using the version <code class="prettyprint">v1</code>. If version is not specified with a request, we will route that request to the latest verion of the API.</p>
-<h1 id='profiles'>Profiles</h1>
+
+<h1 id="profiles">Profiles</h1>
+
 <p>Profiles are the most important object in your app. These objects reflect your users directly (think of them as profiles for your users). Most of the things Horntell allows you to do are dependent on the profiles (after all, they are whom you want to see more engaged in your app).</p>
-<h2 id='the-profile-object'>The profile object</h1><pre class="highlight json"><span class="p">{</span><span class="w">
+
+<h2 id="the-profile-object">The profile object</h2>
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53a1626b28d56e6708f9dd35"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"720974375"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
@@ -143,23 +158,6 @@
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"app_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"539855de9016382d3b8b07d7"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"last_seen_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-07-10 11:27:54"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"activities_summary"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"paid_subscription_fees"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"first_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-05-03 10:08:21"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"last_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-07-03 10:08:21"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="s2">"invited_a_team_member"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">2</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"first_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-06-18 10:08:37"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"last_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-06-18 10:11:20"</span><span class="w">
-        </span><span class="p">},</span><span class="w">
-        </span><span class="s2">"asked_a_question_on_forum"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">56</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"first_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-05-10 10:39:40"</span><span class="p">,</span><span class="w">
-            </span><span class="s2">"last_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-07-01 23:58:15"</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w">
     </span><span class="s2">"campaigns_summary"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"53bf732028d56edc0b8b4567"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"count"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
@@ -169,15 +167,15 @@
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-05-01 09:56:59"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"stats"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"total_activities"</span><span class="p">:</span><span class="w"> </span><span class="mi">61</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"total_revenue"</span><span class="p">:</span><span class="w"> </span><span class="mf">334.54</span><span class="p">,</span><span class="w">
         </span><span class="s2">"total_campaigns"</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
         </span><span class="s2">"total_horns"</span><span class="p">:</span><span class="w"> </span><span class="mi">23</span><span class="w">
     </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"segments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"all"</span><span class="p">,</span><span class="w"> </span><span class="s2">"new"</span><span class="p">,</span><span class="w"> </span><span class="s2">"loyal"</span><span class="p">]</span><span class="w">
+    </span><span class="s2">"segments"</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">"all"</span><span class="p">,</span><span class="w"> </span><span class="s2">"new"</span><span class="p">]</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></pre>
-<h3 id='attributes'>Attributes</h1>
+</span></code></pre>
+
+<h3 id="attributes">Attributes</h3>
+
 <table><thead>
 <tr>
 <th>Attribute</th>
@@ -253,12 +251,8 @@
 <td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">yyyy-mm-dd hh:mm:ss</code></em> <br /> This is the last time the user was seen in your app.</td>
 </tr>
 <tr>
-<td>activities_summary</td>
-<td><em><code class="prettyprint">object</code></em> <br /> The summary about the activities the user performed in your app. Each activity is summarized in three fields: <code class="prettyprint">count</code>, <code class="prettyprint">first_at</code> and <code class="prettyprint">last_at</code>.</td>
-</tr>
-<tr>
 <td>campaigns_summary</td>
-<td><em><code class="prettyprint">object</code></em> <br /> The summary about the automatic campaigns that were fired for the user. Each campaign is summarized in three fields: <code class="prettyprint">count</code>, <code class="prettyprint">first_at</code> and <code class="prettyprint">last_at</code>.</td>
+<td><em><code class="prettyprint">object</code></em> <br /> The summary about the campaigns that were fired for the user. Each campaign is summarized in three fields: <code class="prettyprint">count</code>, <code class="prettyprint">first_at</code> and <code class="prettyprint">last_at</code>.</td>
 </tr>
 <tr>
 <td>created_at</td>
@@ -266,25 +260,27 @@
 </tr>
 <tr>
 <td>stats</td>
-<td><em><code class="prettyprint">object</code></em> <br /> This object keeps track of the important data points for the user. The three stats that you&rsquo;ll find here are the <code class="prettyprint">total_activities</code>, <code class="prettyprint">total_revenue</code>, <code class="prettyprint">total_campaigns</code>, <code class="prettyprint">total_horns</code>.</td>
+<td><em><code class="prettyprint">object</code></em> <br /> This object keeps track of the important data points for the user. The three stats that you&rsquo;ll find here are the <code class="prettyprint">total_campaigns</code>, <code class="prettyprint">total_horns</code>.</td>
 </tr>
 <tr>
 <td>segments</td>
 <td><em><code class="prettyprint">array</code></em> <br />  The list of segments to which the user belongs.</td>
 </tr>
 </tbody></table>
-<h2 id='create-a-new-profile'>Create a New Profile</h1>
+
+<h2 id="create-a-new-profile">Create a New Profile</h2>
+
 <blockquote>
 <p>POST https://api.horntell.com/profiles</p>
 </blockquote>
-<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles"</span> <span class="se">\</span>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.horntell.com/profiles"</span> <span class="se">\</span>
     -X POST <span class="se">\</span>
     -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s1">'{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": 1387977193, "gender": "male", "custom_attributes": {"type": "earlybird"}}'</span>
-</pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Profile</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="k">array</span><span class="p">(</span>
     <span class="s1">'uid'</span> <span class="o">=&gt;</span> <span class="s1">'720974375'</span><span class="p">,</span>
     <span class="s1">'first_name'</span> <span class="o">=&gt;</span> <span class="s1">'John'</span><span class="p">,</span>
@@ -294,38 +290,42 @@
     <span class="s1">'gender'</span> <span class="o">=&gt;</span> <span class="s1">'male'</span><span class="p">,</span>
     <span class="s1">'custom_attributes'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span><span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'earlybird'</span><span class="p">)</span>
 <span class="p">));</span>
-</pre>
+</code></pre>
 
 <blockquote>
 <p>You will get the following in response</p>
 </blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"720974375"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"John"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"signedup_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-12-25 13:13:13"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Male"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"position"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"company"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"industry"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"headline"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"position"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"company"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"industry"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"headline"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"last_seen_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-12-25 13:13:13"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"custom_attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"earlybird"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></pre>
+</span></code></pre>
 
 <p>Creates a new profile.</p>
-<h3 id='endpoint'>Endpoint</h1>
+
+<h3 id="endpoint">Endpoint</h3>
+
 <p><code class="prettyprint">POST https://api.horntell.com/profiles</code></p>
-<h3 id='arguments'>Arguments</h1>
+
+<h3 id="arguments">Arguments</h3>
+
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -393,8 +393,10 @@
 <p><aside class="notice">
     The more information you put in the profile, the better your account looks.
 </aside></p>
-<h3 id='custom-attributes'>Custom Attributes</h1>
-<p>Horntell allows you to add any amount of custom attributes to your profiles to later filter upon. However, the concept of adding custom attributes is simple (simply pass in hash of data), there are a few things to understand tomake most out of it.</p>
+
+<h3 id="custom-attributes">Custom Attributes</h3>
+
+<p>Horntell allows you to add any amount of custom attributes to your profiles to later filter upon. However, the concept of adding custom attributes is simple (simply pass in hash of data), there are a few things to understand to make most out of it.</p>
 
 <p>The true value of custom attributes is extracted when using them in filtering your profiles. You can compare (<code class="prettyprint">starts_with</code>, <code class="prettyprint">contains</code>, etc.) these custom attributes just like the default attributes (<code class="prettyprint">first_name</code>, <code class="prettyprint">gender</code>, etc.). The comparison operators that you get corresponding to each attribute depends on the type of attribute it is. For example, a attribute with data type <code class="prettyprint">number</code> will have comparison operators like <code class="prettyprint">greater than</code>, <code class="prettyprint">less than</code>, which makes no sense when working with <code class="prettyprint">string</code> attributes.</p>
 
@@ -405,11 +407,13 @@
 <li>If an attribute&rsquo;s data type is <code class="prettyprint">int</code> or <code class="prettyprint">float</code>, it is considered to be a <code class="prettyprint">number</code> attribute.</li>
 <li>If an attribute&rsquo;s data type is <code class="prettyprint">int</code> type and the <code class="prettyprint">key</code> ends with <code class="prettyprint">_at</code> (eg. <code class="prettyprint">account_activated_at</code>), it is assumed to be an UNIX timestamp in UTC, and will be typecasted into <code class="prettyprint">date</code> attribute.</li>
 </ul>
-<h2 id='update-a-profile'>Update a Profile</h1>
+
+<h2 id="update-a-profile">Update a Profile</h2>
+
 <blockquote>
 <p>PUT https://api.horntell.com/profiles/{uid}</p>
 </blockquote>
-<pre class="highlight shell"><span class="c"># This will update the first name of the profile with the `uid` = 720974375</span>
+<pre class="highlight shell"><code><span class="c"># This will update the first name of the profile with the `uid` = 720974375</span>
 
 curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span class="se">\</span>
     -X PUT <span class="se">\</span>
@@ -417,49 +421,53 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
     -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
     -d <span class="s1">'{"first_name": "Johnny"}'</span>
-</pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// This will update the first name of the profile with the `uid` = 720974375
 </span>
 <span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Profile</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">update</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">'first_name'</span> <span class="o">=&gt;</span> <span class="s1">'Johnny'</span>
 <span class="p">));</span>
-</pre>
+</code></pre>
 
 <blockquote>
 <p>You will get the following in response</p>
 </blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"720974375"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Johnny"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"signedup_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-12-25 13:13:13"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Male"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"position"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"company"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"industry"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"headline"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"position"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"company"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"industry"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"headline"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"last_seen_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-12-25 13:13:13"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"custom_attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"earlybird"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></pre>
+</span></code></pre>
 
 <p>The following endpoint updates the profile with the new information. The fields that you send with the update request overwrites the older values for the fields.</p>
 
 <p><aside class="warning">
     You cannot modify the <code class="prettyprint">uid</code> of a profile. If you want to update the <code class="prettyprint">uid</code> itself, consider creating a new profile with the new <code class="prettyprint">uid</code>.
 </aside></p>
-<h3 id='endpoint'>Endpoint</h1>
+
+<h3 id="endpoint">Endpoint</h3>
+
 <p><code class="prettyprint">PUT https://api.horntell.com/profiles/{uid}</code></p>
-<h3 id='arguments'>Arguments</h1>
+
+<h3 id="arguments">Arguments</h3>
+
 <table><thead>
 <tr>
 <th>Argument</th>
@@ -519,222 +527,84 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 <td><em><code class="prettyprint">hash</code></em> The hash of custom key-value pairs.</td>
 </tr>
 </tbody></table>
-<h2 id='get-a-profile'>Get a Profile</h1>
+
+<h2 id="get-a-profile">Get a Profile</h2>
+
 <blockquote>
 <p>GET https://api.horntell.com/profiles/{uid}</p>
 </blockquote>
-<pre class="highlight shell"><span class="c"># This will fetch the profile with the `uid` = 720974375</span>
+<pre class="highlight shell"><code><span class="c"># This will fetch the profile with the `uid` = 720974375</span>
 
 curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span class="se">\</span>
     -X GET <span class="se">\</span>
     -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
-</pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// This will fetch the profile with the `uid` = 720974375
 </span>
 <span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Profile</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">find</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">);</span>
-</pre>
+</code></pre>
 
 <blockquote>
 <p>You will get the following in response</p>
 </blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
+<pre class="highlight json"><code><span class="p">{</span><span class="w">
     </span><span class="s2">"data"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"720974375"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"first_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Johnny"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"last_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Doe"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"email"</span><span class="p">:</span><span class="w"> </span><span class="s2">"john@example.com"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"signedup_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-12-25 13:13:13"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"avatar_url"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"gender"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Male"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"position"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"company"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"industry"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"headline"</span><span class="p">:</span><span class="w"> </span><span class="err">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"position"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"company"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"industry"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"location"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"birthday"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"headline"</span><span class="p">:</span><span class="w"> </span><span class="kc">null</span><span class="p">,</span><span class="w">
         </span><span class="s2">"last_seen_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2013-12-25 13:13:13"</span><span class="p">,</span><span class="w">
         </span><span class="s2">"custom_attributes"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"earlybird"</span><span class="w">
         </span><span class="p">}</span><span class="w">
     </span><span class="p">}</span><span class="w">
 </span><span class="p">}</span><span class="w">
-</span></pre>
+</span></code></pre>
 
 <p>The following endpoint fetches the profile against the <code class="prettyprint">uid</code> passed.</p>
-<h3 id='endpoint'>Endpoint</h1>
+
+<h3 id="endpoint">Endpoint</h3>
+
 <p><code class="prettyprint">GET https://api.horntell.com/profiles/{uid}</code></p>
-<h2 id='delete-a-profile'>Delete a Profile</h1>
+
+<h2 id="delete-a-profile">Delete a Profile</h2>
+
 <blockquote>
 <p>DELETE https://api.horntell.com/profiles/{uid}</p>
 </blockquote>
-<pre class="highlight shell"><span class="c"># This will delete the profile with the `uid` = 720974375</span>
+<pre class="highlight shell"><code><span class="c"># This will delete the profile with the `uid` = 720974375</span>
 
 curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span class="se">\</span>
     -X DELETE <span class="se">\</span>
     -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
-</pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="c1">// This will delete the profile with the `uid` = 720974375
 </span>
 <span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Profile</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">delete</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">);</span>
-</pre>
+</code></pre>
 
 <p>The following endpoint deletes the profile against the <code class="prettyprint">uid</code> passed. On successful request, it will return a HTTP 204 (No Content) response.</p>
-<h3 id='endpoint'>Endpoint</h1>
+
+<h3 id="endpoint">Endpoint</h3>
+
 <p><code class="prettyprint">DELETE https://api.horntell.com/profiles/{uid}</code></p>
-<h1 id='activities'>Activities</h1>
-<p>Activities is the way you track the behaviour of a user in your app. By tracking behaviour, we are not encouraging you to track each little thing he does in your app, but the important actions that determine the behaviour of the user. Some examples of actions that can be considered as activity can be: inviting a friend, activating his account, upgraded the subscription plan, etc.</p>
-<h2 id='the-activity-object'>The activity object</h1><pre class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53d2406f28d56eff078b4567"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"app_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"539855de9016382d3b8b07d7"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"profile_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"720974375"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Purchased A Cat"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbound"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"revenue"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.54</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"context"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Street Cat"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"weight"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2kg"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-07-25 11:33:03"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
-<h3 id='attributes'>Attributes</h1>
-<table><thead>
-<tr>
-<th>Attribute</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>id</td>
-<td><em><code class="prettyprint">string</code></em> <br /> This is the primary identifier that Horntell gives to every activity that is created in the system. This identifier is unique all wide the Horntell.</td>
-</tr>
-<tr>
-<td>app_id</td>
-<td><em><code class="prettyprint">string</code></em> <br /> This is the primary identifier for your app to which the activity belongs.</td>
-</tr>
-<tr>
-<td>profile_uid</td>
-<td><em><code class="prettyprint">string</code></em> <br /> This is the identifer which is the primary identifier for the user in your app.</td>
-</tr>
-<tr>
-<td>name</td>
-<td><em><code class="prettyprint">string</code></em> <br /> Activity&rsquo;s complete name.</td>
-</tr>
-<tr>
-<td>direction</td>
-<td><em><code class="prettyprint">string</code></em> <br /> It&rsquo;s value can either be <code class="prettyprint">inbound</code> or <code class="prettyprint">outbound</code>. Inbound activity means the activity has happened from user towards the app (eg. most of the activities). Outbound activity means the activity thas happened from app towards the user (eg. refunds).</td>
-</tr>
-<tr>
-<td>revenue</td>
-<td><em><code class="prettyprint">float</code></em> <br /> This is the amount of revenue that this activity has brought to your business. This is particularly helpful when properly segmenting your profiles.</td>
-</tr>
-<tr>
-<td>created_at</td>
-<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">yyyy-mm-dd hh:mm:ss</code></em> <br /> This timestamp in your timezone when the activity was created.</td>
-</tr>
-<tr>
-<td>context</td>
-<td><em><code class="prettyprint">hash</code></em> The hash of the custom data you want to save for the activity. You can have upto 5 such custom attributes for each activity.</td>
-</tr>
-</tbody></table>
-<h2 id='create-a-new-activity'>Create a New Activity</h1>
-<blockquote>
-<p>POST https://api.horntell.com/profiles/{uid}/activities</p>
-</blockquote>
-<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles/720974375/activities"</span> <span class="se">\</span>
-    -X POST <span class="se">\</span>
-    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
-    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
-    -H <span class="s2">"Content-Type: application/json"</span> <span class="se">\</span>
-    -d <span class="s1">'{"name": "purchased a cat", "direction": "inbound", "revenue": 34.54, "context": {"breed": "Street Cat", "weight": "2kg"}}'</span>
-</pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
-<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Activity</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
-    <span class="s1">'name'</span> <span class="o">=&gt;</span> <span class="s1">'purchased a cat'</span><span class="p">,</span>
-    <span class="s1">'direction'</span> <span class="o">=&gt;</span> <span class="s1">'inbound'</span><span class="p">,</span>
-    <span class="s1">'revenue'</span> <span class="o">=&gt;</span> <span class="mf">34.54</span><span class="p">,</span>
-    <span class="s1">'context'</span> <span class="o">=&gt;</span> <span class="k">array</span><span class="p">(</span>
-        <span class="s1">'breed'</span> <span class="o">=&gt;</span> <span class="s1">'Street Cat'</span><span class="p">,</span>
-        <span class="s1">'weight'</span> <span class="o">=&gt;</span> <span class="s1">'2kg'</span>
-    <span class="p">)</span>
-<span class="p">));</span>
-</pre>
 
-<blockquote>
-<p>You will get the following in response</p>
-</blockquote>
-<pre class="highlight json"><span class="p">{</span><span class="w">
-    </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"53d2406f28d56eff078b4567"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"app_id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"539855de9016382d3b8b07d7"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"profile_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"720974375"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Purchased A Cat"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"direction"</span><span class="p">:</span><span class="w"> </span><span class="s2">"inbound"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"revenue"</span><span class="p">:</span><span class="w"> </span><span class="mf">34.54</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"context"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="s2">"breed"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Street Cat"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"weight"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2kg"</span><span class="w">
-    </span><span class="p">},</span><span class="w">
-    </span><span class="s2">"created_at"</span><span class="p">:</span><span class="w"> </span><span class="s2">"2014-07-25 11:33:03"</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span></pre>
-<h3 id='attributes'>Attributes</h1>
-<table><thead>
-<tr>
-<th>Attribute</th>
-<th>Description</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>name</td>
-<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">required</code></em> <br /> Activity&rsquo;s complete name.</td>
-</tr>
-<tr>
-<td>direction</td>
-<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">required</code></em> <br /> It&rsquo;s value can either be <code class="prettyprint">inbound</code> or <code class="prettyprint">outbound</code>. Inbound activity means the activity has happened from user towards the app (eg. most of the activities). Outbound activity means the activity thas happened from app towards the user (eg. refunds).</td>
-</tr>
-<tr>
-<td>revenue</td>
-<td><em><code class="prettyprint">float</code></em> <br /> This is the amount of revenue that this activity has brought to your business. This is particularly helpful when properly segmenting your profiles.</td>
-</tr>
-<tr>
-<td>context</td>
-<td><em><code class="prettyprint">hash</code></em> <br /> The hash of the custom data you want to save for the activity. You can have upto 5 such custom attributes for each activity.</td>
-</tr>
-</tbody></table>
-<h3 id='calibration'>Calibration</h1>
-<p>We calibrate the several data points in the activity, which should be properly understood. These calibrations help you to use Horntell in a more robust way. Here are some important things to take care of.</p>
+<h1 id="horns">Horns</h1>
 
-<ol>
-<li><p>The name of activity can be passed as a normal human-readable string, but we will calibrate it into an underscored entity by removed all the special characters. This means that all of these activities mean the same thing to us:</p>
-
-<ul>
-<li>Purchased A Cat</li>
-<li>purchased a cat</li>
-<li>Purchased A CAT</li>
-<li>purchased_a_cat</li>
-<li>purchased-a-cat</li>
-</ul>
-
-<p>All of these will be calibrated into <code class="prettyprint">purchased_a_cat</code>, which will the key used at most of the places (eg. in the <code class="prettyprint">activities_summary</code> of profiles).</p>
-
-<p>When showing these activities in the dashboard, we convert them to human readable version (<code class="prettyprint">Purchased A Cat</code>) for better readability.</p>
-
-<p>What this means to you is that you can stop worrying about keeping the activity names strict around the system as we do the work to calibrate them.</p></li>
-<li><p>Calibration also happens in the <code class="prettyprint">context</code> hash. All the keys in the hash are calibrated. So, if you pass two keys in the context which yield the same calibrated version, only the first one will be considered and others will be ignored. Suppose you pass in the following keys in the <code class="prettyprint">context</code> hash:</p>
-
-<ul>
-<li><code class="prettyprint">&quot;product id&quot;: &quot;ping-pong&quot;</code></li>
-<li><code class="prettyprint">&quot;Product Id&quot;: &quot;bingo&quot;</code></li>
-</ul>
-
-<p>We will save <code class="prettyprint">product_id</code> as <code class="prettyprint">ping-pong</code> and ignore every key that yields that same the calibrated value.</p></li>
-</ol>
-<h1 id='horns'>Horns</h1>
-<p>Horns are the notifications in the Horntell&rsquo;s terminology. A horn is the primary way of keeping your users engaged in the app. Horns can be sent to a particular profile. An horn can be of one of four formats:</p>
+<p>Horns are the notifications in the Horntell&rsquo;s terminology. A horn is the primary way of keeping your users engaged in the app. Horns can be sent to a particular profile or multiple profiles. An horn can be of one of four formats:</p>
 
 <ul>
 <li><p><strong>Simple</strong>: Horns of this format do not have anything special about them. They are useful for notifying users about some activity in their account. They cannot interact with these horns. Of course, you can add the links through custom HTML, but we do not take responsibility of their interaction.</p></li>
@@ -748,13 +618,15 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 </aside></p>
 
 <p><aside class="notice">
-    Horns of each of these formats can also be a <strong>Bubble Horn</strong>. Bubble horns are the horns that opens automatically upon being pushed to your users. Bubbles give you power to get better responses against your horns. But as with every other power, it comes with responsibility. If you send too many bubbles, your users might get frustrated, thus, it is advised to keep these for important things.
+    Horns of each of these formats can also be a <strong>Bubble Horn</strong>. Bubble horns are the horns that opens automatically upon being pushed to your users. Bubbles give you power to get better responses against your horns. But as with every other power, it comes with responsibility. If you send too many bubbles, your users might get frustrated, thus, it is advised to keep these for important/urgent things.
 </aside></p>
-<h2 id='create-a-new-horn'>Create a New Horn</h1>
+
+<h2 id="create-a-new-horn">Create a New Horn</h2>
+
 <blockquote>
 <p>POST https://api.horntell.com/profiles/{uid}/horns</p>
 </blockquote>
-<pre class="highlight shell">curl <span class="s2">"https://api.horntell.com/profiles/720974375/horns"</span> <span class="se">\</span>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.horntell.com/profiles/720974375/horns"</span> <span class="se">\</span>
     -X POST <span class="se">\</span>
     -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
@@ -768,8 +640,8 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
         "html": "&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.",
         "link": "http://example.com/campaigns/welcome"
     }'</span>
-</pre>
-<pre class="highlight php"><span class="cp">&lt;?php</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Horn</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="k">array</span><span class="p">(</span>
     <span class="s1">'format'</span> <span class="o">=&gt;</span> <span class="s1">'link'</span><span class="p">,</span>
     <span class="s1">'type'</span> <span class="o">=&gt;</span> <span class="s1">'info'</span><span class="p">,</span>
@@ -778,12 +650,14 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     <span class="s1">'html'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.'</span><span class="p">,</span>
     <span class="s1">'link'</span> <span class="o">=&gt;</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span>
 <span class="p">));</span>
-</pre>
+</code></pre>
 
 <blockquote>
 <p>You will get the HTTP 204 (No Content) in response for the successful request.</p>
 </blockquote>
-<h3 id='attributes'>Attributes</h1>
+
+<h3 id="attributes">Attributes</h3>
+
 <p>The following are the attributes which are same for all formats of horns. There are some extra attributes, for each format of horns, which are discussed below.</p>
 
 <table><thead>
@@ -813,7 +687,9 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 <td><em><code class="prettyprint">string</code></em> <br /> When available, this string will be rendered as HTML rather than the <code class="prettyprint">text</code> string. We parse the HTMl and clean it for all XSS attempts. We have a very strict whitelist of the tags that you can use in your html. You have the following tags available to use: <code class="prettyprint">&lt;h1&gt;</code>, <code class="prettyprint">&lt;h2&gt;</code>, <code class="prettyprint">&lt;h3&gt;</code>, <code class="prettyprint">&lt;h4&gt;</code>, <code class="prettyprint">&lt;h5&gt;</code>, <code class="prettyprint">&lt;h6&gt;</code>, <code class="prettyprint">&lt;strong&gt;</code>, <code class="prettyprint">&lt;em&gt;</code>, <code class="prettyprint">&lt;sub&gt;</code>, <code class="prettyprint">&lt;sup&gt;</code>, <code class="prettyprint">&lt;small&gt;</code>, <code class="prettyprint">&lt;code&gt;</code>, <code class="prettyprint">&lt;pre&gt;</code>, <code class="prettyprint">&lt;strike&gt;</code>, <code class="prettyprint">&lt;table&gt;</code>, <code class="prettyprint">&lt;thead&gt;</code>, <code class="prettyprint">&lt;tbody&gt;</code>, <code class="prettyprint">&lt;tfoot&gt;</code>, <code class="prettyprint">&lt;tr&gt;</code>, <code class="prettyprint">&lt;th&gt;</code>, <code class="prettyprint">&lt;td&gt;</code>, <code class="prettyprint">&lt;ul&gt;</code>, <code class="prettyprint">&lt;ol&gt;</code>, <code class="prettyprint">&lt;li&gt;</code>, <code class="prettyprint">&lt;a&gt;</code>, <code class="prettyprint">&lt;img&gt;</code>, <code class="prettyprint">&lt;iframe&gt;</code>.</td>
 </tr>
 </tbody></table>
-<h3 id='special-attributes'>Special Attributes</h1>
+
+<h3 id="special-attributes">Special Attributes</h3>
+
 <p>Each format comes with some extra attributes that allows you to control the interaction of horn with the user. Here we detail the extra attributes that horn of each format can have.</p>
 
 <ul>
@@ -850,6 +726,82 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 
 <p>There are no extra attributes for this format.</p></li>
 </ul>
+
+<h1 id="campaigns">Campaigns</h1>
+
+<p>There&rsquo;s a problem when you hard-code the content of horns in your codebase, commit it and push it to production. The problem is that, if you want to change the content of horns, you&rsquo;ll have to repeat the whole cycle of <strong>code - commit - ship</strong> to get it done. This sucks. And campaigns solve this problem.</p>
+
+<p>Campaigns allow you to keep the horns stored as templates in your account and when you need to send a horn, simply use API endpoint to run a particular campaign. This has two benefits over hard-coding horn&rsquo;s data in the codebase:</p>
+
+<ul>
+<li>You can modify horn&rsquo;s content really quickly from your Horntell dashboard - without touching your codebase ever.</li>
+<li>The stats to all the horns under one campaign can be seen together for analysis.</li>
+</ul>
+
+<p><aside class="success">
+    While using campaigns, horn&rsquo;s content can be personalized using placeholders (eg. <code class="prettyprint">{first_name}</code>), which will be parsed and replaced whenever creating horns for a profile.
+</aside></p>
+
+<h2 id="run-campaign-for-a-single-profile">Run Campaign for a Single Profile</h2>
+
+<blockquote>
+<p>POST https://api.horntell.com/profiles/{uid}/campaigns/{campaign_id}</p>
+</blockquote>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.horntell.com/profiles/720974375/campaigns/54afd3259f17f6b9468b4567"</span> <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
+    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Campaign</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">);</span>
+</code></pre>
+
+<blockquote>
+<p>You will get the HTTP 204 (No Content) in response for the successful request.</p>
+</blockquote>
+
+<h3 id="attributes">Attributes</h3>
+
+<p>There&rsquo;re no attributes required when running a campaign for a single profile.</p>
+
+<h2 id="run-campaign-for-a-multiple-profiles">Run Campaign for a Multiple Profiles</h2>
+
+<blockquote>
+<p>POST https://api.horntell.com/profiles/campaigns/{campaign_id}</p>
+</blockquote>
+<pre class="highlight shell"><code>curl <span class="s2">"https://api.horntell.com/profiles/campaigns/54afd3259f17f6b9468b4567"</span> <span class="se">\</span>
+    -X POST <span class="se">\</span>
+    -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
+    -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
+    -H <span class="s2">"Content-Type: application/json"</span>
+    -d <span class="s1">'{"profile_uids": ["720974375", "720974376", "720974377"]}'</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Campaign</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toProfiles</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s2">"720974375"</span><span class="p">,</span> <span class="s2">"720974376"</span><span class="p">,</span> <span class="s2">"720974377"</span><span class="p">),</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">);</span>
+</code></pre>
+
+<blockquote>
+<p>You will get the HTTP 204 (No Content) in response for the successful request.</p>
+</blockquote>
+
+<p>What if you would want to run a campaign for 100 users? Making 100 API calls is not a good way to do it. Better way is to use this end-point which accepts an array of <code class="prettyprint">profile_uid</code>&rsquo;s and runs the campaign for all of those.</p>
+
+<h3 id="attributes">Attributes</h3>
+
+<p>When running a campaign for multiple profiles, we need these attributes.</p>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>profile_uids</td>
+<td><em><code class="prettyprint">array</code></em> <em><code class="prettyprint">required</code></em> <br /> It will be an array of <code class="prettyprint">profile_uid</code>&rsquo;s.</td>
+</tr>
+</tbody></table>
 
       </div>
       <div class="dark-box">
