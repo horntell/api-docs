@@ -1,5 +1,5 @@
 ---
-title: Horntell API References
+title: Horntell API Reference
 
 language_tabs:
 - shell
@@ -511,3 +511,69 @@ Each format comes with some extra attributes that allows you to control the inte
 - **Talk**
 
     There are no extra attributes for this format.
+
+# Campaigns
+
+There's a problem when you hard-code the content of horns in your codebase, commit it and push it to production. The problem is that, if you want to change the content of horns, you'll have to repeat the whole cycle of **code - commit - ship** to get it done. This sucks. And campaigns solve this problem.
+
+Campaigns allow you to keep the horns stored as templates in your account and when you need to send a horn, simply use API endpoint to run a particular campaign. This has two benefits over hard-coding horn's data in the codebase:
+
+- You can modify horn's content really quickly from your Horntell dashboard - without touching your codebase ever.
+- The stats to all the horns under one campaign can be seen together for analysis.
+
+<aside class="success">
+    While using campaigns, horn's content can be personalized using placeholders (eg. `{first_name}`), which will be parsed and replaced whenever creating horns for a profile.
+</aside>
+
+## Run Campaign for a Single Profile
+
+> POST https://api.horntell.com/profiles/{uid}/campaigns/{campaign_id}
+
+```shell
+curl "https://api.horntell.com/profiles/720974375/campaigns/54afd3259f17f6b9468b4567" \
+    -X POST \
+    -u hornokpleasekey:hornokpleasesecret \
+    -H "Accept: application/vnd.horntell.v1+json" \
+    -H "Content-Type: application/json"
+```
+
+```php
+<?php
+(new Horntell\Campaign)->toProfile('720974375', '54afd3259f17f6b9468b4567');
+```
+
+> You will get the HTTP 204 (No Content) in response for the successful request.
+
+### Attributes
+
+There're no attributes required when running a campaign for a single profile.
+
+## Run Campaign for a Multiple Profiles
+
+> POST https://api.horntell.com/profiles/campaigns/{campaign_id}
+
+```shell
+curl "https://api.horntell.com/profiles/campaigns/54afd3259f17f6b9468b4567" \
+    -X POST \
+    -u hornokpleasekey:hornokpleasesecret \
+    -H "Accept: application/vnd.horntell.v1+json" \
+    -H "Content-Type: application/json"
+    -d '{"profile_uids": ["720974375", "720974376", "720974377"]}'
+```
+
+```php
+<?php
+(new Horntell\Campaign)->toProfiles(array("720974375", "720974376", "720974377"), '54afd3259f17f6b9468b4567');
+```
+
+> You will get the HTTP 204 (No Content) in response for the successful request.
+
+What if you would want to run a campaign for 100 users? Making 100 API calls is not a good way to do it. Better way is to use this end-point which accepts an array of `profile_uid`'s and runs the campaign for all of those.
+
+### Attributes
+
+When running a campaign for multiple profiles, we need these attributes.
+
+Attribute | Description
+--------- | -----------
+profile_uids | *`array`* *`required`* <br /> It will be an array of `profile_uid`'s.
