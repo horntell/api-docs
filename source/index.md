@@ -1,11 +1,11 @@
 ---
-title: Horntell API Reference
+title: Horntell API References
 
 language_tabs:
 - shell
 - php
 
-search: false
+search: true
 ---
 
 # Introduction
