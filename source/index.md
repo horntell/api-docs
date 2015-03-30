@@ -617,6 +617,10 @@ curl "https://api.horntell.com/profiles/720974375/campaigns/54afd3259f17f6b9468b
 (new Horntell\Campaign)->toProfile('720974375', '54afd3259f17f6b9468b4567');
 ```
 
+```ruby
+Horntell::Campaign.to_profile('720974375', '54afd3259f17f6b9468b4567')
+```
+
 > You will get the HTTP 204 (No Content) in response for the successful request.
 
 ### Attributes
@@ -639,6 +643,10 @@ curl "https://api.horntell.com/profiles/campaigns/54afd3259f17f6b9468b4567" \
 ```php
 <?php
 (new Horntell\Campaign)->toProfiles(array("720974375", "720974376", "720974377"), '54afd3259f17f6b9468b4567');
+```
+
+```ruby
+Horntell\Campaign::to_profiles(["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567')
 ```
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
