@@ -229,6 +229,18 @@ curl "https://api.horntell.com/profiles" \
 ));
 ```
 
+```ruby
+Horntell::Profile.create({
+    :uid => '720974375',
+    :first_name => 'John',
+    :last_name => 'Doe',
+    :email => 'john@example.com',
+    :signedup_at => 1387977193,
+    :gender => 'male',
+    :custom_attributes => {:type => 'earlybird'}
+})
+```
+
 > You will get the following in response
 
 ```json
@@ -320,6 +332,14 @@ curl "https://api.horntell.com/profiles/720974375" \
 ));
 ```
 
+```ruby
+# This will update the first name of the profile with the `uid` = 720974375
+
+Horntell::Profile.update('720974375', {
+    :first_name => 'Johnny'
+})
+```
+
 > You will get the following in response
 
 ```json
@@ -394,6 +414,12 @@ curl "https://api.horntell.com/profiles/720974375" \
 (new Horntell\Profile)->find('720974375');
 ```
 
+```ruby
+# This will fetch the profile with the `uid` = 720974375
+
+Horntell::Profile.find('720974375')
+```
+
 > You will get the following in response
 
 ```json
@@ -445,6 +471,12 @@ curl "https://api.horntell.com/profiles/720974375" \
 // This will delete the profile with the `uid` = 720974375
 
 (new Horntell\Profile)->delete('720974375');
+```
+
+```ruby
+# This will delete the profile with the `uid` = 720974375
+
+Horntell::Profile.delete('720974375')
 ```
 
 The following endpoint deletes the profile against the `uid` passed. On successful request, it will return a HTTP 204 (No Content) response.
