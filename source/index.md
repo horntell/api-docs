@@ -125,7 +125,7 @@ Horntell\App::setVersion('v1');
 ```
 
 ```ruby
-// it already defaults to v1, so this can be skipped
+# it already defaults to v1, so this can be skipped
 Horntell::setVersion('v1');
 ```
 
