@@ -4,6 +4,7 @@ title: Horntell API Reference
 language_tabs:
 - shell
 - php
+- ruby
 
 search: false
 ---
@@ -11,7 +12,9 @@ search: false
 # Introduction
 
 ```shell
-# PHP library available at https://github.com/horntell/php-sdk. Others coming soon!
+# PHP library available at https://github.com/horntell/php-sdk.
+# Ruby library available ar https://github.com/horntell/ruby-sdk
+# Other coming soon!
 ```
 
 Welcome to the Horntell API. The API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and uses HTTP response codes to indicate API errors.
@@ -34,6 +37,10 @@ curl "https://api.horntell.com" \
 ```php
 <?php
 Horntell\App::init('hornokpleasekey', 'hornokpleasesecret');
+```
+
+```ruby
+Horntell::init('hornokpleasekey', 'hornokpleasesecret');
 ```
 
 You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!
@@ -79,6 +86,26 @@ try {
 }
 ```
 
+```ruby
+begin
+    # Use SDK for Ruby
+rescue Horntell::Errors::ForbiddenError => error
+    # you were successfully authenticated but not allowed to do what you were trying to do.
+rescue Horntell::Errors::NotFoundError => error
+    # the resource you wanted to work with was not found. eg. creating horn for a profile that doesn't exist.
+rescue Horntell::Errors::InvalidRequestError => error
+    # any errors (Forbidden, NotFound, etc.) that are thrown due to invalid request extend from this error, and thus, it can be used to catch all such errors instead of catching all of them individually.
+rescue Horntell::Errors::AuthenticationError => error
+    # the request couldn't be authenticated properly, please verify your app's credentials in such case.
+rescue Horntell::Errors::ServiceError => error
+    # this error is thrown when something wrong goes on Horntell's servers. Ideally, it should never be thrown. But if it does, we are pinged and we get on fixing it immediately.
+rescue Horntell::Errors::NetworkError => error
+    # this error is thrown when some network issue arises and the request couldn't be sent to Horntell. Please check your network connection in such case.
+rescue Horntell::Errors::Error => error
+    # of course, you can be a little lazy and simply catch just this one error, which is the parent of each of the above errors.
+end
+```
+
 ### Handling Errors
 
 Our SDKs can throw exceptions/errors for many reasons, like network issues, validation errors, authentication errors, etc. We strongly recommend always trying to gracefully handle these exceptions.
@@ -95,6 +122,11 @@ curl "https://api.horntell.com" \
 <?php
 // it already defaults to v1, so this can be skipped
 Horntell\App::setVersion('v1');
+```
+
+```ruby
+// it already defaults to v1, so this can be skipped
+Horntell::setVersion('v1');
 ```
 
 Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is `v1`.
