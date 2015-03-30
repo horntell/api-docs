@@ -126,7 +126,7 @@ Horntell\App::setVersion('v1');
 
 ```ruby
 # it already defaults to v1, so this can be skipped
-Horntell::setVersion('v1');
+Horntell::set_version('v1');
 ```
 
 Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is `v1`.
