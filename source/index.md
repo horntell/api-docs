@@ -612,6 +612,17 @@ Horntell::Horn.to_profile('720974375', {
 })
 ```
 
+```javascript
+Horntell.horn.toProfile('720974375', {  
+    format: 'link',
+    type: 'info',
+    bubble: true,
+    text: 'Welcome campaign was fired.',
+    html: '<strong>Welcome</strong> campaign was fired.',
+    link: 'http://app.example.com/campaigns/welcome'
+}).then(successCallback, errorCallback);
+```
+
 > You will get the HTTP 204 (No Content) in response for the successful request.
 
 ### Attributes
@@ -684,6 +695,11 @@ curl "https://api.horntell.com/profiles/720974375/campaigns/54afd3259f17f6b9468b
 Horntell::Campaign.to_profile('720974375', '54afd3259f17f6b9468b4567')
 ```
 
+```javascript
+Horntell.campaign.toProfile('720974375', '54afd3259f17f6b9468b4567')
+    .then(successCallback, errorCallback);
+```
+
 > You will get the HTTP 204 (No Content) in response for the successful request.
 
 ### Attributes
@@ -710,6 +726,11 @@ curl "https://api.horntell.com/profiles/campaigns/54afd3259f17f6b9468b4567" \
 
 ```ruby
 Horntell\Campaign::to_profiles(["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567')
+```
+
+```javascript
+Horntell.campaign.toProfiles(["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567')
+    .then(successCallback, errorCallback);
 ```
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
