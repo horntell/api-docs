@@ -159,7 +159,7 @@ Horntell::App.set_version('v1');
 
 ```javascript
 // it already defaults to v1, so this can be skipped
-horntell.app.setVersion('v1');
+Horntell.app.setVersion('v1');
 ```
 
 Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is `v1`.
@@ -474,7 +474,8 @@ Horntell::Profile.find('720974375')
 ```javascript
 // This will fetch the profile with the `uid` = 720974375
 
-Horntell.profile.find('720974375').then(successCallback, errorCallback);
+Horntell.profile.find('720974375')
+    .then(successCallback, errorCallback);
 ```
 
 > You will get the following in response
@@ -539,7 +540,8 @@ Horntell::Profile.delete('720974375')
 ```javascript
 // This will delete the profile with the `uid` = 720974375
 
-Horntell.profile.delete('720974375').then(successCallback, errorCallback);
+Horntell.profile.delete('720974375')
+    .then(successCallback, errorCallback);
 ```
 
 The following endpoint deletes the profile against the `uid` passed. On successful request, it will return a HTTP 204 (No Content) response.
