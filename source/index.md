@@ -23,7 +23,7 @@ We use built-in HTTP features, like HTTP authentication and HTTP verbs, which ca
 
 JSON will be returned in all responses from the API, including errors (though if you're using API bindings, we will convert the response to the appropriate language-specific object).
 
-We have a library for [PHP](https://github.com/horntell/php-sdk) ready (others coming soon), but making the calls to API in others shouldn't be different than making cURL requests in the language of your choice. The examples are given on the right hand side.
+We have a library for [PHP](https://github.com/horntell/php-sdk) and [Ruby](https://github.com/horntell/ruby-sdk) ready (others coming soon), but making the calls to API in others shouldn't be different than making cURL requests in the language of your choice. The examples are given on the right hand side.
 
 The base URL for all the API requests is: **https://api.horntell.com**
 
