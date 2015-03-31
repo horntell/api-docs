@@ -45,8 +45,8 @@ Horntell::App.init('hornokpleasekey', 'hornokpleasesecret');
 ```
 
 ```javascript
-var horntell = require('horntell');
-horntell.app.init('hornokpleasekey', 'hornokpleasesecret');
+var Horntell = require('horntell');
+Horntell.app.init('hornokpleasekey', 'hornokpleasesecret');
 ```
 
 You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!
@@ -116,19 +116,19 @@ end
 // Sample error callback function
 // Every error object has three methods: getMessage(), getCode(), getType()
 function(error) {
-    if(error instanceof horntell.errors.ForbiddenError) {
+    if(error instanceof Horntell.errors.ForbiddenError) {
         /* you were successfully authenticated but not allowed to do what you were trying to do.*/
-    } else if(error instanceof horntell.errors.NotFoundError) {
+    } else if(error instanceof Horntell.errors.NotFoundError) {
         /* the resource you wanted to work with was not found. eg. creating horn for a profile that doesn't exist.*/
-    } else if(error instanceof horntell.errors.InvalidRequestError) {
+    } else if(error instanceof Horntell.errors.InvalidRequestError) {
         /* any errors (Forbidden, NotFound, etc.) that are thrown due to invalid request extend from this error, and thus, it can be used to catch all such errors instead of catching all of them individually.*/
-    } else if(error instanceof horntell.errors.AuthenticationError) {
+    } else if(error instanceof Horntell.errors.AuthenticationError) {
         /* the request couldn't be authenticated properly, please verify your app's credentials in such case.*/
-    } else if(error instanceof horntell.errors.ServiceError) {
+    } else if(error instanceof Horntell.errors.ServiceError) {
         /* this error is thrown when something wrong goes on Horntell's servers. Ideally, it should never be thrown. But if it does, we are pinged and we get on fixing it immediately.*/
-    } else if(error instanceof horntell.errors.NetworkError) {
+    } else if(error instanceof Horntell.errors.NetworkError) {
         /* this error is thrown when some network issue arises and the request couldn't be sent to Horntell. Please check your network connection in such case.*/
-    } else if(error instanceof horntell.errors.Error) {
+    } else if(error instanceof Horntell.errors.Error) {
         /* of course, you can be a little lazy and simply catch just this one error, which is the parent of each of the above errors.*/
     }
 }
