@@ -61,7 +61,7 @@
 <pre class="highlight php"><code><span class="cp">&lt;?php</span>
 <span class="nx">Horntell\App</span><span class="o">::</span><span class="na">init</span><span class="p">(</span><span class="s1">'hornokpleasekey'</span><span class="p">,</span> <span class="s1">'hornokpleasesecret'</span><span class="p">);</span>
 </code></pre>
-<pre class="highlight ruby"><code><span class="no">Horntell</span><span class="o">::</span><span class="n">init</span><span class="p">(</span><span class="s1">'hornokpleasekey'</span><span class="p">,</span> <span class="s1">'hornokpleasesecret'</span><span class="p">);</span>
+<pre class="highlight ruby"><code><span class="no">Horntell</span><span class="o">::</span><span class="no">App</span><span class="p">.</span><span class="nf">init</span><span class="p">(</span><span class="s1">'hornokpleasekey'</span><span class="p">,</span> <span class="s1">'hornokpleasesecret'</span><span class="p">);</span>
 </code></pre>
 
 <p>You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!</p>
@@ -151,7 +151,7 @@
 </span><span class="nx">Horntell\App</span><span class="o">::</span><span class="na">setVersion</span><span class="p">(</span><span class="s1">'v1'</span><span class="p">);</span>
 </code></pre>
 <pre class="highlight ruby"><code><span class="c1"># it already defaults to v1, so this can be skipped</span>
-<span class="no">Horntell</span><span class="o">::</span><span class="n">set_version</span><span class="p">(</span><span class="s1">'v1'</span><span class="p">);</span>
+<span class="no">Horntell</span><span class="o">::</span><span class="no">App</span><span class="p">.</span><span class="nf">set_version</span><span class="p">(</span><span class="s1">'v1'</span><span class="p">);</span>
 </code></pre>
 
 <p>Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is <code class="prettyprint">v1</code>.</p>
