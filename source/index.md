@@ -40,7 +40,7 @@ Horntell\App::init('hornokpleasekey', 'hornokpleasesecret');
 ```
 
 ```ruby
-Horntell::init('hornokpleasekey', 'hornokpleasesecret');
+Horntell::App.init('hornokpleasekey', 'hornokpleasesecret');
 ```
 
 You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!
@@ -126,7 +126,7 @@ Horntell\App::setVersion('v1');
 
 ```ruby
 # it already defaults to v1, so this can be skipped
-Horntell::set_version('v1');
+Horntell::App.set_version('v1');
 ```
 
 Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is `v1`.
