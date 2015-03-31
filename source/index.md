@@ -158,7 +158,7 @@ Horntell::App.set_version('v1');
 ```
 
 ```javascript
-# it already defaults to v1, so this can be skipped
+// it already defaults to v1, so this can be skipped
 horntell.app.setVersion('v1');
 ```
 
