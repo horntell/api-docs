@@ -598,6 +598,12 @@ Horntell.profile.delete('720974375')
     .then(successCallback, errorCallback);
 ```
 
+```python
+# This will delete the profile with the `uid` = 720974375
+
+horntell.Profile().delete('720974375')
+```
+
 The following endpoint deletes the profile against the `uid` passed. On successful request, it will return a HTTP 204 (No Content) response.
 
 ### Endpoint
