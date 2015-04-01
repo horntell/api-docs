@@ -13,7 +13,7 @@
 
       <script>
         $(function() {
-          setupLanguages(["shell","php","ruby","javascript"]);
+          setupLanguages(["shell","php","ruby","javascript","python"]);
         });
       </script>
   </head>
@@ -32,6 +32,7 @@
               <a href="#" data-language-name="php">php</a>
               <a href="#" data-language-name="ruby">ruby</a>
               <a href="#" data-language-name="javascript">javascript</a>
+              <a href="#" data-language-name="python">python</a>
         </div>
       <div id="toc">
       </div>
@@ -66,6 +67,9 @@
 </code></pre>
 <pre class="highlight javascript"><code><span class="kd">var</span> <span class="nx">Horntell</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'horntell'</span><span class="p">);</span>
 <span class="nx">Horntell</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">init</span><span class="p">(</span><span class="s1">'hornokpleasekey'</span><span class="p">,</span> <span class="s1">'hornokpleasesecret'</span><span class="p">);</span>
+</code></pre>
+<pre class="highlight python"><code><span class="kn">import</span> <span class="nn">horntell</span>
+<span class="n">horntell</span><span class="o">.</span><span class="n">App</span><span class="p">()</span><span class="o">.</span><span class="n">init</span><span class="p">(</span><span class="s">'hornokpleasekey'</span><span class="p">,</span> <span class="s">'hornokpleasesecret'</span><span class="p">)</span>
 </code></pre>
 
 <p>You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!</p>
@@ -160,6 +164,23 @@
     <span class="p">}</span>
 <span class="p">}</span>
 </code></pre>
+<pre class="highlight python"><code><span class="k">try</span><span class="p">:</span>
+    <span class="c"># Use SDK for Python</span>
+<span class="k">except</span> <span class="n">horntell</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">ForbiddenError</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c"># you were successfully authenticated but not allowed to do what you were trying to do.</span>
+<span class="k">except</span> <span class="n">horntell</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">NotFoundError</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c"># the resource you wanted to work with was not found. eg. creating horn for a profile that doesn't exist.</span>
+<span class="k">except</span> <span class="n">horntell</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">InvalidRequestError</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c"># any errors (Forbidden, NotFound, etc.) that are thrown due to invalid request extend from this error, and thus, it can be used to catch all such errors instead of catching all of them individually.</span>
+<span class="k">except</span> <span class="n">horntell</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">AuthenticationError</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c"># the request couldn't be authenticated properly, please verify your app's credentials in such case.</span>
+<span class="k">except</span> <span class="n">horntell</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">ServiceError</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c"># this error is thrown when something wrong goes on Horntell's servers. Ideally, it should never be thrown. But if it does, we are pinged and we get on fixing it immediately.</span>
+<span class="k">except</span> <span class="n">horntell</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">NetworkError</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c"># this error is thrown when some network issue arises and the request couldn't be sent to Horntell. Please check your network connection in such case.</span>
+<span class="k">except</span> <span class="n">horntell</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">Error</span><span class="p">,</span> <span class="n">error</span><span class="p">:</span>
+    <span class="c"># of course, you can be a little lazy and simply catch just this one error, which is the parent of each of the above errors.</span>
+</code></pre>
 
 <h3 id="handling-errors">Handling Errors</h3>
 
@@ -179,6 +200,9 @@
 </code></pre>
 <pre class="highlight javascript"><code><span class="c1">// it already defaults to v1, so this can be skipped</span>
 <span class="nx">Horntell</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">setVersion</span><span class="p">(</span><span class="s1">'v1'</span><span class="p">);</span>
+</code></pre>
+<pre class="highlight python"><code><span class="c"># it already defaults to v1, so this can be skipped</span>
+<span class="n">horntell</span><span class="o">.</span><span class="n">App</span><span class="p">()</span><span class="o">.</span><span class="n">set_version</span><span class="p">(</span><span class="s">'v1'</span><span class="p">)</span>
 </code></pre>
 
 <p>Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is <code class="prettyprint">v1</code>.</p>
@@ -364,6 +388,16 @@
     <span class="na">custom_attributes</span><span class="p">:</span> <span class="p">{</span><span class="na">type</span><span class="p">:</span> <span class="s1">'earlybird'</span><span class="p">}</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
 </code></pre>
+<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span><span class="o">.</span><span class="n">create</span><span class="p">({</span>
+    <span class="s">'uid'</span><span class="p">:</span> <span class="s">'720974375'</span><span class="p">,</span>
+    <span class="s">'first_name'</span><span class="p">:</span> <span class="s">'John'</span><span class="p">,</span>
+    <span class="s">'last_name'</span><span class="p">:</span> <span class="s">'Doe'</span><span class="p">,</span>
+    <span class="s">'email'</span><span class="p">:</span> <span class="s">'john@example.com'</span><span class="p">,</span>
+    <span class="s">'signedup_at'</span><span class="p">:</span> <span class="mi">1387977193</span><span class="p">,</span>
+    <span class="s">'gender'</span><span class="p">:</span> <span class="s">'male'</span><span class="p">,</span>
+    <span class="s">'custom_attributes'</span><span class="p">:</span> <span class="p">{</span><span class="s">'type'</span><span class="p">:</span> <span class="s">'earlybird'</span><span class="p">}</span>
+<span class="p">})</span>
+</code></pre>
 
 <blockquote>
 <p>You will get the following in response</p>
@@ -512,6 +546,10 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     <span class="na">first_name</span><span class="p">:</span> <span class="s1">'Johnny'</span><span class="p">,</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
 </code></pre>
+<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="s">'720974375'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="s">'first_name'</span><span class="p">:</span> <span class="s">'Johnny'</span><span class="p">,</span>
+<span class="p">})</span>
+</code></pre>
 
 <blockquote>
 <p>You will get the following in response</p>
@@ -637,6 +675,10 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 <span class="nx">Horntell</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
 </code></pre>
+<pre class="highlight python"><code><span class="c"># This will fetch the profile with the `uid` = 720974375</span>
+
+<span class="n">horntell</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="s">'720974375'</span><span class="p">)</span>
+</code></pre>
 
 <blockquote>
 <p>You will get the following in response</p>
@@ -695,6 +737,10 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 
 <span class="nx">Horntell</span><span class="p">.</span><span class="nx">profile</span><span class="p">.</span><span class="k">delete</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
+</code></pre>
+<pre class="highlight python"><code><span class="c"># This will delete the profile with the `uid` = 720974375</span>
+
+<span class="n">horntell</span><span class="o">.</span><span class="n">Profile</span><span class="p">()</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s">'720974375'</span><span class="p">)</span>
 </code></pre>
 
 <p>The following endpoint deletes the profile against the <code class="prettyprint">uid</code> passed. On successful request, it will return a HTTP 204 (No Content) response.</p>
@@ -769,6 +815,15 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     <span class="na">html</span><span class="p">:</span> <span class="s1">'&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.'</span><span class="p">,</span>
     <span class="na">link</span><span class="p">:</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
+</code></pre>
+<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Horn</span><span class="p">()</span><span class="o">.</span><span class="n">to_profile</span><span class="p">(</span><span class="s">'720974375'</span><span class="p">,</span> <span class="p">{</span>  
+    <span class="s">'format'</span><span class="p">:</span> <span class="s">'link'</span><span class="p">,</span>
+    <span class="s">'type'</span><span class="p">:</span> <span class="s">'info'</span><span class="p">,</span>
+    <span class="s">'bubble'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
+    <span class="s">'text'</span><span class="p">:</span> <span class="s">'Welcome campaign was fired.'</span><span class="p">,</span>
+    <span class="s">'html'</span><span class="p">:</span> <span class="s">'&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.'</span><span class="p">,</span>
+    <span class="s">'link'</span><span class="p">:</span> <span class="s">'http://app.example.com/campaigns/welcome'</span>
+<span class="p">})</span>
 </code></pre>
 
 <blockquote>
@@ -880,6 +935,8 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 <pre class="highlight javascript"><code><span class="nx">Horntell</span><span class="p">.</span><span class="nx">campaign</span><span class="p">.</span><span class="nx">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
 </code></pre>
+<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Campaign</span><span class="p">()</span><span class="o">.</span><span class="n">to_profile</span><span class="p">(</span><span class="s">'720974375'</span><span class="p">,</span> <span class="s">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
+</code></pre>
 
 <blockquote>
 <p>You will get the HTTP 204 (No Content) in response for the successful request.</p>
@@ -908,6 +965,8 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 </code></pre>
 <pre class="highlight javascript"><code><span class="nx">Horntell</span><span class="p">.</span><span class="nx">campaign</span><span class="p">.</span><span class="nx">toProfiles</span><span class="p">([</span><span class="s2">"720974375"</span><span class="p">,</span> <span class="s2">"720974376"</span><span class="p">,</span> <span class="s2">"720974377"</span><span class="p">],</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
     <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
+</code></pre>
+<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Campaign</span><span class="p">()</span><span class="o">.</span><span class="n">to_profiles</span><span class="p">([</span><span class="s">"720974375"</span><span class="p">,</span> <span class="s">"720974376"</span><span class="p">,</span> <span class="s">"720974377"</span><span class="p">],</span> <span class="s">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
 </code></pre>
 
 <blockquote>
@@ -939,6 +998,7 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
                 <a href="#" data-language-name="php">php</a>
                 <a href="#" data-language-name="ruby">ruby</a>
                 <a href="#" data-language-name="javascript">javascript</a>
+                <a href="#" data-language-name="python">python</a>
           </div>
       </div>
     </div>
