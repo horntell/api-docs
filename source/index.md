@@ -433,6 +433,12 @@ Horntell.profile.update('720974375', {
 }).then(successCallback, errorCallback);
 ```
 
+```python
+horntell.Profile().update('720974375', {
+    'first_name': 'Johnny',
+})
+```
+
 > You will get the following in response
 
 ```json
