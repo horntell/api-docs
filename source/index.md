@@ -6,6 +6,7 @@ language_tabs:
 - php
 - ruby
 - javascript
+- python
 
 search: false
 ---
@@ -47,6 +48,11 @@ Horntell::App.init('hornokpleasekey', 'hornokpleasesecret');
 ```javascript
 var Horntell = require('horntell');
 Horntell.app.init('hornokpleasekey', 'hornokpleasesecret');
+```
+
+```python
+import horntell
+horntell.App().init('hornokpleasekey', 'hornokpleasesecret')
 ```
 
 You authenticate to the Horntell API by providing your API key and secret in the request. You can manage your API key and secret from your account. Your API keys carry many privileges, so be sure to keep them secret!
