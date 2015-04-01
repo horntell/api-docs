@@ -526,6 +526,12 @@ Horntell.profile.find('720974375')
     .then(successCallback, errorCallback);
 ```
 
+```python
+# This will fetch the profile with the `uid` = 720974375
+
+horntell.Profile().find('720974375')
+```
+
 > You will get the following in response
 
 ```json
