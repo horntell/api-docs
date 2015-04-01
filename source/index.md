@@ -810,6 +810,10 @@ Horntell.campaign.toProfiles(["720974375", "720974376", "720974377"], '54afd3259
     .then(successCallback, errorCallback);
 ```
 
+```python
+horntell.Campaign().to_profiles(["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567')
+```
+
 > You will get the HTTP 204 (No Content) in response for the successful request.
 
 What if you would want to run a campaign for 100 users? Making 100 API calls is not a good way to do it. Better way is to use this end-point which accepts an array of `profile_uid`'s and runs the campaign for all of those.
