@@ -773,6 +773,10 @@ Horntell.campaign.toProfile('720974375', '54afd3259f17f6b9468b4567')
     .then(successCallback, errorCallback);
 ```
 
+```python
+horntell.Campaign().to_profile('720974375', '54afd3259f17f6b9468b4567')
+```
+
 > You will get the HTTP 204 (No Content) in response for the successful request.
 
 ### Attributes
