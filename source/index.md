@@ -17,6 +17,7 @@ search: false
 # PHP library available at https://github.com/horntell/php-sdk.
 # Ruby library available ar https://github.com/horntell/ruby-sdk
 # Node library available ar https://github.com/horntell/node-sdk
+# Python library available ar https://github.com/horntell/python-sdk
 ```
 
 Welcome to the Horntell API. The API is organized around REST. Our API is designed to have predictable, resource-oriented URLs and uses HTTP response codes to indicate API errors.
@@ -25,7 +26,7 @@ We use built-in HTTP features, like HTTP authentication and HTTP verbs, which ca
 
 JSON will be returned in all responses from the API, including errors (though if you're using API bindings, we will convert the response to the appropriate language-specific object).
 
-We have a library for [PHP](https://github.com/horntell/php-sdk), [Ruby](https://github.com/horntell/ruby-sdk) and [Node](https://github.com/horntell/node-sdk) ready (others coming soon), but making the calls to API in others shouldn't be different than making cURL requests in the language of your choice. The examples are given on the right hand side.
+We have a library for [PHP](https://github.com/horntell/php-sdk), [Ruby](https://github.com/horntell/ruby-sdk), [Node](https://github.com/horntell/node-sdk) and [Python](https://github.com/horntell/python-sdk) ready, but making the calls to API in others shouldn't be different than making cURL requests in the language of your choice. The examples are given on the right hand side.
 
 The base URL for all the API requests is: **https://api.horntell.com**
 
