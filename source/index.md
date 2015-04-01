@@ -187,6 +187,11 @@ Horntell::App.set_version('v1');
 Horntell.app.setVersion('v1');
 ```
 
+```python
+# it already defaults to v1, so this can be skipped
+horntell.App().set_version('v1')
+```
+
 Horntell allows its API to be backward-compatible, and we allow this using the versioned API. Current version of the API is `v1`.
 
 You have to specify the version of the API with each API request in the `Accept:` header. The example on the right is using the version `v1`. If version is not specified with a request, we will route that request to the latest verion of the API.
