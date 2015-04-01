@@ -140,6 +140,25 @@ function(error) {
 }
 ```
 
+```python
+try:
+    # Use SDK for Python
+except horntell.errors.ForbiddenError, error:
+    # you were successfully authenticated but not allowed to do what you were trying to do.
+except horntell.errors.NotFoundError, error:
+    # the resource you wanted to work with was not found. eg. creating horn for a profile that doesn't exist.
+except horntell.errors.InvalidRequestError, error:
+    # any errors (Forbidden, NotFound, etc.) that are thrown due to invalid request extend from this error, and thus, it can be used to catch all such errors instead of catching all of them individually.
+except horntell.errors.AuthenticationError, error:
+    # the request couldn't be authenticated properly, please verify your app's credentials in such case.
+except horntell.errors.ServiceError, error:
+    # this error is thrown when something wrong goes on Horntell's servers. Ideally, it should never be thrown. But if it does, we are pinged and we get on fixing it immediately.
+except horntell.errors.NetworkError, error:
+    # this error is thrown when some network issue arises and the request couldn't be sent to Horntell. Please check your network connection in such case.
+except horntell.errors.Error, error:
+    # of course, you can be a little lazy and simply catch just this one error, which is the parent of each of the above errors.
+```
+
 ### Handling Errors
 
 Our SDKs can throw exceptions/errors for many reasons, like network issues, validation errors, authentication errors, etc. We strongly recommend always trying to gracefully handle these exceptions.
