@@ -210,6 +210,27 @@
 
 <p>You have to specify the version of the API with each API request in the <code class="prettyprint">Accept:</code> header. The example on the right is using the version <code class="prettyprint">v1</code>. If version is not specified with a request, we will route that request to the latest verion of the API.</p>
 
+<h1 id="hashing">Hashing</h1>
+<pre class="highlight shell"><code><span class="c"># not required in shell</span>
+</code></pre>
+<pre class="highlight php"><code><span class="cp">&lt;?php</span>
+<span class="c1">// returns correct uid_hash to be used in JS widget
+</span><span class="nx">Horntell\App</span><span class="o">::</span><span class="na">hash</span><span class="p">(</span><span class="nv">$uid</span><span class="p">);</span>
+</code></pre>
+<pre class="highlight ruby"><code><span class="c1"># returns correct uid_hash to be used in JS widget</span>
+<span class="no">Horntell</span><span class="o">::</span><span class="no">App</span><span class="p">.</span><span class="nf">hash</span><span class="p">(</span><span class="n">uid</span><span class="p">);</span>
+</code></pre>
+<pre class="highlight javascript"><code><span class="c1">// returns correct uid_hash to be used in JS widget</span>
+<span class="nx">Horntell</span><span class="p">.</span><span class="nx">app</span><span class="p">.</span><span class="nx">hash</span><span class="p">(</span><span class="nx">uid</span><span class="p">);</span>
+</code></pre>
+<pre class="highlight python"><code><span class="c"># returns correct uid_hash to be used in JS widget</span>
+<span class="n">horntell</span><span class="o">.</span><span class="n">App</span><span class="p">()</span><span class="o">.</span><span class="nb">hash</span><span class="p">(</span><span class="n">uid</span><span class="p">)</span>
+</code></pre>
+
+<p><a href="http://docs.horntell.com/help/articles/how-to-integrate-horntell-center/">Horntell Center</a> needs you to pass a variable called <code class="prettyprint">uid_hash</code> when configuring. This hash is HMAC SHA256 value of the <code class="prettyprint">uid</code> using your app&rsquo;s secret key, and is responsible in making sure that the notifications are loaded for the correct user.</p>
+
+<p>Because the hash is needed to be computed on server side, it becomes quite a task to do so. Thus, our SDKs in various languages provides a handy <code class="prettyprint">hash()</code> method that does it for you. You&rsquo;ll only need to pass in the <code class="prettyprint">uid</code> and the <code class="prettyprint">hash()</code> method will return the correct <code class="prettyprint">uid_hash</code> for that <code class="prettyprint">uid</code>.</p>
+
 <h1 id="profiles">Profiles</h1>
 
 <p>Profiles are the most important object in your app. These objects reflect your users directly (think of them as profiles for your users). Most of the things Horntell allows you to do are dependent on the profiles (after all, they are whom you want to see more engaged in your app).</p>
@@ -458,7 +479,7 @@
 </tr>
 <tr>
 <td>signedup_at</td>
-<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">yyyy-mm-dd hh:mm:ss</code></em> <em><code class="prettyprint">required</code></em> <br /> The time at which the user signed up for your app.</td>
+<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">yyyy-mm-dd hh:mm:ss</code></em> <br /> The time at which the user signed up for your app.</td>
 </tr>
 <tr>
 <td>avatar_url</td>
@@ -786,7 +807,8 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
         "bubble": true,
         "text": "Welcome campaign was fired.",
         "html": "&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.",
-        "link": "http://example.com/campaigns/welcome"
+        "link": "http://example.com/campaigns/welcome",
+        "new_window": true
     }'</span>
 </code></pre>
 <pre class="highlight php"><code><span class="cp">&lt;?php</span>
@@ -796,7 +818,8 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     <span class="s1">'bubble'</span> <span class="o">=&gt;</span> <span class="kc">true</span><span class="p">,</span>
     <span class="s1">'text'</span> <span class="o">=&gt;</span> <span class="s1">'Welcome campaign was fired.'</span><span class="p">,</span>
     <span class="s1">'html'</span> <span class="o">=&gt;</span> <span class="s1">'&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.'</span><span class="p">,</span>
-    <span class="s1">'link'</span> <span class="o">=&gt;</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span>
+    <span class="s1">'link'</span> <span class="o">=&gt;</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span><span class="p">,</span>
+    <span class="s1">'new_window'</span> <span class="o">=&gt;</span> <span class="kc">true</span>
 <span class="p">));</span>
 </code></pre>
 <pre class="highlight ruby"><code><span class="no">Horntell</span><span class="o">::</span><span class="no">Horn</span><span class="p">.</span><span class="nf">to_profile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="p">{</span>
@@ -805,7 +828,8 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     <span class="ss">:bubble</span> <span class="o">=&gt;</span> <span class="kp">true</span><span class="p">,</span>
     <span class="ss">:text</span> <span class="o">=&gt;</span> <span class="s1">'Welcome campaign was fired.'</span><span class="p">,</span>
     <span class="ss">:html</span> <span class="o">=&gt;</span> <span class="s1">'&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.'</span><span class="p">,</span>
-    <span class="ss">:link</span> <span class="o">=&gt;</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span>
+    <span class="ss">:link</span> <span class="o">=&gt;</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span><span class="p">,</span>
+    <span class="ss">:new_window</span> <span class="o">=&gt;</span> <span class="kp">true</span>
 <span class="p">})</span>
 </code></pre>
 <pre class="highlight javascript"><code><span class="nx">Horntell</span><span class="p">.</span><span class="nx">horn</span><span class="p">.</span><span class="nx">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="p">{</span>  
@@ -814,7 +838,8 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     <span class="na">bubble</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
     <span class="na">text</span><span class="p">:</span> <span class="s1">'Welcome campaign was fired.'</span><span class="p">,</span>
     <span class="na">html</span><span class="p">:</span> <span class="s1">'&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.'</span><span class="p">,</span>
-    <span class="na">link</span><span class="p">:</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span>
+    <span class="na">link</span><span class="p">:</span> <span class="s1">'http://app.example.com/campaigns/welcome'</span><span class="p">,</span>
+    <span class="na">new_window</span><span class="p">:</span> <span class="kc">true</span>
 <span class="p">}).</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
 </code></pre>
 <pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Horn</span><span class="p">()</span><span class="o">.</span><span class="n">to_profile</span><span class="p">(</span><span class="s">'720974375'</span><span class="p">,</span> <span class="p">{</span>  
@@ -823,7 +848,9 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     <span class="s">'bubble'</span><span class="p">:</span> <span class="bp">True</span><span class="p">,</span>
     <span class="s">'text'</span><span class="p">:</span> <span class="s">'Welcome campaign was fired.'</span><span class="p">,</span>
     <span class="s">'html'</span><span class="p">:</span> <span class="s">'&lt;strong&gt;Welcome&lt;/strong&gt; campaign was fired.'</span><span class="p">,</span>
-    <span class="s">'link'</span><span class="p">:</span> <span class="s">'http://app.example.com/campaigns/welcome'</span>
+    <span class="s">'link'</span><span class="p">:</span> <span class="s">'http://app.example.com/campaigns/welcome'</span><span class="p">,</span>
+    <span class="s">'new_window'</span><span class="p">:</span> <span class="bp">True</span>
+    <span class="s">'new_window'</span><span class="p">:</span> <span class="bp">True</span>
 <span class="p">})</span>
 </code></pre>
 
@@ -896,6 +923,10 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 <td>link</td>
 <td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">url</code></em> <em><code class="prettyprint">required</code></em> <br /> It is the URL of the page where the user should be sent to upon clicking.</td>
 </tr>
+<tr>
+<td>new_window</td>
+<td><em><code class="prettyprint">boolean</code></em> <br /> When set to <code class="prettyprint">true</code>, the notification created will open the links in new window.</td>
+</tr>
 </tbody></table></li>
 <li><p><strong>Talk</strong></p>
 
@@ -927,25 +958,52 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
     -H <span class="s2">"Content-Type: application/json"</span>
+    -d <span class="s1">'
+    {
+        "meta": {
+            "friend_name": "Alley Doe"
+        }
+    }'</span>
 </code></pre>
 <pre class="highlight php"><code><span class="cp">&lt;?php</span>
-<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Campaign</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">);</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Campaign</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'friend_name'</span> <span class="o">=&gt;</span> <span class="s1">'Alley Doe'</span><span class="p">)</span>
+<span class="p">);</span>
 </code></pre>
-<pre class="highlight ruby"><code><span class="no">Horntell</span><span class="o">::</span><span class="no">Campaign</span><span class="p">.</span><span class="nf">to_profile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
+<pre class="highlight ruby"><code><span class="no">Horntell</span><span class="o">::</span><span class="no">Campaign</span><span class="p">.</span><span class="nf">to_profile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">,</span>
+    <span class="p">{</span><span class="ss">:friend_name</span> <span class="o">=&gt;</span> <span class="s1">'Alley Doe'</span><span class="p">}</span>
+<span class="p">)</span>
 </code></pre>
-<pre class="highlight javascript"><code><span class="nx">Horntell</span><span class="p">.</span><span class="nx">campaign</span><span class="p">.</span><span class="nx">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
+<pre class="highlight javascript"><code><span class="nx">Horntell</span><span class="p">.</span><span class="nx">campaign</span><span class="p">.</span><span class="nx">toProfile</span><span class="p">(</span><span class="s1">'720974375'</span><span class="p">,</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">,</span>
+    <span class="p">{</span><span class="na">friend_name</span><span class="p">:</span> <span class="s1">'Alley Doe'</span><span class="p">}</span>
+<span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
 </code></pre>
-<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Campaign</span><span class="p">()</span><span class="o">.</span><span class="n">to_profile</span><span class="p">(</span><span class="s">'720974375'</span><span class="p">,</span> <span class="s">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
+<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Campaign</span><span class="p">()</span><span class="o">.</span><span class="n">to_profile</span><span class="p">(</span><span class="s">'720974375'</span><span class="p">,</span> <span class="s">'54afd3259f17f6b9468b4567'</span><span class="p">,</span>
+    <span class="p">{</span><span class="s">'friend_name'</span><span class="p">:</span> <span class="s">'Alley Doe'</span><span class="p">}</span>
+<span class="p">)</span>
 </code></pre>
 
 <blockquote>
 <p>You will get the HTTP 204 (No Content) in response for the successful request.</p>
 </blockquote>
 
+<p>If you&rsquo;ve specified some <strong>meta variables</strong> (using content like this: <code class="prettyprint">{meta.friend_name}</code>) in your campaigns, then, you&rsquo;ll need to pass in the hash of those meta variables with their corresponding values. Horntell will then replace those meta variables with the values passed to create final compiled notification&rsquo;s content.</p>
+
+<p>If there&rsquo;re no meta variables in your campaign&rsquo;s content, you don&rsquo;t need to pass in anything.</p>
+
 <h3 id="attributes">Attributes</h3>
 
-<p>There&rsquo;re no attributes required when running a campaign for a single profile.</p>
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>meta</td>
+<td><em><code class="prettyprint">array</code></em> <br /> If your campaign contains meta variables, you&rsquo;ll need to pass the values of those variables when firing the campaign.</td>
+</tr>
+</tbody></table>
 
 <h2 id="run-campaign-for-a-multiple-profiles">Run Campaign for a Multiple Profiles</h2>
 
@@ -957,17 +1015,34 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     -u hornokpleasekey:hornokpleasesecret <span class="se">\</span>
     -H <span class="s2">"Accept: application/vnd.horntell.v1+json"</span> <span class="se">\</span>
     -H <span class="s2">"Content-Type: application/json"</span>
-    -d <span class="s1">'{"profile_uids": ["720974375", "720974376", "720974377"]}'</span>
+    -d <span class="s1">'
+    {
+        "profile_uids": ["720974375", "720974376", "720974377"],
+        "meta": {
+            "friend_name": "Alley Doe"
+        }
+    }'</span>
 </code></pre>
 <pre class="highlight php"><code><span class="cp">&lt;?php</span>
-<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Campaign</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toProfiles</span><span class="p">(</span><span class="k">array</span><span class="p">(</span><span class="s2">"720974375"</span><span class="p">,</span> <span class="s2">"720974376"</span><span class="p">,</span> <span class="s2">"720974377"</span><span class="p">),</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">);</span>
+<span class="p">(</span><span class="k">new</span> <span class="nx">Horntell\Campaign</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">toProfiles</span><span class="p">(</span>
+    <span class="k">array</span><span class="p">(</span><span class="s2">"720974375"</span><span class="p">,</span> <span class="s2">"720974376"</span><span class="p">,</span> <span class="s2">"720974377"</span><span class="p">),</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">,</span>
+    <span class="k">array</span><span class="p">(</span><span class="s1">'friend_name'</span> <span class="o">=&gt;</span> <span class="s1">'Alley Doe'</span><span class="p">)</span>
+<span class="p">);</span>
 </code></pre>
-<pre class="highlight ruby"><code><span class="no">Horntell</span><span class="p">\</span><span class="no">Campaign</span><span class="o">::</span><span class="n">to_profiles</span><span class="p">([</span><span class="s2">"720974375"</span><span class="p">,</span> <span class="s2">"720974376"</span><span class="p">,</span> <span class="s2">"720974377"</span><span class="p">],</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
+<pre class="highlight ruby"><code><span class="no">Horntell</span><span class="p">\</span><span class="no">Campaign</span><span class="o">::</span><span class="n">to_profiles</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">"720974375"</span><span class="p">,</span> <span class="s2">"720974376"</span><span class="p">,</span> <span class="s2">"720974377"</span><span class="p">],</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">,</span>
+    <span class="p">{</span><span class="ss">:friend_name</span> <span class="o">=&gt;</span> <span class="s1">'Alley Doe'</span><span class="p">}</span>
+<span class="p">)</span>
 </code></pre>
-<pre class="highlight javascript"><code><span class="nx">Horntell</span><span class="p">.</span><span class="nx">campaign</span><span class="p">.</span><span class="nx">toProfiles</span><span class="p">([</span><span class="s2">"720974375"</span><span class="p">,</span> <span class="s2">"720974376"</span><span class="p">,</span> <span class="s2">"720974377"</span><span class="p">],</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
-    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
+<pre class="highlight javascript"><code><span class="nx">Horntell</span><span class="p">.</span><span class="nx">campaign</span><span class="p">.</span><span class="nx">toProfiles</span><span class="p">(</span>
+    <span class="p">[</span><span class="s2">"720974375"</span><span class="p">,</span> <span class="s2">"720974376"</span><span class="p">,</span> <span class="s2">"720974377"</span><span class="p">],</span> <span class="s1">'54afd3259f17f6b9468b4567'</span><span class="p">,</span>
+    <span class="p">{</span><span class="na">friend_name</span><span class="p">:</span> <span class="s1">'Alley Doe'</span><span class="p">}</span>
+<span class="p">).</span><span class="nx">then</span><span class="p">(</span><span class="nx">successCallback</span><span class="p">,</span> <span class="nx">errorCallback</span><span class="p">);</span>
 </code></pre>
-<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Campaign</span><span class="p">()</span><span class="o">.</span><span class="n">to_profiles</span><span class="p">([</span><span class="s">"720974375"</span><span class="p">,</span> <span class="s">"720974376"</span><span class="p">,</span> <span class="s">"720974377"</span><span class="p">],</span> <span class="s">'54afd3259f17f6b9468b4567'</span><span class="p">)</span>
+<pre class="highlight python"><code><span class="n">horntell</span><span class="o">.</span><span class="n">Campaign</span><span class="p">()</span><span class="o">.</span><span class="n">to_profiles</span><span class="p">(</span>
+    <span class="p">[</span><span class="s">"720974375"</span><span class="p">,</span> <span class="s">"720974376"</span><span class="p">,</span> <span class="s">"720974377"</span><span class="p">],</span> <span class="s">'54afd3259f17f6b9468b4567'</span><span class="p">,</span>
+    <span class="p">{</span><span class="s">'friend_name'</span><span class="p">:</span> <span class="s">'Alley Doe'</span><span class="p">}</span>
+<span class="p">)</span>
 </code></pre>
 
 <blockquote>
@@ -989,6 +1064,10 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 <tr>
 <td>profile_uids</td>
 <td><em><code class="prettyprint">array</code></em> <em><code class="prettyprint">required</code></em> <br /> It will be an array of <code class="prettyprint">profile_uid</code>&rsquo;s.</td>
+</tr>
+<tr>
+<td>meta</td>
+<td><em><code class="prettyprint">array</code></em> <br /> If your campaign contains meta variables, you&rsquo;ll need to pass the values of those variables when firing the campaign.</td>
 </tr>
 </tbody></table>
 
