@@ -831,11 +831,15 @@ horntell.Campaign().to_profile('720974375', '54afd3259f17f6b9468b4567',
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
 
-### Attributes
-
 If you've specified some **meta variables** (using content like this: `{meta.friend_name}`) in your campaigns, then, you'll need to pass in the hash of those meta variables with their corresponding values. Horntell will then replace those meta variables with the values passed to create final compiled notification's content.
 
 If there're no meta variables in your campaign's content, you don't need to pass in anything.
+
+### Attributes
+
+Attribute | Description
+--------- | -----------
+meta | *`array`* <br /> If your campaign contains meta variables, you'll need to pass the values of those variables when firing the campaign.
 
 ## Run Campaign for a Multiple Profiles
 
