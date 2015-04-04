@@ -679,7 +679,8 @@ curl "https://api.horntell.com/profiles/720974375/horns" \
         "bubble": true,
         "text": "Welcome campaign was fired.",
         "html": "<strong>Welcome</strong> campaign was fired.",
-        "link": "http://example.com/campaigns/welcome"
+        "link": "http://example.com/campaigns/welcome",
+        "new_window": true
     }'
 ```
 
@@ -691,7 +692,8 @@ curl "https://api.horntell.com/profiles/720974375/horns" \
     'bubble' => true,
     'text' => 'Welcome campaign was fired.',
     'html' => '<strong>Welcome</strong> campaign was fired.',
-    'link' => 'http://app.example.com/campaigns/welcome'
+    'link' => 'http://app.example.com/campaigns/welcome',
+    'new_window' => true
 ));
 ```
 
@@ -702,7 +704,8 @@ Horntell::Horn.to_profile('720974375', {
     :bubble => true,
     :text => 'Welcome campaign was fired.',
     :html => '<strong>Welcome</strong> campaign was fired.',
-    :link => 'http://app.example.com/campaigns/welcome'
+    :link => 'http://app.example.com/campaigns/welcome',
+    :new_window => true
 })
 ```
 
@@ -713,7 +716,8 @@ Horntell.horn.toProfile('720974375', {
     bubble: true,
     text: 'Welcome campaign was fired.',
     html: '<strong>Welcome</strong> campaign was fired.',
-    link: 'http://app.example.com/campaigns/welcome'
+    link: 'http://app.example.com/campaigns/welcome',
+    new_window: true
 }).then(successCallback, errorCallback);
 ```
 
@@ -724,7 +728,9 @@ horntell.Horn().to_profile('720974375', {
     'bubble': True,
     'text': 'Welcome campaign was fired.',
     'html': '<strong>Welcome</strong> campaign was fired.',
-    'link': 'http://app.example.com/campaigns/welcome'
+    'link': 'http://app.example.com/campaigns/welcome',
+    'new_window': True
+    'new_window': True
 })
 ```
 
@@ -761,6 +767,7 @@ Each format comes with some extra attributes that allows you to control the inte
     Attribute | Description
     --------- | -----------
     link | *`string`* *`url`* *`required`* <br /> It is the URL of the page where the user should be sent to upon clicking.
+    new_window | *`boolean`* <br /> When set to `true`, the notification created will open the links in new window.
 
 - **Talk**
 
