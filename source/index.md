@@ -197,6 +197,37 @@ Horntell allows its API to be backward-compatible, and we allow this using the v
 
 You have to specify the version of the API with each API request in the `Accept:` header. The example on the right is using the version `v1`. If version is not specified with a request, we will route that request to the latest verion of the API.
 
+# Hashing
+
+```shell
+# not required in shell
+```
+
+```php
+<?php
+// returns correct uid_hash to be used in JS widget
+Horntell\App::hash($uid);
+```
+
+```ruby
+# returns correct uid_hash to be used in JS widget
+Horntell::App.hash(uid);
+```
+
+```javascript
+// returns correct uid_hash to be used in JS widget
+Horntell.app.hash(uid);
+```
+
+```python
+# returns correct uid_hash to be used in JS widget
+horntell.App().hash(uid)
+```
+
+[Horntell Center](http://docs.horntell.com/help/articles/how-to-integrate-horntell-center/) needs you to pass a variable called `uid_hash` when configuring. This hash is HMAC SHA256 value of the `uid` using your app's secret key, and is responsible in making sure that the notifications are loaded for the correct user.
+
+Because the hash is needed to be computed on server side, it becomes quite a task to do so. Thus, our SDKs in various languages provides a handy `hash()` method that does it for you. You'll only need to pass in the `uid` and the `hash()` method will return the correct `uid_hash` for that `uid`.
+
 # Profiles
 
 Profiles are the most important object in your app. These objects reflect your users directly (think of them as profiles for your users). Most of the things Horntell allows you to do are dependent on the profiles (after all, they are whom you want to see more engaged in your app).
