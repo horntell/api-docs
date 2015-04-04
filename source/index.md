@@ -796,31 +796,46 @@ curl "https://api.horntell.com/profiles/720974375/campaigns/54afd3259f17f6b9468b
     -u hornokpleasekey:hornokpleasesecret \
     -H "Accept: application/vnd.horntell.v1+json" \
     -H "Content-Type: application/json"
+    -d '
+    {
+        "meta": {
+            "friend_name": "Alley Doe"
+        }
+    }'
 ```
 
 ```php
 <?php
-(new Horntell\Campaign)->toProfile('720974375', '54afd3259f17f6b9468b4567');
+(new Horntell\Campaign)->toProfile('720974375', '54afd3259f17f6b9468b4567',
+    array('friend_name' => 'Alley Doe')
+);
 ```
 
 ```ruby
-Horntell::Campaign.to_profile('720974375', '54afd3259f17f6b9468b4567')
+Horntell::Campaign.to_profile('720974375', '54afd3259f17f6b9468b4567',
+    {:friend_name => 'Alley Doe'}
+)
 ```
 
 ```javascript
-Horntell.campaign.toProfile('720974375', '54afd3259f17f6b9468b4567')
-    .then(successCallback, errorCallback);
+Horntell.campaign.toProfile('720974375', '54afd3259f17f6b9468b4567',
+    {friend_name: 'Alley Doe'}
+).then(successCallback, errorCallback);
 ```
 
 ```python
-horntell.Campaign().to_profile('720974375', '54afd3259f17f6b9468b4567')
+horntell.Campaign().to_profile('720974375', '54afd3259f17f6b9468b4567',
+    {'friend_name': 'Alley Doe'}
+)
 ```
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
 
 ### Attributes
 
-There're no attributes required when running a campaign for a single profile.
+If you've specified some **meta variables** (using content like this: `{meta.friend_name}`) in your campaigns, then, you'll need to pass in the hash of those meta variables with their corresponding values. Horntell will then replace those meta variables with the values passed to create final compiled notification's content.
+
+If there're no meta variables in your campaign's content, you don't need to pass in anything.
 
 ## Run Campaign for a Multiple Profiles
 
@@ -832,25 +847,42 @@ curl "https://api.horntell.com/profiles/campaigns/54afd3259f17f6b9468b4567" \
     -u hornokpleasekey:hornokpleasesecret \
     -H "Accept: application/vnd.horntell.v1+json" \
     -H "Content-Type: application/json"
-    -d '{"profile_uids": ["720974375", "720974376", "720974377"]}'
+    -d '
+    {
+        "profile_uids": ["720974375", "720974376", "720974377"],
+        "meta": {
+            "friend_name": "Alley Doe"
+        }
+    }'
 ```
 
 ```php
 <?php
-(new Horntell\Campaign)->toProfiles(array("720974375", "720974376", "720974377"), '54afd3259f17f6b9468b4567');
+(new Horntell\Campaign)->toProfiles(
+    array("720974375", "720974376", "720974377"), '54afd3259f17f6b9468b4567',
+    array('friend_name' => 'Alley Doe')
+);
 ```
 
 ```ruby
-Horntell\Campaign::to_profiles(["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567')
+Horntell\Campaign::to_profiles(
+    ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
+    {:friend_name => 'Alley Doe'}
+)
 ```
 
 ```javascript
-Horntell.campaign.toProfiles(["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567')
-    .then(successCallback, errorCallback);
+Horntell.campaign.toProfiles(
+    ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
+    {friend_name: 'Alley Doe'}
+).then(successCallback, errorCallback);
 ```
 
 ```python
-horntell.Campaign().to_profiles(["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567')
+horntell.Campaign().to_profiles(
+    ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
+    {'friend_name': 'Alley Doe'}
+)
 ```
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
@@ -864,3 +896,4 @@ When running a campaign for multiple profiles, we need these attributes.
 Attribute | Description
 --------- | -----------
 profile_uids | *`array`* *`required`* <br /> It will be an array of `profile_uid`'s.
+meta | *`array`* <br /> If your campaign contains meta variables, you'll need to pass the values of those variables when firing the campaign.
