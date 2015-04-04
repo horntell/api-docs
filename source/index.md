@@ -400,7 +400,7 @@ uid | *`string`* *`required`* <br /> The primary identifier for the user in your
 first_name | *`string`* <br /> First name of the user in your app.
 last_name | *`string`* <br /> Last name of the user in your app.
 email | *`string`* <br /> The valid email address for the user. This email address is used to send the campaign emails to the profile.
-signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* *`required`* <br /> The time at which the user signed up for your app.
+signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> The time at which the user signed up for your app.
 avatar_url | *`string`* *`url`* <br /> The URL at which the Horntell can find the profile picture for the profile. This makes your dashboard look good.
 gender | *`string`* <br /> Gender can either be `male` or `female` (all lowercase).
 position | *`string`* <br /> The position at which the user works at his company.
