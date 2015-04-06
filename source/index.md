@@ -902,9 +902,11 @@ Attribute | Description
 profile_uids | *`array`* *`required`* <br /> It will be an array of `profile_uid`'s.
 meta | *`array`* <br /> If your campaign contains meta variables, you'll need to pass the values of those variables when firing the campaign.
 
-# Webhooks
+# Events
 
-Horntell strives to remove as much friction as possible between your users and them making an action. Interactive notifications allows you to embed the call-to-action right inside the notification. And webhooks are the way Horntell will notify your app, when some user takes some action inside your notification.
+Events are our way of letting your app know about something interesting that has just happened in your account. When an interesting event occurs, we create a new event object. For example, when your user interacts with the app, `horn.responded` event is created.
+
+We have a system for sending the events directly to your server, called webhooks. Webhooks are managed in your app's setting. Webhooks are special URLs in your application, to which we will post the event and you can act accordingly.
 
 ## Types of events
 
