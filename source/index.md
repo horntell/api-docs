@@ -908,10 +908,56 @@ Events are our way of letting your app know about something interesting that has
 
 We have a system for sending the events directly to your server, called webhooks. Webhooks are managed in your app's setting. Webhooks are special URLs in your application, to which we will post the event and you can act accordingly.
 
+## The event object
+
+```json
+{
+  "id": "55223xxxxxxxxxxxxxxx4568",
+  "app_id": "54ffexxxxxxxxxxxxxxx45a0",
+  "type": "horn.responded",
+  "resource": {
+    "id": "55223xxxxxxxxxxxxxxx4567",
+    "trigger": {
+        "type": "campaign",
+        "id": "54345xxxxxxxxxxxxxxx5578"
+    },
+    "format": "talk",
+    "bubble": true,
+    "type": "success",
+    "text": "Enter your email to receive updates from us!",
+    "icon": null,
+    "html": "<p>We've got a killer roadmap ahead. Want to stay updated?</p><p>Your email address please?</p>",
+    "seen_at": 1428306116,
+    "read_at": 1428306294,
+    "delivered_at": 1428306117,
+    "responded_at": 1428306294,
+    "response": "john@example.com",
+    "profile_uid": "720974375",
+    "created_at": 1428306116,
+    "updated_at": 1428306294
+  },
+  "pending_webhooks": 1,
+  "attempts_count": 0,
+  "created_at": 1428306294
+}
+```
+
+### Attributes
+
+Attribute | Description
+--------- | -----------
+id | *`string`* <br /> This is the primary key of the event.
+app_id | *`string`* <br /> This is the identifer of your app for which the event occured.
+type | *`string`* <br /> The type of the event.
+resource | *`object`* <br /> The object that corresponds to the event.
+pending_webhooks | *`number`* <br /> The number of webhooks that are pending to be executed.
+attempts_count | *`number*` <br /> Number of attempts that have been made in total to execute all the webhooks.
+created_at | *`timestamp`* <br /> The timestamp in UTC, when the event was created.
+
 ## Types of events
 
 However we are supporting just one event as of now (i.e. `horn.responded`), we are adding more events like `profile.created`, `profile.updated`, etc in near future.
 
 Event | Resource
 --------- | -----------
-horn.responded | *describes a [horn](#horn)* <br /> Occurs whenever your user interacts with the notification.
+horn.responded | *describes a [horn](#horns)* <br /> Occurs whenever your user interacts with the notification.
