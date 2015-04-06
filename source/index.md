@@ -901,3 +901,15 @@ Attribute | Description
 --------- | -----------
 profile_uids | *`array`* *`required`* <br /> It will be an array of `profile_uid`'s.
 meta | *`array`* <br /> If your campaign contains meta variables, you'll need to pass the values of those variables when firing the campaign.
+
+# Webhooks
+
+Horntell strives to remove as much friction as possible between your users and them making an action. Interactive notifications allows you to embed the call-to-action right inside the notification. And webhooks are the way Horntell will notify your app, when some user takes some action inside your notification.
+
+## Types of events
+
+However we are supporting just one event as of now (i.e. `horn.responded`), we are adding more events like `profile.created`, `profile.updated`, etc in near future.
+
+Event | Resource
+--------- | -----------
+horn.responded | *describes a [horn](#horn)* <br /> Occurs whenever your user interacts with the notification.
