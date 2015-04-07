@@ -933,8 +933,7 @@ We have a system for sending the events directly to your server, called webhooks
     "responded_at": 1428306294,
     "response": "john@example.com",
     "profile_uid": "720974375",
-    "created_at": 1428306116,
-    "updated_at": 1428306294
+    "created_at": 1428306116
   },
   "pending_webhooks": 1,
   "attempts_count": 0,
@@ -952,7 +951,7 @@ type | *`string`* <br /> The type of the event.
 resource | *`object`* <br /> The object that corresponds to the event.
 pending_webhooks | *`number`* <br /> The number of webhooks that are pending to be executed.
 attempts_count | *`number*` <br /> Number of attempts that have been made in total to execute all the webhooks.
-created_at | *`timestamp`* <br /> The timestamp in UTC, when the event was created.
+created_at | *`timestamp`* <br /> The timestamp, when the event was created.
 
 ## Types of events
 
