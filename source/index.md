@@ -241,7 +241,7 @@ Profiles are the most important object in your app. These objects reflect your u
     "first_name": "John",
     "last_name": "Doe",
     "email": "john@example.com",
-    "signedup_at": "2013-12-25 13:13:13",
+    "signedup_at": 1387977193,
     "avatar_url": "http://example.com/johndoe.jpg",
     "gender": "Male",
     "position": "Founder & CEO",
@@ -251,19 +251,19 @@ Profiles are the most important object in your app. These objects reflect your u
     "headline": "Everyone's example!",
     "birthday": "1977-02-26",
     "custom_attributes": {
-        "first_referral_at": "2014-01-10 00:00:00",
+        "first_referral_at": 1389312000,
         "type": "earlybird"
     },
     "app_id": "539855de9016382d3b8b07d7",
-    "last_seen_at": "2014-07-10 11:27:54",
+    "last_seen_at": 1404991674,
     "campaigns_summary": {
         "53bf732028d56edc0b8b4567": {
             "count": 1,
-            "first_at": "2014-05-03 10:10:10",
-            "last_at": "2014-05-03 10:10:10"
+            "first_at": 1399111810,
+            "last_at": 1399111810
         }
     },
-    "created_at": "2014-05-01 09:56:59",
+    "created_at": 1398938219,
     "stats": {
         "total_campaigns": 1,
         "total_horns": 23
@@ -282,7 +282,7 @@ uid | *`string`* <br /> This is the identifer which is the primary identifier fo
 first_name | *`string`*
 last_name | *`string`*
 email | *`string`*
-signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> The timestamp at which the user signed up for your app.
+signedup_at | *`timestamp`* <br /> UNIX timestamp at which the user signed up for your app.
 avatar_url | *`string`* *`url`*
 gender | *`string`* <br /> Either `Male` or `Female`.
 position | *`string`* <br /> The position of the user at his company.
@@ -292,9 +292,9 @@ location | *`string`*
 headline | *`string`* <br /> The small description/bio about the user.
 birthday | *`string`* *`yyyy-mm-dd`*
 custom_attributes | *`hash`* <br /> The hash of custom key-value pairs.
-last_seen_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> This is the last time the user was seen in your app.
+last_seen_at | *`timestamp`* <br /> UNIX timestamp of the last time the user was seen in your app.
 campaigns_summary | *`object`* <br /> The summary about the campaigns that were fired for the user. Each campaign is summarized in three fields: `count`, `first_at` and `last_at`.
-created_at | *`string`* *`yyyy-mm-dd hh:mm:ss`*
+created_at | *`timestamp`*
 stats | *`object`* <br /> This object keeps track of the important data points for the user. The three stats that you'll find here are the `total_campaigns`, `total_horns`.
 segments | *`array`* <br />  The list of segments to which the user belongs.
 
@@ -321,7 +321,7 @@ curl "https://api.horntell.com/profiles" \
     'signedup_at' => 1387977193,
     'gender' => 'male',
     'custom_attributes' => array('type' => 'earlybird')
-    ));
+));
 ```
 
 ```ruby
@@ -369,7 +369,7 @@ horntell.Profile().create({
         "first_name": "John",
         "last_name": "Doe",
         "email": "john@example.com",
-        "signedup_at": "2013-12-25 13:13:13",
+        "signedup_at": 1404991674,
         "avatar_url": null,
         "gender": "Male",
         "position": null,
@@ -378,7 +378,7 @@ horntell.Profile().create({
         "location": null,
         "birthday": null,
         "headline": null,
-        "last_seen_at": "2013-12-25 13:13:13",
+        "last_seen_at": 1404991674,
         "custom_attributes": {
             "type": "earlybird"
         }
@@ -400,7 +400,7 @@ uid | *`string`* *`required`* <br /> The primary identifier for the user in your
 first_name | *`string`* <br /> First name of the user in your app.
 last_name | *`string`* <br /> Last name of the user in your app.
 email | *`string`* <br /> The valid email address for the user. This email address is used to send the campaign emails to the profile.
-signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> The time at which the user signed up for your app.
+signedup_at | *`timestamp`* <br /> UNIX time at which the user signed up for your app.
 avatar_url | *`string`* *`url`* <br /> The URL at which the Horntell can find the profile picture for the profile. This makes your dashboard look good.
 gender | *`string`* <br /> Gender can either be `male` or `female` (all lowercase).
 position | *`string`* <br /> The position at which the user works at his company.
@@ -448,7 +448,7 @@ curl "https://api.horntell.com/profiles/720974375" \
 
 (new Horntell\Profile)->update('720974375', array(
     'first_name' => 'Johnny'
-    ));
+));
 ```
 
 ```ruby
@@ -480,7 +480,7 @@ horntell.Profile().update('720974375', {
         "first_name": "Johnny",
         "last_name": "Doe",
         "email": "john@example.com",
-        "signedup_at": "2013-12-25 13:13:13",
+        "signedup_at": 1404991674,
         "avatar_url": null,
         "gender": "Male",
         "position": null,
@@ -489,7 +489,7 @@ horntell.Profile().update('720974375', {
         "location": null,
         "birthday": null,
         "headline": null,
-        "last_seen_at": "2013-12-25 13:13:13",
+        "last_seen_at": 1404991674,
         "custom_attributes": {
             "type": "earlybird"
         }
@@ -514,7 +514,7 @@ Argument | Description
 first_name | *`string`* <br /> First name of the user in your app.
 last_name | *`string`* <br /> Last name of the user in your app.
 email | *`string`* <br /> The valid email address for the user. This email address is used to send the campaign emails to the profile.
-signedup_at | *`string`* *`yyyy-mm-dd hh:mm:ss`* <br /> The time at which the user signed up for your app.
+signedup_at | *`timestamp`* <br /> UNIX time at which the user signed up for your app.
 avatar_url | *`string`* *`url`* <br /> The URL at which the Horntell can find the profile picture for the profile. This makes your dashboard look good.
 gender | *`string`* <br /> Gender can either be `male` or `female` (all lowercase).
 position | *`string`* <br /> The position at which the user works at his company.
@@ -573,7 +573,7 @@ horntell.Profile().find('720974375')
         "first_name": "Johnny",
         "last_name": "Doe",
         "email": "john@example.com",
-        "signedup_at": "2013-12-25 13:13:13",
+        "signedup_at": 1404991674,
         "avatar_url": null,
         "gender": "Male",
         "position": null,
@@ -582,7 +582,7 @@ horntell.Profile().find('720974375')
         "location": null,
         "birthday": null,
         "headline": null,
-        "last_seen_at": "2013-12-25 13:13:13",
+        "last_seen_at": 1404991674,
         "custom_attributes": {
             "type": "earlybird"
         }
@@ -737,7 +737,7 @@ curl "https://api.horntell.com/profiles/720974375/horns" \
     'html' => '<strong>Welcome</strong> campaign was fired.',
     'link' => 'http://app.example.com/campaigns/welcome',
     'new_window' => true
-    ));
+));
 ```
 
 ```ruby
@@ -851,25 +851,25 @@ curl "https://api.horntell.com/profiles/720974375/campaigns/54afd3259f17f6b9468b
 <?php
 (new Horntell\Campaign)->toProfile('720974375', '54afd3259f17f6b9468b4567',
     array('friend_name' => 'Alley Doe')
-    );
+);
 ```
 
 ```ruby
 Horntell::Campaign.to_profile('720974375', '54afd3259f17f6b9468b4567',
     {:friend_name => 'Alley Doe'}
-    )
+)
 ```
 
 ```javascript
 Horntell.campaign.toProfile('720974375', '54afd3259f17f6b9468b4567',
     {friend_name: 'Alley Doe'}
-    ).then(successCallback, errorCallback);
+).then(successCallback, errorCallback);
 ```
 
 ```python
 horntell.Campaign().to_profile('720974375', '54afd3259f17f6b9468b4567',
     {'friend_name': 'Alley Doe'}
-    )
+)
 ```
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
@@ -908,28 +908,28 @@ curl "https://api.horntell.com/profiles/campaigns/54afd3259f17f6b9468b4567" \
 (new Horntell\Campaign)->toProfiles(
     array("720974375", "720974376", "720974377"), '54afd3259f17f6b9468b4567',
     array('friend_name' => 'Alley Doe')
-    );
+);
 ```
 
 ```ruby
 Horntell\Campaign::to_profiles(
     ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
     {:friend_name => 'Alley Doe'}
-    )
+)
 ```
 
 ```javascript
 Horntell.campaign.toProfiles(
     ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
     {friend_name: 'Alley Doe'}
-    ).then(successCallback, errorCallback);
+).then(successCallback, errorCallback);
 ```
 
 ```python
 horntell.Campaign().to_profiles(
     ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
     {'friend_name': 'Alley Doe'}
-    )
+)
 ```
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
