@@ -304,11 +304,11 @@ segments | *`array`* <br />  The list of segments to which the user belongs.
 
 ```shell
 curl "https://api.horntell.com/profiles" \
-    -X POST \
-    -u hornokpleasekey:hornokpleasesecret \
-    -H "Accept: application/vnd.horntell.v1+json" \
-    -H "Content-Type: application/json" \
-    -d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": 1387977193, "gender": "male", "custom_attributes": {"type": "earlybird"}}'
+-X POST \
+-u hornokpleasekey:hornokpleasesecret \
+-H "Accept: application/vnd.horntell.v1+json" \
+-H "Content-Type: application/json" \
+-d '{"uid": "720974375", "first_name": "John", "last_name": "Doe", "email": "john@example.com", "signedup_at": 1387977193, "gender": "male", "custom_attributes": {"type": "earlybird"}}'
 ```
 
 ```php
@@ -321,7 +321,7 @@ curl "https://api.horntell.com/profiles" \
     'signedup_at' => 1387977193,
     'gender' => 'male',
     'custom_attributes' => array('type' => 'earlybird')
-));
+    ));
 ```
 
 ```ruby
@@ -435,11 +435,11 @@ Thus, data type of custom attributes become crucial when it comes to using them 
 # This will update the first name of the profile with the `uid` = 720974375
 
 curl "https://api.horntell.com/profiles/720974375" \
-    -X PUT \
-    -u hornokpleasekey:hornokpleasesecret \
-    -H "Accept: application/vnd.horntell.v1+json" \
-    -H "Content-Type: application/json" \
-    -d '{"first_name": "Johnny"}'
+-X PUT \
+-u hornokpleasekey:hornokpleasesecret \
+-H "Accept: application/vnd.horntell.v1+json" \
+-H "Content-Type: application/json" \
+-d '{"first_name": "Johnny"}'
 ```
 
 ```php
@@ -448,7 +448,7 @@ curl "https://api.horntell.com/profiles/720974375" \
 
 (new Horntell\Profile)->update('720974375', array(
     'first_name' => 'Johnny'
-));
+    ));
 ```
 
 ```ruby
@@ -533,9 +533,9 @@ custom_attributes | *`hash`* The hash of custom key-value pairs.
 # This will fetch the profile with the `uid` = 720974375
 
 curl "https://api.horntell.com/profiles/720974375" \
-    -X GET \
-    -u hornokpleasekey:hornokpleasesecret \
-    -H "Accept: application/vnd.horntell.v1+json" \
+-X GET \
+-u hornokpleasekey:hornokpleasesecret \
+-H "Accept: application/vnd.horntell.v1+json" \
 ```
 
 ```php
@@ -555,7 +555,7 @@ Horntell::Profile.find('720974375')
 // This will fetch the profile with the `uid` = 720974375
 
 Horntell.profile.find('720974375')
-    .then(successCallback, errorCallback);
+.then(successCallback, errorCallback);
 ```
 
 ```python
@@ -605,9 +605,9 @@ The following endpoint fetches the profile against the `uid` passed.
 # This will delete the profile with the `uid` = 720974375
 
 curl "https://api.horntell.com/profiles/720974375" \
-    -X DELETE \
-    -u hornokpleasekey:hornokpleasesecret \
-    -H "Accept: application/vnd.horntell.v1+json" \
+-X DELETE \
+-u hornokpleasekey:hornokpleasesecret \
+-H "Accept: application/vnd.horntell.v1+json" \
 ```
 
 ```php
@@ -627,7 +627,7 @@ Horntell::Profile.delete('720974375')
 // This will delete the profile with the `uid` = 720974375
 
 Horntell.profile.delete('720974375')
-    .then(successCallback, errorCallback);
+.then(successCallback, errorCallback);
 ```
 
 ```python
@@ -662,26 +662,69 @@ Horns are the notifications in the Horntell's terminology. A horn is the primary
     Horns of each of these formats can also be a **Bubble Horn**. Bubble horns are the horns that opens automatically upon being pushed to your users. Bubbles give you power to get better responses against your horns. But as with every other power, it comes with responsibility. If you send too many bubbles, your users might get frustrated, thus, it is advised to keep these for important/urgent things.
 </aside>
 
+## The horn object
+
+```json
+{
+    "id": "552238c4bffebca40c8b4567",
+    "profile_uid": "720974375",
+    "trigger": {
+        "type": "campaign",
+        "id": "5522354fbffebcf30b8b4567"
+    },
+    "format": "talk",
+    "bubble": true,
+    "type": "success",
+    "text": "Enter your email to receive updates from us!",
+    "html": "<p>We've got a killer roadmap ahead. Want to stay updated?</p><p>Your email address please?</p>",
+    "delivered_at": 1428306117,
+    "seen_at": 1428306116,
+    "read_at": 1428306294,
+    "responded_at": 1428306294,
+    "response": "john@example.com",
+    "created_at": 1428306116
+}
+```
+
+### Attributes
+
+Attribute | Description
+--------- | -----------
+id | *`string`* <br /> This is the primary key of the horn.
+trigger | *`object`* <br /> Hash of keys (`type` and `id`) describing how the horn was triggered. The `type` has possible values of `campaign` and `manual`, while `id` contains the primary key of campaign (if `type` is `campaign`) that triggered it, otherwise `null`.
+profile_uid | *`string`* <br /> The `uid` of profile, for which this horn was created.
+format | *`string`* *`required`* <br /> Format of horn among these: `simple`, `ask`, `link` or `talk`.
+type | *`string`* *`required`* <br /> Type of the horn among these: `info` (blue), `success` (green), `warning` (orange), `danger` (red).
+text | *`string`* *`required`* <br /> This is the plain text version of the horn.
+bubble | *`boolean`* <br /> Is this horn, a bubble type?
+html | *`string`* <br /> The HTML version of the horn.
+delivered_at | *`timestamp`* <br /> UNIX timestamp when the horn was delivered to the profile.
+seen_at | *`timestamp`* <br /> UNIX timestamp when profile sees the horn.
+read_at | *`timestamp`* <br /> UNIX timestamp when profile reads the horn.
+responded_at | *`timestamp`* <br /> UNIX timestamp when profiles responds to the horn.
+response | *`string`* / *`object`* <br /> Response to the horn by profile. <br /> <ul><li>When format is `simple` and `link`, this will be `null`.</li> <li>When format is `talk`, this will be a `string`.</li> <li>When format is `ask`, this will be an object with two keys: `type` and `text`. The `text` is the text to the shown on clicked button and `type` will be one of these values that denoted the color of clicked button: `default` (white), `success` (green), `warning` (orange), `danger` (red).</li>
+created_at | *`timestamp`* <br /> UNIX timestamp when the horn was created.
+
 ## Create a New Horn
 
 > POST https://api.horntell.com/profiles/{uid}/horns
 
 ```shell
 curl "https://api.horntell.com/profiles/720974375/horns" \
-    -X POST \
-    -u hornokpleasekey:hornokpleasesecret \
-    -H "Accept: application/vnd.horntell.v1+json" \
-    -H "Content-Type: application/json" \
-    -d '
-    {
-        "format": "link",
-        "type": "info",
-        "bubble": true,
-        "text": "Welcome campaign was fired.",
-        "html": "<strong>Welcome</strong> campaign was fired.",
-        "link": "http://example.com/campaigns/welcome",
-        "new_window": true
-    }'
+-X POST \
+-u hornokpleasekey:hornokpleasesecret \
+-H "Accept: application/vnd.horntell.v1+json" \
+-H "Content-Type: application/json" \
+-d '
+{
+    "format": "link",
+    "type": "info",
+    "bubble": true,
+    "text": "Welcome campaign was fired.",
+    "html": "<strong>Welcome</strong> campaign was fired.",
+    "link": "http://example.com/campaigns/welcome",
+    "new_window": true
+}'
 ```
 
 ```php
@@ -694,7 +737,7 @@ curl "https://api.horntell.com/profiles/720974375/horns" \
     'html' => '<strong>Welcome</strong> campaign was fired.',
     'link' => 'http://app.example.com/campaigns/welcome',
     'new_window' => true
-));
+    ));
 ```
 
 ```ruby
@@ -745,7 +788,7 @@ Attribute | Description
 format | *`string`* *`required`* <br /> It should be one of these: `simple`, `ask`, `link` or `talk`.
 type | *`string`* *`required`* <br /> You can give a color to your horn depending upon the situation. For instance, account expiry warning can be red colored, while simple heads up can be blue colored. The available types are: `info` (blue), `success` (green), `warning` (orange), `danger` (red).
 text | *`string`* *`required`* <br /> This is the plain text version of the horn. We require this to show something in situations where HTML cannot be rendered.
-bubble | *`boolean`* When set to `true`, the horn will be opened automatically when pushed to the user.
+bubble | *`boolean`* <br /> When set to `true`, the horn will be opened automatically when pushed to the user.
 html | *`string`* <br /> When available, this string will be rendered as HTML rather than the `text` string. We parse the HTMl and clean it for all XSS attempts. We have a very strict whitelist of the tags that you can use in your html. You have the following tags available to use: `<h1>`, `<h2>`, `<h3>`, `<h4>`, `<h5>`, `<h6>`, `<strong>`, `<em>`, `<sub>`, `<sup>`, `<small>`, `<code>`, `<pre>`, `<strike>`, `<table>`, `<thead>`, `<tbody>`, `<tfoot>`, `<tr>`, `<th>`, `<td>`, `<ul>`, `<ol>`, `<li>`, `<a>`, `<img>`, `<iframe>`.
 
 ### Special Attributes
@@ -754,24 +797,24 @@ Each format comes with some extra attributes that allows you to control the inte
 
 - **Simple**
 
-    There are no extra attributes for this format.
+There are no extra attributes for this format.
 
 - **Ask**
 
-    Attribute | Description
-    --------- | -----------
-    options | *`array`* *`required`* <br /> It is an array which contains details about the buttons to render for the horn. It can have maximum of 3 elements, where each element can either be a string (text on the button) or be an object with two keys: `type` and `text`. The `text` is the text to the shown on button and `type` can be one of these values to denote the color of button: `default` (white), `success` (green), `warning` (orange), `danger` (red).
+Attribute | Description
+--------- | -----------
+options | *`array`* *`required`* <br /> It is an array which contains details about the buttons to render for the horn. It can have maximum of 3 elements, where each element can either be a string (text on the button) or be an object with two keys: `type` and `text`. The `text` is the text to the shown on button and `type` can be one of these values to denote the color of button: `default` (white), `success` (green), `warning` (orange), `danger` (red).
 
 - **Link**
 
-    Attribute | Description
-    --------- | -----------
-    link | *`string`* *`url`* *`required`* <br /> It is the URL of the page where the user should be sent to upon clicking.
-    new_window | *`boolean`* <br /> When set to `true`, the notification created will open the links in new window.
+Attribute | Description
+--------- | -----------
+link | *`string`* *`url`* *`required`* <br /> It is the URL of the page where the user should be sent to upon clicking.
+new_window | *`boolean`* <br /> When set to `true`, the notification created will open the links in new window.
 
 - **Talk**
 
-    There are no extra attributes for this format.
+There are no extra attributes for this format.
 
 # Campaigns
 
@@ -792,41 +835,41 @@ Campaigns allow you to keep the horns stored as templates in your account and wh
 
 ```shell
 curl "https://api.horntell.com/profiles/720974375/campaigns/54afd3259f17f6b9468b4567" \
-    -X POST \
-    -u hornokpleasekey:hornokpleasesecret \
-    -H "Accept: application/vnd.horntell.v1+json" \
-    -H "Content-Type: application/json"
-    -d '
-    {
-        "meta": {
-            "friend_name": "Alley Doe"
-        }
-    }'
+-X POST \
+-u hornokpleasekey:hornokpleasesecret \
+-H "Accept: application/vnd.horntell.v1+json" \
+-H "Content-Type: application/json"
+-d '
+{
+    "meta": {
+        "friend_name": "Alley Doe"
+    }
+}'
 ```
 
 ```php
 <?php
 (new Horntell\Campaign)->toProfile('720974375', '54afd3259f17f6b9468b4567',
     array('friend_name' => 'Alley Doe')
-);
+    );
 ```
 
 ```ruby
 Horntell::Campaign.to_profile('720974375', '54afd3259f17f6b9468b4567',
     {:friend_name => 'Alley Doe'}
-)
+    )
 ```
 
 ```javascript
 Horntell.campaign.toProfile('720974375', '54afd3259f17f6b9468b4567',
     {friend_name: 'Alley Doe'}
-).then(successCallback, errorCallback);
+    ).then(successCallback, errorCallback);
 ```
 
 ```python
 horntell.Campaign().to_profile('720974375', '54afd3259f17f6b9468b4567',
     {'friend_name': 'Alley Doe'}
-)
+    )
 ```
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
@@ -847,17 +890,17 @@ meta | *`array`* <br /> If your campaign contains meta variables, you'll need to
 
 ```shell
 curl "https://api.horntell.com/profiles/campaigns/54afd3259f17f6b9468b4567" \
-    -X POST \
-    -u hornokpleasekey:hornokpleasesecret \
-    -H "Accept: application/vnd.horntell.v1+json" \
-    -H "Content-Type: application/json"
-    -d '
-    {
-        "profile_uids": ["720974375", "720974376", "720974377"],
-        "meta": {
-            "friend_name": "Alley Doe"
-        }
-    }'
+-X POST \
+-u hornokpleasekey:hornokpleasesecret \
+-H "Accept: application/vnd.horntell.v1+json" \
+-H "Content-Type: application/json"
+-d '
+{
+    "profile_uids": ["720974375", "720974376", "720974377"],
+    "meta": {
+        "friend_name": "Alley Doe"
+    }
+}'
 ```
 
 ```php
@@ -865,28 +908,28 @@ curl "https://api.horntell.com/profiles/campaigns/54afd3259f17f6b9468b4567" \
 (new Horntell\Campaign)->toProfiles(
     array("720974375", "720974376", "720974377"), '54afd3259f17f6b9468b4567',
     array('friend_name' => 'Alley Doe')
-);
+    );
 ```
 
 ```ruby
 Horntell\Campaign::to_profiles(
     ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
     {:friend_name => 'Alley Doe'}
-)
+    )
 ```
 
 ```javascript
 Horntell.campaign.toProfiles(
     ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
     {friend_name: 'Alley Doe'}
-).then(successCallback, errorCallback);
+    ).then(successCallback, errorCallback);
 ```
 
 ```python
 horntell.Campaign().to_profiles(
     ["720974375", "720974376", "720974377"], '54afd3259f17f6b9468b4567',
     {'friend_name': 'Alley Doe'}
-)
+    )
 ```
 
 > You will get the HTTP 204 (No Content) in response for the successful request.
@@ -912,32 +955,31 @@ We have a system for sending the events directly to your server, called webhooks
 
 ```json
 {
-  "id": "55223xxxxxxxxxxxxxxx4568",
-  "app_id": "54ffexxxxxxxxxxxxxxx45a0",
+  "id": "55223976bffebca40c8b4568",
+  "app_id": "54ffe593bffebc4c048b45a0",
   "type": "horn.responded",
   "resource": {
-    "id": "55223xxxxxxxxxxxxxxx4567",
+    "id": "552238c4bffebca40c8b4567",
+    "profile_uid": "720974375",
     "trigger": {
         "type": "campaign",
-        "id": "54345xxxxxxxxxxxxxxx5578"
+        "id": "5522354fbffebcf30b8b4567"
     },
     "format": "talk",
     "bubble": true,
     "type": "success",
     "text": "Enter your email to receive updates from us!",
-    "icon": null,
     "html": "<p>We've got a killer roadmap ahead. Want to stay updated?</p><p>Your email address please?</p>",
+    "delivered_at": 1428306117,
     "seen_at": 1428306116,
     "read_at": 1428306294,
-    "delivered_at": 1428306117,
     "responded_at": 1428306294,
     "response": "john@example.com",
-    "profile_uid": "720974375",
     "created_at": 1428306116
-  },
-  "pending_webhooks": 1,
-  "attempts_count": 0,
-  "created_at": 1428306294
+},
+"pending_webhooks": 1,
+"attempts_count": 0,
+"created_at": 1428306294
 }
 ```
 
@@ -959,4 +1001,4 @@ However we are supporting just one event as of now (i.e. `horn.responded`), we a
 
 Event | Resource
 --------- | -----------
-horn.responded | *describes a [horn](#horns)* <br /> Occurs whenever your user interacts with the notification.
+horn.responded | *describes a [horn](#the-horn-object)* <br/> Occurs when your user responds to the horn.
