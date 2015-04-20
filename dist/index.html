@@ -796,7 +796,10 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
     </span><span class="s2">"profile_uid"</span><span class="p">:</span><span class="w"> </span><span class="s2">"720974375"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"trigger"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="s2">"type"</span><span class="p">:</span><span class="w"> </span><span class="s2">"campaign"</span><span class="p">,</span><span class="w">
-        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5522354fbffebcf30b8b4567"</span><span class="w">
+        </span><span class="s2">"id"</span><span class="p">:</span><span class="w"> </span><span class="s2">"5522354fbffebcf30b8b4567"</span><span class="p">,</span><span class="w">
+        </span><span class="s2">"meta"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="s2">"friend_name"</span><span class="p">:</span><span class="w"> </span><span class="s2">"Alley Doe"</span><span class="w">
+        </span><span class="p">}</span><span class="w">
     </span><span class="p">},</span><span class="w">
     </span><span class="s2">"format"</span><span class="p">:</span><span class="w"> </span><span class="s2">"talk"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"bubble"</span><span class="p">:</span><span class="w"> </span><span class="kc">true</span><span class="p">,</span><span class="w">
@@ -826,7 +829,7 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 </tr>
 <tr>
 <td>trigger</td>
-<td><em><code class="prettyprint">object</code></em> <br /> Hash of keys (<code class="prettyprint">type</code> and <code class="prettyprint">id</code>) describing how the horn was triggered. The <code class="prettyprint">type</code> has possible values of <code class="prettyprint">campaign</code> and <code class="prettyprint">manual</code>, while <code class="prettyprint">id</code> contains the primary key of campaign (if <code class="prettyprint">type</code> is <code class="prettyprint">campaign</code>) that triggered it, otherwise <code class="prettyprint">null</code>.</td>
+<td><em><code class="prettyprint">object</code></em> <br /> Hash of keys (<code class="prettyprint">type</code>, <code class="prettyprint">id</code> and <code class="prettyprint">meta</code>) describing how the horn was triggered. The <code class="prettyprint">type</code> has possible values of <code class="prettyprint">campaign</code> and <code class="prettyprint">manual</code>, while <code class="prettyprint">id</code> contains the primary key of campaign (if <code class="prettyprint">type</code> is <code class="prettyprint">campaign</code>) that triggered it, otherwise <code class="prettyprint">null</code>, and <code class="prettyprint">meta</code> contains the key-value pairs of the meta data that was sent when triggering the campaign that created this horn.</td>
 </tr>
 <tr>
 <td>profile_uid</td>
