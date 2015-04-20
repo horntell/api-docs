@@ -670,7 +670,10 @@ Horns are the notifications in the Horntell's terminology. A horn is the primary
     "profile_uid": "720974375",
     "trigger": {
         "type": "campaign",
-        "id": "5522354fbffebcf30b8b4567"
+        "id": "5522354fbffebcf30b8b4567",
+        "meta": {
+            "friend_name": "Alley Doe"
+        }
     },
     "format": "talk",
     "bubble": true,
@@ -691,7 +694,7 @@ Horns are the notifications in the Horntell's terminology. A horn is the primary
 Attribute | Description
 --------- | -----------
 id | *`string`* <br /> This is the primary key of the horn.
-trigger | *`object`* <br /> Hash of keys (`type` and `id`) describing how the horn was triggered. The `type` has possible values of `campaign` and `manual`, while `id` contains the primary key of campaign (if `type` is `campaign`) that triggered it, otherwise `null`.
+trigger | *`object`* <br /> Hash of keys (`type`, `id` and `meta`) describing how the horn was triggered. The `type` has possible values of `campaign` and `manual`, while `id` contains the primary key of campaign (if `type` is `campaign`) that triggered it, otherwise `null`, and `meta` contains the key-value pairs of the meta data that was sent when triggering the campaign that created this horn.
 profile_uid | *`string`* <br /> The `uid` of profile, for which this horn was created.
 format | *`string`* *`required`* <br /> Format of horn among these: `simple`, `ask`, `link` or `talk`.
 type | *`string`* *`required`* <br /> Type of the horn among these: `info` (blue), `success` (green), `warning` (orange), `danger` (red).
