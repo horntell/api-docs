@@ -924,7 +924,7 @@ curl "https://api.horntell.com/profiles/720974375/cards" \
 -H "Content-Type: application/json" \
 -d '
 {
-    "text": "You've got a new todo assigned to you by Alley Doe.",
+    "text": "You have got a new todo assigned to you by Alley Doe.",
     "include": {
         "format": "quote",
         "icon": "http://example.com/profiles/1234.jpg",
