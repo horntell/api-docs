@@ -1,7 +1,3 @@
-# <<<<<<< HEAD
-# require './lib/redcarpet_header_fix'
-
-# =======
 # Markdown
 set :markdown_engine, :redcarpet
 set :markdown,
@@ -14,7 +10,6 @@ set :markdown,
     no_intra_emphasis: true
 
 # Assets
-# >>>>>>> 19d651a65aa822f3777f71635cf21cde737070ee
 set :css_dir, 'stylesheets'
 set :js_dir, 'javascripts'
 set :images_dir, 'images'
