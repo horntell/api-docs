@@ -878,14 +878,14 @@ Any combination of `include` and `action` can be used in a card.
         },
         "choices": [
             {
-                "identifier": "MARK_AS_COMPLETED",
+                "identifier": "mark_as_completed",
                 "text": "Mark Completed"
             }
         ]
     },
     "response": {
         "type": "choice",
-        "value": "MARK_AS_COMPLETED"
+        "value": "mark_as_completed"
     },
     "created_at": 1428306116,
     "delivered_at": 1428306117,
@@ -924,63 +924,152 @@ curl "https://api.horntell.com/profiles/720974375/cards" \
 -H "Content-Type: application/json" \
 -d '
 {
-    "format": "link",
-    "type": "info",
-    "bubble": true,
-    "text": "Welcome campaign was fired.",
-    "html": "<strong>Welcome</strong> campaign was fired.",
-    "link": "http://example.com/campaigns/welcome",
-    "new_window": true
+    "text": "You've got a new todo assigned to you by Alley Doe.",
+    "include": {
+        "format": "quote",
+        "icon": "http://example.com/profiles/1234.jpg",
+        "title": "Create media_video format",
+        "text": "Users should be able to embed Youtube or other videos in their cards.",
+        "label": {
+            "format": "danger",
+            "text": "Due",
+            "sub_text": "May 1"
+        }
+    },
+    "action": {
+        "format": "choice_reply",
+        "reply": {
+            "placeholder": "Add Comment",
+            "default": null
+        },
+        "choices": [
+            {
+                "identifier": "mark_as_completed",
+                "text": "Mark Completed"
+            }
+        ]
+    }
 }'
 ```
 
 ```php
 <?php
-(new Horntell\Horn)->toProfile('720974375', array(
-    'format' => 'link',
-    'type' => 'info',
-    'bubble' => true,
-    'text' => 'Welcome campaign was fired.',
-    'html' => '<strong>Welcome</strong> campaign was fired.',
-    'link' => 'http://app.example.com/campaigns/welcome',
-    'new_window' => true
+(new Horntell\Card)->toProfile('720974375', array(
+    'text' => 'You\'ve got a new todo assigned to you by Alley Doe.',
+    'include' => array(
+        'format' => 'quote',
+        'icon' => 'http://example.com/profiles/1234.jpg',
+        'title' => 'Create media_video format',
+        'text' => 'Users should be able to embed Youtube or other videos in their cards.',
+        'label' => array(
+            'format' => 'danger',
+            'text' => 'Due',
+            'sub_text' => 'May 1'
+        )
+    ),
+    'action' => array(
+        'format' => 'choice_reply',
+        'reply' => array(
+            'placeholder' => 'Add Comment',
+            'default' => null
+        ),
+        'choices' => array(
+            array(
+                'identifier' => 'mark_as_completed',
+                'text' => 'Mark Completed'
+            )
+        )
+    )
 ));
 ```
 
 ```ruby
 Horntell::Horn.to_profile('720974375', {
-    :format => 'link',
-    :type => 'info',
-    :bubble => true,
-    :text => 'Welcome campaign was fired.',
-    :html => '<strong>Welcome</strong> campaign was fired.',
-    :link => 'http://app.example.com/campaigns/welcome',
-    :new_window => true
+    :text => 'You\'ve got a new todo assigned to you by Alley Doe.',
+    :include => {
+        :format => 'quote',
+        :icon => 'http://example.com/profiles/1234.jpg',
+        :title => 'Create media_video format',
+        :text => 'Users should be able to embed Youtube or other videos in their cards.',
+        :label => {
+            :format => 'danger',
+            :text => 'Due',
+            :sub_text => 'May 1'
+        }
+    },
+    :action => {
+        :format => 'choice_reply',
+        :reply => {
+            :placeholder => 'Add Comment',
+            :default => null
+        },
+        :choices => [
+            {
+                :identifier => 'mark_as_completed',
+                :text => 'Mark Completed'
+            }
+        ]
+    }
 })
 ```
 
 ```javascript
 Horntell.horn.toProfile('720974375', {  
-    format: 'link',
-    type: 'info',
-    bubble: true,
-    text: 'Welcome campaign was fired.',
-    html: '<strong>Welcome</strong> campaign was fired.',
-    link: 'http://app.example.com/campaigns/welcome',
-    new_window: true
+    text: 'You\'ve got a new todo assigned to you by Alley Doe.',
+    include: {
+        format: 'quote',
+        icon: 'http://example.com/profiles/1234.jpg',
+        title: 'Create media_video format',
+        text: 'Users should be able to embed Youtube or other videos in their cards.',
+        label: {
+            format: 'danger',
+            text: 'Due',
+            sub_text: 'May 1'
+        }
+    },
+    action: {
+        format: 'choice_reply',
+        reply: {
+            placeholder: 'Add Comment',
+            default: null
+        },
+        choices: [
+            {
+                identifier: 'mark_as_completed',
+                text: 'Mark Completed'
+            }
+        ]
+    }
 }).then(successCallback, errorCallback);
 ```
 
 ```python
 horntell.Horn().to_profile('720974375', {  
-    'format': 'link',
-    'type': 'info',
-    'bubble': True,
-    'text': 'Welcome campaign was fired.',
-    'html': '<strong>Welcome</strong> campaign was fired.',
-    'link': 'http://app.example.com/campaigns/welcome',
-    'new_window': True
-    'new_window': True
+    'text': 'You\'ve got a new todo assigned to you by Alley Doe.',
+    'include': {
+        'format': 'quote',
+        'icon': 'http://example.com/profiles/1234.jpg',
+        'title': 'Create media_video format',
+        'text': 'Users should be able to embed Youtube or other videos in their cards.',
+        'label': {
+            'format': 'danger',
+            'text': 'Due',
+            'sub_text': 'May 1'
+        }
+    },
+    'action': {
+        'format': 'choice_reply',
+        'reply': {
+            'placeholder': 'Add Comment',
+            'default': null
+        },
+        'choices': [
+            {
+                'identifier': 'mark_as_completed',
+                'text': 'Mark Completed'
+            }
+        ]
+    }
 })
 ```
 
@@ -1050,7 +1139,7 @@ decline | *`object`* *`limit: 20chars`* <br /> Hash containing the key `text` th
 Attribute | Description
 --------- | -----------
 reply | *`object`* *`required`* <br /> Hash containing the keys same as of the format `reply` (as discussed above).
-choices | *`array`* *`required`* <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 2 elements, where each element is an object with two keys: `text` (*`limit: 20chars`*) and `identifier` (*`limit: 30chars`*. The `text`is shown on the choices as it is, while `identifier` helps you to identify the action taken on webhooks. The `identifier` needs to be ALL CAPS, WITHOUT_SPACES containing only ALPHABETS_NUMBERS_AND_UNDERSCORES (eg `REMIND_ME_LATER`).
+choices | *`array`* *`required`* <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 2 elements, where each element is an object with two keys: `text` (*`limit: 20chars`*) and `identifier` (*`limit: 30chars`*. The `text`is shown on the choices as it is, while `identifier` helps you to identify the action taken on webhooks. The `identifier` needs to be in snake_case including only alphabets, numbers and underscores. (eg `remind_me_later`).
 
 # Campaigns
 
