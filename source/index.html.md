@@ -642,7 +642,11 @@ The following endpoint deletes the profile against the `uid` passed. On successf
 
 `DELETE https://api.horntell.com/profiles/{uid}`
 
-# Horns
+# Horns [DEPRECATED]
+
+<aside class="warning">
+    The 'horns' are deprecated in the favour of <a href="#cards">Cards</a>. We plan to remove the corresponding API endpoints in future versions. Kindly refrain from using these in your application. Use <a href="#cards">Cards</a> instead.
+</aside>
 
 Horns are the notifications in the Horntell's terminology. A horn is the primary way of keeping your users engaged in the app. Horns can be sent to a particular profile or multiple profiles. An horn can be of one of four formats:
 
@@ -662,7 +666,7 @@ Horns are the notifications in the Horntell's terminology. A horn is the primary
     Horns of each of these formats can also be a **Bubble Horn**. Bubble horns are the horns that opens automatically upon being pushed to your users. Bubbles give you power to get better responses against your horns. But as with every other power, it comes with responsibility. If you send too many bubbles, your users might get frustrated, thus, it is advised to keep these for important/urgent things.
 </aside>
 
-## The horn object
+## The Horn object
 
 ```json
 {
@@ -819,6 +823,235 @@ new_window | *`boolean`* <br /> When set to `true`, the notification created wil
 
 There are no extra attributes for this format.
 
+# Cards
+
+A card is the primary way of keeping your users engaged in the app. Cards can be sent to a particular profile or multiple profiles or a channel. A card has three required sections:
+
+- **Text**: This is the primary and plain text of the card. This text creates the context of the card as whole.
+
+- **Include**: This is the section that allows you to embed details about an object in the card. The various formats of `include` are:
+    - **Quote**: This allows to embed a quote/comment/reply in the card.
+    - **Item**: This allows to embed a summary of an item in the card.
+
+- **Action**: This is the section that allows you to define an action that can be taken on the card. The various formats of `action` are:
+    - **Reactions**: This allows your users to record their emotions, i.e. Happy, Neutral or Sad.
+    - **Reply**: This allows your users to send a reply to the card.
+    - **Confirmation**: This allows your users to either confirm or decline the object that card talks about.
+    - **Reply with Choices**: This allows your users to either send a reply to the card or make a choice using buttons.
+
+Any combination of `include` and `action` can be used in a card.
+
+## The Card object
+
+```json
+{
+    "id": "57149c0820ef7158428b456a",
+    "trigger": {
+        "type": "campaign",
+        "id": "5522354fbffebcf30b8b4567",
+        "meta": {
+            "todo_assigner_name": "Alley Doe",
+            "todo_assigner_photo": "http://example.com/profiles/1234.jpg",
+            "todo_title": "Create media_video format",
+            "todo_description": "Users should be able to embed Youtube or other videos in their cards.",
+            "todo_due": "May 1"
+        }
+    },
+    "profile_uid": "720974375",
+    "text": "You've got a new todo assigned to you by {meta.todo_assigner_name}.",
+    "include": {
+        "format": "quote",
+        "icon": "{meta.todo_assigner_photo}",
+        "title": "{meta.todo_title}",
+        "text": "{meta.todo_description}",
+        "label": {
+            "format": "danger",
+            "text": "Due",
+            "sub_text": "{meta.todo_due}"
+        }
+    },
+    "action": {
+        "format": "choice_reply",
+        "reply": {
+            "placeholder": "Add Comment",
+            "default": null
+        },
+        "choices": [
+            {
+                "identifier": "MARK_AS_COMPLETED",
+                "text": "Mark Completed"
+            }
+        ]
+    },
+    "response": {
+        "type": "choice",
+        "value": "MARK_AS_COMPLETED"
+    },
+    "created_at": 1428306116,
+    "delivered_at": 1428306117,
+    "seen_at": 1428306116,
+    "read_at": 1428306294,
+    "responded_at": 1428306294
+}
+```
+
+### Attributes
+
+Attribute | Description
+--------- | -----------
+id | *`string`* <br /> This is the primary key of the card.
+trigger | *`object`* <br /> Hash of keys (`type`, `id` and `meta`) describing how the card was created. The `type` has possible values of `campaign` and `manual`, while `id` contains the primary key of campaign (if `type` is `campaign`) that triggered it, otherwise `null`, and `meta` contains the key-value pairs of the meta data that was sent when triggering the campaign that created this card.
+profile_uid | *`string`* <br /> The `uid` of profile, for which this card was created.
+text | *`string`* *`required`* <br /> This is the primary and plain text of the card. This text creates the context of the card as whole.
+include | *`object`* <br /> The hash representing the object to be embedded in the card.
+action | *`object`* <br /> The hash representing the action that can be taken on the card.
+response | *`object`* <br /> Hash of keys (`type` and `value`) representing the response to the card by profile.<br /> <ul><li>When `type` is `reaction`, `value` will either be `HAPPY`, `NEUTRAL` or `SAD`.</li> <li>When `type` is `reply`, `value` will be a `string` that the user sent.</li> <li>When format is `choice`, `value` will be the identifier of the choice that the user chose (when `action` is of format `choice_confirm`, possible identifiers are `CONFIRM`, `PROBABLE`, `DECLINE`).</li>
+created_at | *`timestamp`* <br /> UNIX timestamp when the card was created.
+delivered_at | *`timestamp`* <br /> UNIX timestamp when the card was delivered to the profile.
+seen_at | *`timestamp`* <br /> UNIX timestamp when profile sees the card.
+read_at | *`timestamp`* <br /> UNIX timestamp when profile reads the card.
+responded_at | *`timestamp`* <br /> UNIX timestamp when profiles responds to the card.
+
+## Create a New Card
+
+> POST https://api.horntell.com/profiles/{uid}/cards
+
+```shell
+curl "https://api.horntell.com/profiles/720974375/cards" \
+-X POST \
+-u hornokpleasekey:hornokpleasesecret \
+-H "Accept: application/vnd.horntell.v1+json" \
+-H "Content-Type: application/json" \
+-d '
+{
+    "format": "link",
+    "type": "info",
+    "bubble": true,
+    "text": "Welcome campaign was fired.",
+    "html": "<strong>Welcome</strong> campaign was fired.",
+    "link": "http://example.com/campaigns/welcome",
+    "new_window": true
+}'
+```
+
+```php
+<?php
+(new Horntell\Horn)->toProfile('720974375', array(
+    'format' => 'link',
+    'type' => 'info',
+    'bubble' => true,
+    'text' => 'Welcome campaign was fired.',
+    'html' => '<strong>Welcome</strong> campaign was fired.',
+    'link' => 'http://app.example.com/campaigns/welcome',
+    'new_window' => true
+));
+```
+
+```ruby
+Horntell::Horn.to_profile('720974375', {
+    :format => 'link',
+    :type => 'info',
+    :bubble => true,
+    :text => 'Welcome campaign was fired.',
+    :html => '<strong>Welcome</strong> campaign was fired.',
+    :link => 'http://app.example.com/campaigns/welcome',
+    :new_window => true
+})
+```
+
+```javascript
+Horntell.horn.toProfile('720974375', {  
+    format: 'link',
+    type: 'info',
+    bubble: true,
+    text: 'Welcome campaign was fired.',
+    html: '<strong>Welcome</strong> campaign was fired.',
+    link: 'http://app.example.com/campaigns/welcome',
+    new_window: true
+}).then(successCallback, errorCallback);
+```
+
+```python
+horntell.Horn().to_profile('720974375', {  
+    'format': 'link',
+    'type': 'info',
+    'bubble': True,
+    'text': 'Welcome campaign was fired.',
+    'html': '<strong>Welcome</strong> campaign was fired.',
+    'link': 'http://app.example.com/campaigns/welcome',
+    'new_window': True
+    'new_window': True
+})
+```
+
+> You will get the HTTP 204 (No Content) in response for the successful request.
+
+### Attributes
+
+The following are the attributes which are required to create a card. Each format of `include` and `action` requires different attributes that are discussed below.
+
+Attribute | Description
+--------- | -----------
+text | *`string`* *`required`* *`limit: 45chars`* <br /> This is the primary and plain text of the card. This text creates the context of the card as whole.
+include | *`object`* <br /> The hash representing the object to be embedded in the card. All supported formats are described below.
+action | *`object`* <br /> The hash representing the action that can be taken on the card. All supported formats are described below.
+
+### Supported formats for `include`
+
+- **Quote** (Format: `quote`)
+
+Attribute | Description
+--------- | -----------
+icon | *`string`* *`url`* *`required`* <br /> The URL to a publicly viewable image.
+title | *`string`* *`required`* *`limit: 45chars`* <br /> Title of the quote. Limit: 
+text | *`string`* *`required`* *`limit: 140chars`* <br /> Text of the quote. Limit: 
+
+- **Item** (Format: `item`)
+
+Attribute | Description
+--------- | -----------
+icon | *`string`* *`url`* *`required`* <br /> The URL to a publicly viewable image.
+title | *`string`* *`required`* *`limit: 45chars`* <br /> Title of the item. Limit: 
+lines | *`array`* *`required`* <br /> It is an array which contains details about the item. It can have maximum of 3 elements, where each element is an object with two keys: `label` (*`limit: 20chars`*) and `value` (*`limit: 80chars`*). The `label` acts of the label of the description, while `value` acts as the description itself.
+
+### Labels
+
+Each format of the `include` can also have an optional key, `label`. If defined, the `label` has to have the following attributes.
+
+Attribute | Description
+--------- | -----------
+format | *`string`* *`required`* <br /> Describes the color of the label. Valid formats are: `info`, `success`, `warning` and `danger`.
+text | *`string`* *`required`* *`limit: 15chars`* <br /> Primary text of the label.
+sub_text | *`string`* *`limit: 45chars`* <br /> Secondary text of the label.
+
+### Supported formats for `action`
+
+- **Reactions** (Format: `reactions`)
+
+There are no extra attributes for this format.
+
+- **Reply** (Format: `reply`)
+
+Attribute | Description
+--------- | -----------
+placeholder | *`string`* *`required`* *`limit: 30chars`* <br /> Acts as a hint to inform the recipient what kind of reply is expected.
+default | *`string`* *`limit: 30chars`* <br /> The default value that will pre-fill the reply box for the user.
+
+- **Confirmation** (Format: `choice_confirm`)
+
+Attribute | Description
+--------- | -----------
+confirm | *`object`* *`required`* *`limit: 20chars`* <br /> Hash containing the key `text` that needs to be shown on the confirmation button.
+probable | *`object`* *`limit: 20chars`* <br /> Hash containing the key `text` that needs to be shown on the probable button.
+decline | *`object`* *`limit: 20chars`* <br /> Hash containing the key `text` that needs to be shown on the decline button.
+
+- **Reply with Choices** (Format: `choice_reply`)
+
+Attribute | Description
+--------- | -----------
+reply | *`object`* *`required`* <br /> Hash containing the keys same as of the format `reply` (as discussed above).
+choices | *`array`* *`required`* <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 2 elements, where each element is an object with two keys: `text` (*`limit: 20chars`*) and `identifier` (*`limit: 30chars`*. The `text`is shown on the choices as it is, while `identifier` helps you to identify the action taken on webhooks. The `identifier` needs to be ALL CAPS, WITHOUT_SPACES containing only ALPHABETS_NUMBERS_AND_UNDERSCORES (eg `REMIND_ME_LATER`).
+
 # Campaigns
 
 There's a problem when you hard-code the content of horns in your codebase, commit it and push it to production. The problem is that, if you want to change the content of horns, you'll have to repeat the whole cycle of **code - commit - ship** to get it done. This sucks. And campaigns solve this problem.
@@ -954,7 +1187,7 @@ Events are our way of letting your app know about something interesting that has
 
 We have a system for sending the events directly to your server, called webhooks. Webhooks are managed in your app's setting. Webhooks are special URLs in your application, to which we will post the event and you can act accordingly.
 
-## The event object
+## The Event object
 
 ```json
 {
@@ -1004,4 +1237,5 @@ However we are supporting just one event as of now (i.e. `horn.responded`), we a
 
 Event | Resource
 --------- | -----------
-horn.responded | *describes a [horn](#the-horn-object)* <br/> Occurs when your user responds to the horn.
+horn.responded | *`deprecated`* *describes a [horn](#the-horn-object)* <br/> Occurs when your user responds to the horn.
+card.responded | *describes a [card](#the-card-object)* <br/> Occurs when your user responds to the card.
