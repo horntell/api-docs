@@ -1077,7 +1077,7 @@ horntell.Horn().to_profile('720974375', {
 
 ### Attributes
 
-The following are the attributes which are required to create a card. Each format of `include` and `action` requires different attributes that are discussed below.
+The following are the attributes which are required to create a card. Each format of `include` and `action` requires different attributes that are discussed below. You might also want to learn more about [anatomy of a card](http://docs.horntell.com/help/articles/anatomy-of-a-card/) or [what are various formats of Cards](http://docs.horntell.com/help/articles/what-are-various-formats-of-cards/) available to use.
 
 Attribute | Description
 --------- | -----------
@@ -1100,8 +1100,16 @@ text | *`string`* *`required`* *`limit: 140chars`* <br /> Text of the quote. Lim
 Attribute | Description
 --------- | -----------
 icon | *`string`* *`url`* *`required`* <br /> The URL to a publicly viewable image.
-title | *`string`* *`required`* *`limit: 45chars`* <br /> Title of the item. Limit: 
+title | *`string`* *`required`* *`limit: 45chars`* <br /> Title of the item.
 lines | *`array`* *`required`* <br /> It is an array which contains details about the item. It can have maximum of 3 elements, where each element is an object with two keys: `label` (*`limit: 20chars`*) and `value` (*`limit: 80chars`*). The `label` acts of the label of the description, while `value` acts as the description itself.
+
+- **Media Image** (Format: `media_image`)
+
+Attribute | Description
+--------- | -----------
+title | *`string`* *`required`* *`limit: 45chars`* <br /> Title of the images.
+description | *`string`* *`required`* *`limit: 140chars`* <br /> Description of the images.
+images | *`array`* *`required`* <br /> It is an array which contains urls of the images. Each element in the array has a key: `url`, which is the url at which the image is hosted.
 
 ### Labels
 
@@ -1139,7 +1147,24 @@ decline | *`object`* *`limit: 20chars`* <br /> Hash containing the key `text` th
 Attribute | Description
 --------- | -----------
 reply | *`object`* *`required`* <br /> Hash containing the keys same as of the format `reply` (as discussed above).
-choices | *`array`* *`required`* <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 2 elements, where each element is an object with two keys: `text` (*`limit: 20chars`*) and `identifier` (*`limit: 30chars`*. The `text`is shown on the choices as it is, while `identifier` helps you to identify the action taken on webhooks. The `identifier` needs to be in snake_case including only alphabets, numbers and underscores. (eg `remind_me_later`).
+choices | *`array`* *`required`* <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 2 elements, where each element is an object with two keys: `text` (*`limit: 20chars`*) and `identifier` (*`limit: 30chars`*). The `text` is shown on the choices as it is, while `identifier` helps you to identify the action taken on webhooks. The `identifier` needs to be in snake_case including only alphabets, numbers and underscores. (eg `remind_me_later`).
+
+- **Choices** (Format: `choice_general`)
+
+Attribute | Description
+--------- | -----------
+choices | *`array`* *`required`* <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 10 elements, where each element is an object with two keys: `text` (*`limit: 20chars`*) and `identifier` (*`limit: 30chars`*). The `text` is shown on the choices as it is, while `identifier` helps you to identify the action taken on webhooks. The `identifier` needs to be in snake_case including only alphabets, numbers and underscores. (eg `remind_me_later`).
+
+- **Pay** (Format: `pay`)
+
+Attribute | Description
+--------- | -----------
+text | *`string`* *`required`* *`limit: 15chars`* <br /> The text to show on the Pay button.
+require_shipping_address | *`boolean`* *`required`* <br /> A boolean value defining whether the Card needs to ask for shipping address or not.
+allow_cash_on_delivery | *`boolean`* *`required`* <br /> A boolean value defining whether the user is allowed to pay cash on delivery.
+transaction_description | *`string`* *`required`* *`limit: 22chars`* <br /> The text that will be shown on user's credit card statement.
+price | *`object`* *`required`* <br /> Hash containing the keys `amount` and `currency`. The key `amount` is the amount to be collected in the base currency (i.e. Cents, not Dollars). The `currency` is the 3-letter ISO code for the currency in which the amount has to be collected (eg. USD).
+
 
 # Campaigns
 

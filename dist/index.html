@@ -1403,7 +1403,7 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 
 <h3 id="attributes">Attributes</h3>
 
-<p>The following are the attributes which are required to create a card. Each format of <code class="prettyprint">include</code> and <code class="prettyprint">action</code> requires different attributes that are discussed below.</p>
+<p>The following are the attributes which are required to create a card. Each format of <code class="prettyprint">include</code> and <code class="prettyprint">action</code> requires different attributes that are discussed below. You might also want to learn more about <a href="http://docs.horntell.com/help/articles/anatomy-of-a-card/">anatomy of a card</a> or <a href="http://docs.horntell.com/help/articles/what-are-various-formats-of-cards/">what are various formats of Cards</a> available to use.</p>
 
 <table><thead>
 <tr>
@@ -1467,11 +1467,35 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 </tr>
 <tr>
 <td>title</td>
-<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">required</code></em> <em><code class="prettyprint">limit: 45chars</code></em> <br /> Title of the item. Limit:</td>
+<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">required</code></em> <em><code class="prettyprint">limit: 45chars</code></em> <br /> Title of the item.</td>
 </tr>
 <tr>
 <td>lines</td>
 <td><em><code class="prettyprint">array</code></em> <em><code class="prettyprint">required</code></em> <br /> It is an array which contains details about the item. It can have maximum of 3 elements, where each element is an object with two keys: <code class="prettyprint">label</code> (<em><code class="prettyprint">limit: 20chars</code></em>) and <code class="prettyprint">value</code> (<em><code class="prettyprint">limit: 80chars</code></em>). The <code class="prettyprint">label</code> acts of the label of the description, while <code class="prettyprint">value</code> acts as the description itself.</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li><strong>Media Image</strong> (Format: <code class="prettyprint">media_image</code>)</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>title</td>
+<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">required</code></em> <em><code class="prettyprint">limit: 45chars</code></em> <br /> Title of the images.</td>
+</tr>
+<tr>
+<td>description</td>
+<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">required</code></em> <em><code class="prettyprint">limit: 140chars</code></em> <br /> Description of the images.</td>
+</tr>
+<tr>
+<td>images</td>
+<td><em><code class="prettyprint">array</code></em> <em><code class="prettyprint">required</code></em> <br /> It is an array which contains urls of the images. Each element in the array has a key: <code class="prettyprint">url</code>, which is the url at which the image is hosted.</td>
 </tr>
 </tbody></table>
 
@@ -1567,7 +1591,55 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 </tr>
 <tr>
 <td>choices</td>
-<td><em><code class="prettyprint">array</code></em> <em><code class="prettyprint">required</code></em> <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 2 elements, where each element is an object with two keys: <code class="prettyprint">text</code> (<em><code class="prettyprint">limit: 20chars</code></em>) and <code class="prettyprint">identifier</code> (<em><code class="prettyprint">limit: 30chars</code></em>. The <code class="prettyprint">text</code>is shown on the choices as it is, while <code class="prettyprint">identifier</code> helps you to identify the action taken on webhooks. The <code class="prettyprint">identifier</code> needs to be in snake_case including only alphabets, numbers and underscores. (eg <code class="prettyprint">remind_me_later</code>).</td>
+<td><em><code class="prettyprint">array</code></em> <em><code class="prettyprint">required</code></em> <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 2 elements, where each element is an object with two keys: <code class="prettyprint">text</code> (<em><code class="prettyprint">limit: 20chars</code></em>) and <code class="prettyprint">identifier</code> (<em><code class="prettyprint">limit: 30chars</code></em>). The <code class="prettyprint">text</code> is shown on the choices as it is, while <code class="prettyprint">identifier</code> helps you to identify the action taken on webhooks. The <code class="prettyprint">identifier</code> needs to be in snake_case including only alphabets, numbers and underscores. (eg <code class="prettyprint">remind_me_later</code>).</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li><strong>Choices</strong> (Format: <code class="prettyprint">choice_general</code>)</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>choices</td>
+<td><em><code class="prettyprint">array</code></em> <em><code class="prettyprint">required</code></em> <br /> It is an array which contains details about the choices. It can have minimum of 1 and maximum of 10 elements, where each element is an object with two keys: <code class="prettyprint">text</code> (<em><code class="prettyprint">limit: 20chars</code></em>) and <code class="prettyprint">identifier</code> (<em><code class="prettyprint">limit: 30chars</code></em>). The <code class="prettyprint">text</code> is shown on the choices as it is, while <code class="prettyprint">identifier</code> helps you to identify the action taken on webhooks. The <code class="prettyprint">identifier</code> needs to be in snake_case including only alphabets, numbers and underscores. (eg <code class="prettyprint">remind_me_later</code>).</td>
+</tr>
+</tbody></table>
+
+<ul>
+<li><strong>Pay</strong> (Format: <code class="prettyprint">pay</code>)</li>
+</ul>
+
+<table><thead>
+<tr>
+<th>Attribute</th>
+<th>Description</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>text</td>
+<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">required</code></em> <em><code class="prettyprint">limit: 15chars</code></em> <br /> The text to show on the Pay button.</td>
+</tr>
+<tr>
+<td>require_shipping_address</td>
+<td><em><code class="prettyprint">boolean</code></em> <em><code class="prettyprint">required</code></em> <br /> A boolean value defining whether the Card needs to ask for shipping address or not.</td>
+</tr>
+<tr>
+<td>allow_cash_on_delivery</td>
+<td><em><code class="prettyprint">boolean</code></em> <em><code class="prettyprint">required</code></em> <br /> A boolean value defining whether the user is allowed to pay cash on delivery.</td>
+</tr>
+<tr>
+<td>transaction_description</td>
+<td><em><code class="prettyprint">string</code></em> <em><code class="prettyprint">required</code></em> <em><code class="prettyprint">limit: 22chars</code></em> <br /> The text that will be shown on user&rsquo;s credit card statement.</td>
+</tr>
+<tr>
+<td>price</td>
+<td><em><code class="prettyprint">object</code></em> <em><code class="prettyprint">required</code></em> <br /> Hash containing the keys <code class="prettyprint">amount</code> and <code class="prettyprint">currency</code>. The key <code class="prettyprint">amount</code> is the amount to be collected in the base currency (i.e. Cents, not Dollars). The <code class="prettyprint">currency</code> is the 3-letter ISO code for the currency in which the amount has to be collected (eg. USD).</td>
 </tr>
 </tbody></table>
 
