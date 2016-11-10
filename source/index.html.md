@@ -832,12 +832,15 @@ A card is the primary way of keeping your users engaged in the app. Cards can be
 - **Include**: This is the section that allows you to embed details about an object in the card. The various formats of `include` are:
     - **Quote**: This allows to embed a quote/comment/reply in the card.
     - **Item**: This allows to embed a summary of an item in the card.
+    - **Media Image**: This allows to embed one or more images in the card.
 
 - **Action**: This is the section that allows you to define an action that can be taken on the card. The various formats of `action` are:
     - **Reactions**: This allows your users to record their emotions, i.e. Happy, Neutral or Sad.
     - **Reply**: This allows your users to send a reply to the card.
     - **Confirmation**: This allows your users to either confirm or decline the object that card talks about.
     - **Reply with Choices**: This allows your users to either send a reply to the card or make a choice using buttons.
+    - **Choices**: This allows your users to pick one or many pre-defined choices by you.
+    - **Pay**: This allows your users to pay you via the card itself.
 
 Any combination of `include` and `action` can be used in a card.
 
@@ -905,7 +908,7 @@ profile_uid | *`string`* <br /> The `uid` of profile, for which this card was cr
 text | *`string`* *`required`* <br /> This is the primary and plain text of the card. This text creates the context of the card as whole.
 include | *`object`* <br /> The hash representing the object to be embedded in the card.
 action | *`object`* <br /> The hash representing the action that can be taken on the card.
-response | *`object`* <br /> Hash of keys (`type` and `value`) representing the response to the card by profile.<br /> <ul><li>When `type` is `reaction`, `value` will either be `HAPPY`, `NEUTRAL` or `SAD`.</li> <li>When `type` is `reply`, `value` will be a `string` that the user sent.</li> <li>When format is `choice`, `value` will be the identifier of the choice that the user chose (when `action` is of format `choice_confirm`, possible identifiers are `CONFIRM`, `PROBABLE`, `DECLINE`).</li>
+response | *`object`* <br /> Hash of keys (`type` and `value`) representing the response to the card by profile.<br /> <ul><li>When `type` is `reaction`, `value` will either be `HAPPY`, `NEUTRAL` or `SAD`.</li> <li>When `type` is `reply`, `value` will be a `string` that the user sent.</li> <li>When format is `choice`, `value` will be the identifier of the choice that the user chose (when `action` is of format `choice_confirm`, possible identifiers are `CONFIRM`, `PROBABLE`, `DECLINE`).</li> <li>When `type` is `pay`, `value` will be `paid`. It will also contain an additional hash called `meta` containing the keys `mode` and `transaction_id`. The value of `mode` will either be `cash` or `card` depending how the user paid.</li></ul>
 created_at | *`timestamp`* <br /> UNIX timestamp when the card was created.
 delivered_at | *`timestamp`* <br /> UNIX timestamp when the card was delivered to the profile.
 seen_at | *`timestamp`* <br /> UNIX timestamp when profile sees the card.

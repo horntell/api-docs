@@ -1121,6 +1121,7 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 <ul>
 <li><strong>Quote</strong>: This allows to embed a quote/comment/reply in the card.</li>
 <li><strong>Item</strong>: This allows to embed a summary of an item in the card.</li>
+<li><strong>Media Image</strong>: This allows to embed one or more images in the card.</li>
 </ul></li>
 <li><p><strong>Action</strong>: This is the section that allows you to define an action that can be taken on the card. The various formats of <code class="prettyprint">action</code> are:</p>
 
@@ -1129,6 +1130,8 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 <li><strong>Reply</strong>: This allows your users to send a reply to the card.</li>
 <li><strong>Confirmation</strong>: This allows your users to either confirm or decline the object that card talks about.</li>
 <li><strong>Reply with Choices</strong>: This allows your users to either send a reply to the card or make a choice using buttons.</li>
+<li><strong>Choices</strong>: This allows your users to pick one or many pre-defined choices by you.</li>
+<li><strong>Pay</strong>: This allows your users to pay you via the card itself.</li>
 </ul></li>
 </ul>
 
@@ -1220,7 +1223,7 @@ curl <span class="s2">"https://api.horntell.com/profiles/720974375"</span> <span
 </tr>
 <tr>
 <td>response</td>
-<td><em><code class="prettyprint">object</code></em> <br /> Hash of keys (<code class="prettyprint">type</code> and <code class="prettyprint">value</code>) representing the response to the card by profile.<br /> <ul><li>When <code class="prettyprint">type</code> is <code class="prettyprint">reaction</code>, <code class="prettyprint">value</code> will either be <code class="prettyprint">HAPPY</code>, <code class="prettyprint">NEUTRAL</code> or <code class="prettyprint">SAD</code>.</li> <li>When <code class="prettyprint">type</code> is <code class="prettyprint">reply</code>, <code class="prettyprint">value</code> will be a <code class="prettyprint">string</code> that the user sent.</li> <li>When format is <code class="prettyprint">choice</code>, <code class="prettyprint">value</code> will be the identifier of the choice that the user chose (when <code class="prettyprint">action</code> is of format <code class="prettyprint">choice_confirm</code>, possible identifiers are <code class="prettyprint">CONFIRM</code>, <code class="prettyprint">PROBABLE</code>, <code class="prettyprint">DECLINE</code>).</li></td>
+<td><em><code class="prettyprint">object</code></em> <br /> Hash of keys (<code class="prettyprint">type</code> and <code class="prettyprint">value</code>) representing the response to the card by profile.<br /> <ul><li>When <code class="prettyprint">type</code> is <code class="prettyprint">reaction</code>, <code class="prettyprint">value</code> will either be <code class="prettyprint">HAPPY</code>, <code class="prettyprint">NEUTRAL</code> or <code class="prettyprint">SAD</code>.</li> <li>When <code class="prettyprint">type</code> is <code class="prettyprint">reply</code>, <code class="prettyprint">value</code> will be a <code class="prettyprint">string</code> that the user sent.</li> <li>When format is <code class="prettyprint">choice</code>, <code class="prettyprint">value</code> will be the identifier of the choice that the user chose (when <code class="prettyprint">action</code> is of format <code class="prettyprint">choice_confirm</code>, possible identifiers are <code class="prettyprint">CONFIRM</code>, <code class="prettyprint">PROBABLE</code>, <code class="prettyprint">DECLINE</code>).</li> <li>When <code class="prettyprint">type</code> is <code class="prettyprint">pay</code>, <code class="prettyprint">value</code> will be <code class="prettyprint">paid</code>. It will also contain an additional hash called <code class="prettyprint">meta</code> containing the keys <code class="prettyprint">mode</code> and <code class="prettyprint">transaction_id</code>. The value of <code class="prettyprint">mode</code> will either be <code class="prettyprint">cash</code> or <code class="prettyprint">card</code> depending how the user paid.</li></ul></td>
 </tr>
 <tr>
 <td>created_at</td>
